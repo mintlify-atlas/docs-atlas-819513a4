@@ -4,58 +4,45 @@ description: A ai chat with voice input block.
 author: ephraim duncan
 ---
 
-<ComponentPreview name="ai-01" />
 
 ## Installation
 
-<Tabs defaultValue="cli">
+<Tabs>
+  <Tab title="CLI">
+    Install the block using the shadcn CLI:
 
-<TabsContent value="cli">
+    ```bash
+    npx shadcn@latest add @blocks/ai-01
+    ```
 
-<Steps>
+    This will automatically install the following dependencies:
+    - `@tabler/icons-react`
 
-<Step>Install dependencies</Step>
+    And add these shadcn/ui components:
+    - `button`
+    - `dropdown-menu`
+    - `textarea`
+  </Tab>
 
-```bash
-npx shadcn@latest add @blocks/ai-01
-```
+  <Tab title="Manual">
+    <Steps>
+      <Step title="Install dependencies">
+        ```bash
+        npm install @tabler/icons-react
+        ```
+      </Step>
 
-This will install the following dependencies:
-- `@tabler/icons-react`
+      <Step title="Add shadcn/ui components">
+        ```bash
+        npx shadcn@latest add button dropdown-menu textarea
+        ```
+      </Step>
 
-And add the following shadcn/ui components:
-- `button`
-- `dropdown-menu`
-- `textarea`
-
-</Steps>
-
-</TabsContent>
-
-<TabsContent value="manual">
-
-<Steps>
-
-<Step>Install dependencies</Step>
-
-```bash
-npm install @tabler/icons-react
-```
-
-<Step>Add shadcn/ui components</Step>
-
-```bash
-npx shadcn@latest add button dropdown-menu textarea
-```
-
-<Step>Copy the source code</Step>
-
-Create `components/ai-01.tsx` and paste the component code.
-
-</Steps>
-
-</TabsContent>
-
+      <Step title="Copy the source code">
+        Create `components/ai-01.tsx` and paste the component code from the [Blocks registry](https://blocks.so/r/ai-01.json).
+      </Step>
+    </Steps>
+  </Tab>
 </Tabs>
 
 ## Usage

@@ -4,73 +4,26 @@ description: A ai elements chat block.
 author: ephraim duncan
 ---
 
-<ComponentPreview name="ai-05" />
 
 ## Installation
 
-<Tabs defaultValue="cli">
-
-<TabsContent value="cli">
-
 <Steps>
+  <Step title="Install the block">
+    ```bash
+    npx shadcn@latest add @blocks/ai-05
+    ```
 
-<Step>Install dependencies</Step>
+    This installs required dependencies (`@tabler/icons-react`, `ai`) and shadcn/ui components (`badge`, `button`).
+  </Step>
 
-```bash
-npx shadcn@latest add @blocks/ai-05
-```
+  <Step title="Install AI Elements">
+    ```bash
+    npx ai-elements@latest add conversation message prompt-input
+    ```
 
-This will install the following dependencies:
-- `@tabler/icons-react`
-- `ai`
-
-And add the following shadcn/ui components:
-- `badge`
-- `button`
-
-<Step>Install AI Elements</Step>
-
-```bash
-npx ai-elements@latest add conversation message prompt-input
-```
-
-This component requires the AI Elements library for conversation and message components.
-
+    This component requires AI Elements for conversation and message components.
+  </Step>
 </Steps>
-
-</TabsContent>
-
-<TabsContent value="manual">
-
-<Steps>
-
-<Step>Install dependencies</Step>
-
-```bash
-npm install @tabler/icons-react ai
-```
-
-<Step>Add shadcn/ui components</Step>
-
-```bash
-npx shadcn@latest add badge button
-```
-
-<Step>Install AI Elements</Step>
-
-```bash
-npx ai-elements@latest add conversation message prompt-input
-```
-
-<Step>Copy the source code</Step>
-
-Create `components/ai-05.tsx` and paste the component code.
-
-</Steps>
-
-</TabsContent>
-
-</Tabs>
 
 ## Usage
 

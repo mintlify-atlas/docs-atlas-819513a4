@@ -4,58 +4,41 @@ description: A ai chat with model selection block.
 author: ephraim duncan
 ---
 
-<ComponentPreview name="ai-02" />
 
 ## Installation
 
-<Tabs defaultValue="cli">
+<Tabs>
+  <Tab title="CLI">
+    Install the block using the shadcn CLI:
 
-<TabsContent value="cli">
+    ```bash
+    npx shadcn@latest add @blocks/ai-02
+    ```
 
-<Steps>
+    This automatically installs:
+    - `@tabler/icons-react`
+    - shadcn/ui components: `button`, `select`, `textarea`
+  </Tab>
 
-<Step>Install dependencies</Step>
+  <Tab title="Manual">
+    <Steps>
+      <Step title="Install dependencies">
+        ```bash
+        npm install @tabler/icons-react
+        ```
+      </Step>
 
-```bash
-npx shadcn@latest add @blocks/ai-02
-```
+      <Step title="Add shadcn/ui components">
+        ```bash
+        npx shadcn@latest add button select textarea
+        ```
+      </Step>
 
-This will install the following dependencies:
-- `@tabler/icons-react`
-
-And add the following shadcn/ui components:
-- `button`
-- `select`
-- `textarea`
-
-</Steps>
-
-</TabsContent>
-
-<TabsContent value="manual">
-
-<Steps>
-
-<Step>Install dependencies</Step>
-
-```bash
-npm install @tabler/icons-react
-```
-
-<Step>Add shadcn/ui components</Step>
-
-```bash
-npx shadcn@latest add button select textarea
-```
-
-<Step>Copy the source code</Step>
-
-Create `components/ai-02.tsx` and paste the component code.
-
-</Steps>
-
-</TabsContent>
-
+      <Step title="Copy source code">
+        Create `components/ai-02.tsx` with code from [blocks.so/r/ai-02.json](https://blocks.so/r/ai-02.json)
+      </Step>
+    </Steps>
+  </Tab>
 </Tabs>
 
 ## Usage
