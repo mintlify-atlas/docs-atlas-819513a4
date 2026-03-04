@@ -1,0 +1,216 @@
+{
+  "projectType": "frontend",
+  "projectName": "Blocks",
+  "projectDescription": "An open-source library of 60+ accessible, customizable UI blocks built with React, Tailwind CSS, and shadcn/ui",
+  "theme": "palm",
+  "primaryColor": "#040404",
+  "lightColor": "#848484",
+  "darkColor": "#dcdcdc",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "installation",
+              "usage"
+            ]
+          },
+          {
+            "group": "Blocks",
+            "pages": [
+              "blocks/ai",
+              "blocks/command-menu",
+              "blocks/dialogs",
+              "blocks/file-upload",
+              "blocks/form-layout",
+              "blocks/grid-list",
+              "blocks/login",
+              "blocks/onboarding",
+              "blocks/sidebar",
+              "blocks/stats",
+              "blocks/tables"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "guides/customization",
+              "guides/theming",
+              "guides/typescript"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Components",
+        "groups": [
+          {
+            "group": "AI Components",
+            "pages": [
+              "components/ai/ai-01",
+              "components/ai/ai-02",
+              "components/ai/ai-03",
+              "components/ai/ai-04",
+              "components/ai/ai-05"
+            ]
+          },
+          {
+            "group": "Command Menu",
+            "pages": [
+              "components/command-menu/command-menu-01",
+              "components/command-menu/command-menu-02",
+              "components/command-menu/command-menu-03"
+            ]
+          },
+          {
+            "group": "Dialogs",
+            "pages": [
+              "components/dialogs/dialog-01",
+              "components/dialogs/dialog-02",
+              "components/dialogs/dialog-03",
+              "components/dialogs/dialog-04",
+              "components/dialogs/dialog-05",
+              "components/dialogs/dialog-06",
+              "components/dialogs/dialog-07",
+              "components/dialogs/dialog-08",
+              "components/dialogs/dialog-09",
+              "components/dialogs/dialog-10",
+              "components/dialogs/dialog-11",
+              "components/dialogs/dialog-12"
+            ]
+          },
+          {
+            "group": "File Upload",
+            "pages": [
+              "components/file-upload/file-upload-01",
+              "components/file-upload/file-upload-02",
+              "components/file-upload/file-upload-03",
+              "components/file-upload/file-upload-04",
+              "components/file-upload/file-upload-05",
+              "components/file-upload/file-upload-06"
+            ]
+          },
+          {
+            "group": "Form Layout",
+            "pages": [
+              "components/form-layout/form-layout-01",
+              "components/form-layout/form-layout-02",
+              "components/form-layout/form-layout-03",
+              "components/form-layout/form-layout-04",
+              "components/form-layout/form-layout-05"
+            ]
+          },
+          {
+            "group": "Grid List",
+            "pages": [
+              "components/grid-list/grid-list-01",
+              "components/grid-list/grid-list-02",
+              "components/grid-list/grid-list-03"
+            ]
+          },
+          {
+            "group": "Login",
+            "pages": [
+              "components/login/login-01",
+              "components/login/login-02",
+              "components/login/login-03",
+              "components/login/login-04",
+              "components/login/login-05",
+              "components/login/login-06",
+              "components/login/login-07",
+              "components/login/login-08",
+              "components/login/login-09"
+            ]
+          },
+          {
+            "group": "Onboarding",
+            "pages": [
+              "components/onboarding/onboarding-01"
+            ]
+          },
+          {
+            "group": "Sidebar",
+            "pages": [
+              "components/sidebar/sidebar-01",
+              "components/sidebar/sidebar-02",
+              "components/sidebar/sidebar-03",
+              "components/sidebar/sidebar-04",
+              "components/sidebar/sidebar-05",
+              "components/sidebar/sidebar-06"
+            ]
+          },
+          {
+            "group": "Stats",
+            "pages": [
+              "components/stats/stats-01",
+              "components/stats/stats-02",
+              "components/stats/stats-03",
+              "components/stats/stats-04",
+              "components/stats/stats-05",
+              "components/stats/stats-06",
+              "components/stats/stats-07",
+              "components/stats/stats-08",
+              "components/stats/stats-09",
+              "components/stats/stats-10",
+              "components/stats/stats-11",
+              "components/stats/stats-12",
+              "components/stats/stats-13",
+              "components/stats/stats-14",
+              "components/stats/stats-15"
+            ]
+          },
+          {
+            "group": "Tables",
+            "pages": [
+              "components/tables/table-01",
+              "components/tables/table-02",
+              "components/tables/table-03",
+              "components/tables/table-04",
+              "components/tables/table-05"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Contributing",
+        "groups": [
+          {
+            "group": "Contributing",
+            "pages": [
+              "contributing/overview",
+              "contributing/adding-blocks",
+              "contributing/guidelines"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "60+ accessible and customizable UI blocks",
+    "Built with React, Tailwind CSS, and shadcn/ui",
+    "Easy copy-paste integration via shadcn CLI",
+    "Component categories: AI, dialogs, forms, login, stats, tables, and more",
+    "Remote registry support for seamless installation",
+    "Open source with MIT license"
+  ],
+  "publicApiSurface": [
+    "AI Blocks: ai-01 through ai-05",
+    "Command Menu Blocks: command-menu-01 through command-menu-03",
+    "Dialog Blocks: dialog-01 through dialog-12",
+    "File Upload Blocks: file-upload-01 through file-upload-06",
+    "Form Layout Blocks: form-layout-01 through form-layout-05",
+    "Grid List Blocks: grid-list-01 through grid-list-03",
+    "Login Blocks: login-01 through login-09",
+    "Onboarding Blocks: onboarding-01",
+    "Sidebar Blocks: sidebar-01 through sidebar-06",
+    "Stats Blocks: stats-01 through stats-15",
+    "Table Blocks: table-01 through table-05",
+    "Registry: https://blocks.so/r/{name}.json",
+    "CLI command: npx shadcn@latest add @blocks/{block-id}"
+  ]
+}
