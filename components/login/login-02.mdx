@@ -1,0 +1,79 @@
+---
+title: "Login with Email, Password and Google"
+description: "Full-featured login form with email, password fields, and Google OAuth"
+icon: "lock"
+---
+
+A comprehensive login form that includes both email and password fields, along with a Google sign-in alternative.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://blocks.so/r/login-02
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- button
+- input
+- label
+- separator
+
+## Usage
+
+```tsx
+import Login02 from "@/components/login-02";
+
+export default function LoginPage() {
+  return <Login02 />;
+}
+```
+
+## Features
+
+- Email and password input fields
+- Full form with proper autocomplete attributes
+- Primary sign-in button
+- Horizontal separator with "or with" text
+- Google OAuth integration button
+- Terms of service and privacy policy agreement
+- Responsive centered layout
+- Dark mode support with explicit theme classes
+- Accessible form structure
+
+## Component Structure
+
+The form layout includes:
+
+- Two-field form with vertical spacing
+- Email input with proper type and autocomplete
+- Password input with masked characters
+- Full-width submit button
+- Visual divider for alternative methods
+- Social login option with icon
+- Legal disclaimer text
+
+## Form Fields
+
+### Email Field
+- Type: email
+- Autocomplete: email
+- Placeholder: ephraim@blocks.so
+
+### Password Field
+- Type: password
+- Autocomplete: password
+- Placeholder: **************
+
+## Customization
+
+Customize the component by:
+
+- Adding password visibility toggle
+- Implementing forgot password link
+- Adding additional OAuth providers
+- Customizing validation messages
+- Modifying spacing and layout
+- Integrating with authentication services

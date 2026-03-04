@@ -1,0 +1,93 @@
+---
+title: "Login Card Signup Form"
+description: "Comprehensive signup form in a card layout with newsletter opt-in"
+icon: "lock"
+---
+
+A complete signup form presented in a card layout, featuring fields for name, email, password confirmation, and a newsletter subscription checkbox.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://blocks.so/r/login-05
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- button
+- card
+- checkbox
+- input
+- label
+
+## Usage
+
+```tsx
+import Login05 from "@/components/login-05";
+
+export default function SignupPage() {
+  return <Login05 />;
+}
+```
+
+## Features
+
+- Card-based layout for visual hierarchy
+- Custom logo at the top
+- Four input fields (name, email, password, confirm password)
+- Newsletter subscription checkbox
+- Terms of service agreement
+- Create account button
+- Sign-in link for existing users
+- Professional spacing within card
+- Centered logo and heading
+- Dark mode compatible
+
+## Component Structure
+
+The form includes:
+
+- Centered logo icon
+- Bold heading for workspace account creation
+- Card container with proper padding
+- Four-field signup form
+- Checkbox for newsletter opt-in
+- Full-width submit button
+- Legal terms links
+- Bottom sign-in link
+
+## Form Fields
+
+### Name Field
+- Type: text
+- Autocomplete: name
+- Placeholder: Name
+
+### Email Field
+- Type: email
+- Autocomplete: email
+- Placeholder: ephraim@blocks.so
+
+### Password Field
+- Type: password
+- Autocomplete: new-password
+- Placeholder: Password
+
+### Confirm Password Field
+- Type: password
+- Autocomplete: new-password
+- Placeholder: Password
+
+## Customization
+
+You can customize by:
+
+- Adding password strength indicator
+- Implementing real-time password matching
+- Adding more profile fields
+- Customizing card styling
+- Modifying newsletter checkbox text
+- Adding form validation feedback
+- Implementing progressive disclosure

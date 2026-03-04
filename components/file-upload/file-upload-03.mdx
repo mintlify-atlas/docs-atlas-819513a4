@@ -1,0 +1,69 @@
+---
+title: File Upload Multi-File Dropzone
+description: A file upload multi-file dropzone block.
+---
+
+<ComponentPreview name="file-upload-03" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add "https://ui.shadcn.com/r/file-upload-03"
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install lucide-react react-dropzone
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="file-upload-03" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import FileUpload03 from "@/components/file-upload-03"
+
+export default function Page() {
+  return <FileUpload03 />
+}
+```
+
+## Features
+
+This component includes:
+
+- Multi-file drag and drop using react-dropzone
+- Visual feedback on drag active state
+- File list with preview cards
+- Individual file removal
+- File size display in bytes
+- Bucket name and visibility settings
+- Responsive grid layout
+- Maximum file size information (50MB)
+- Upload and cancel actions

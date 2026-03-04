@@ -1,0 +1,322 @@
+---
+title: AI Elements Chat
+description: A ai elements chat block.
+author: ephraim duncan
+---
+
+<ComponentPreview name="ai-05" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsContent value="cli">
+
+<Steps>
+
+<Step>Install dependencies</Step>
+
+```bash
+npx shadcn@latest add @blocks/ai-05
+```
+
+This will install the following dependencies:
+- `@tabler/icons-react`
+- `ai`
+
+And add the following shadcn/ui components:
+- `badge`
+- `button`
+
+<Step>Install AI Elements</Step>
+
+```bash
+npx ai-elements@latest add conversation message prompt-input
+```
+
+This component requires the AI Elements library for conversation and message components.
+
+</Steps>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install dependencies</Step>
+
+```bash
+npm install @tabler/icons-react ai
+```
+
+<Step>Add shadcn/ui components</Step>
+
+```bash
+npx shadcn@latest add badge button
+```
+
+<Step>Install AI Elements</Step>
+
+```bash
+npx ai-elements@latest add conversation message prompt-input
+```
+
+<Step>Copy the source code</Step>
+
+Create `components/ai-05.tsx` and paste the component code.
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import Ai05 from "@/components/ai-05";
+
+export default function Page() {
+  return <Ai05 />;
+}
+```
+
+## Features
+
+A complete chat interface built with AI Elements, featuring message history, streaming responses, and a polished UI:
+
+### AI Elements Integration
+
+<Note>
+**Production-Ready Components** - Built with AI Elements library for robust conversation management, message rendering, and prompt input handling.
+</Note>
+
+The component uses three main AI Elements modules:
+
+```tsx
+import {
+  Conversation,
+  ConversationContent,
+  ConversationScrollButton,
+} from "@/components/ai-elements/conversation";
+
+import {
+  Message,
+  MessageContent,
+  MessageResponse,
+} from "@/components/ai-elements/message";
+
+import {
+  PromptInput,
+  PromptInputButton,
+  PromptInputFooter,
+  PromptInputSubmit,
+  PromptInputTextarea,
+  PromptInputTools,
+} from "@/components/ai-elements/prompt-input";
+```
+
+### Message System
+
+Messages use a typed interface for type safety:
+
+```tsx
+interface DemoMessage {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+}
+```
+
+### Chat Status Management
+
+The component tracks chat status using types from the `ai` package:
+
+```tsx
+const [status, setStatus] = useState<ChatStatus>("ready");
+```
+
+Status transitions:
+- `ready` - Ready to receive input
+- `submitted` - Message submitted, awaiting response
+
+### Initial Messages
+
+Pre-populated conversation to demonstrate capabilities:
+
+```tsx
+const INITIAL_MESSAGES: DemoMessage[] = [
+  {
+    id: "intro",
+    role: "assistant",
+    content: "**Welcome back.** I can help you explore this chat block.\n\n- Draft UI copy\n- Summarize docs\n- Turn notes into tasks\n\nAsk me anything and I will respond with a demo reply.",
+  },
+  // ... more messages
+];
+```
+
+### Response Rotation
+
+Demo responses cycle through predefined replies:
+
+```tsx
+const RESPONSES = [
+  "Here is a quick outline you can reuse:\n\n1. Swap the mock response with a real API call.\n2. Stream tokens into `MessageResponse`.\n3. Keep the layout exactly as-is for a consistent UI.",
+  "If you want multi-model support, add a small model selector next to the status badge and pass the selection to your backend.",
+  "You can also inject tools like file upload or voice input by adding buttons to the prompt footer.",
+];
+
+const pickResponse = (index: number) => RESPONSES[index % RESPONSES.length];
+```
+
+### Toolbar Actions
+
+Quick access buttons in the prompt footer:
+
+- **Attach** - Upload files
+- **Quick Prompt** - Access saved prompts
+- **New Chat** - Start fresh conversation
+
+## Component Props
+
+This component doesn't accept external props. It demonstrates a self-contained chat interface.
+
+## Customization
+
+### Connecting to Real API
+
+Replace the demo response logic with an actual API call:
+
+```tsx
+const handleSend = async (text: string) => {
+  const trimmed = text.trim();
+  if (!trimmed) return;
+
+  const newMessage: DemoMessage = {
+    id: `user-${Date.now()}`,
+    role: "user",
+    content: trimmed,
+  };
+
+  setMessages((prev) => [...prev, newMessage]);
+  setInputValue("");
+  setStatus("submitted");
+
+  try {
+    // Replace with your API call
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: trimmed }),
+    });
+
+    const data = await response.json();
+    
+    const assistantMessage: DemoMessage = {
+      id: `assistant-${Date.now()}`,
+      role: "assistant",
+      content: data.response,
+    };
+
+    setMessages((prev) => [...prev, assistantMessage]);
+  } catch (error) {
+    console.error("Failed to get response:", error);
+  } finally {
+    setStatus("ready");
+  }
+};
+```
+
+### Styling the Header
+
+Customize the chat header:
+
+```tsx
+<header className="flex items-center justify-between gap-4 border-b border-border/80 px-4 py-3">
+  <div className="flex items-center gap-3">
+    <div className="space-y-1">
+      <div className="flex items-center gap-2 text-balance text-sm font-semibold">
+        Your Chat Title
+      </div>
+      <div className="flex items-center gap-2 text-pretty text-xs text-muted-foreground">
+        <span className="inline-flex items-center gap-1">
+          <span className="size-1.5 rounded-full bg-emerald-500" />
+          Custom status
+        </span>
+      </div>
+    </div>
+  </div>
+</header>
+```
+
+### Adding Tools to Prompt Input
+
+Extend the prompt footer with custom tools:
+
+```tsx
+<PromptInputTools>
+  <PromptInputButton aria-label="Attach">
+    <IconPaperclip className="size-4" />
+  </PromptInputButton>
+  {/* Add custom tools */}
+  <PromptInputButton aria-label="Custom Tool">
+    <IconCustom className="size-4" />
+  </PromptInputButton>
+</PromptInputTools>
+```
+
+### Message Rendering
+
+The component uses `MessageResponse` for assistant messages to support markdown:
+
+```tsx
+{message.role === "assistant" ? (
+  <MessageResponse>{message.content}</MessageResponse>
+) : (
+  <p className="whitespace-pre-wrap text-pretty">
+    {message.content}
+  </p>
+)}
+```
+
+## Implementation Details
+
+### Message State Management
+
+```tsx
+const [messages, setMessages] = useState<DemoMessage[]>(INITIAL_MESSAGES);
+const [inputValue, setInputValue] = useState("");
+const [status, setStatus] = useState<ChatStatus>("ready");
+```
+
+### Timeout Cleanup
+
+Proper cleanup of timeout references:
+
+```tsx
+const replyTimeoutRef = useRef<number | null>(null);
+
+useEffect(() => {
+  return () => {
+    if (replyTimeoutRef.current) {
+      window.clearTimeout(replyTimeoutRef.current);
+    }
+  };
+}, []);
+```
+
+### Conversation Layout
+
+The conversation uses a fixed height container with scrolling:
+
+```tsx
+<div className="mx-auto flex h-96 w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-lg sm:w-3/5">
+  <Conversation className="bg-muted/30">
+    <ConversationContent className="gap-6 pl-1">
+      {/* Messages */}
+    </ConversationContent>
+    <ConversationScrollButton />
+  </Conversation>
+</div>
+```

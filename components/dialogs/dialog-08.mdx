@@ -1,0 +1,83 @@
+---
+title: "Dialog with Email and Password Fields"
+description: "A two-factor authentication deactivation dialog with email and password inputs"
+---
+
+An alert dialog for deactivating two-factor authentication that includes email and password fields with password visibility toggle.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx shadcn@latest add @blocks/dialog-08
+```
+
+```bash pnpm
+pnpm dlx shadcn@latest add @blocks/dialog-08
+```
+
+```bash yarn
+npx shadcn@latest add @blocks/dialog-08
+```
+
+```bash bun
+bunx --bun shadcn@latest add @blocks/dialog-08
+```
+
+</CodeGroup>
+
+## Dependencies
+
+This component requires the following dependencies:
+
+- `alert-dialog` - shadcn/ui alert dialog component
+- `button` - shadcn/ui button component
+- `input` - shadcn/ui input component
+- `label` - shadcn/ui label component
+- `lucide-react` - Icon library (EyeIcon, EyeOffIcon)
+
+## Usage
+
+```tsx
+import Dialog08 from "@/components/dialog-08";
+
+export default function Page() {
+  return <Dialog08 />;
+}
+```
+
+## Features
+
+- **Multiple fields** - Email (disabled) and password inputs
+- **Password toggle** - Show/hide password functionality
+- **Disabled email** - Pre-filled, non-editable email field
+- **Form validation** - Required password field
+- **Accessible controls** - Proper ARIA attributes for visibility toggle
+- **Destructive action** - Uses destructive button styling
+- **Form submission** - Handles submit event with validation
+- **Large dialog** - Uses `sm:max-w-lg` for comfortable form layout
+
+## Component Structure
+
+The component includes:
+
+- `AlertDialog` with controlled state
+- `AlertDialogTrigger` with destructive variant
+- `AlertDialogContent` with large width
+- `AlertDialogHeader` with warning title and instructions
+- Form with `space-y-4` for field spacing:
+  - Email input (disabled)
+  - Password input with visibility toggle:
+    - Eye/EyeOff icon button
+    - Dynamic type attribute (text/password)
+    - ARIA attributes for accessibility
+- `AlertDialogFooter` with Cancel and Deactivate buttons
+- State management for:
+  - Dialog open/close
+  - Password visibility
+- Form submit handler
+
+<Note>
+The email field is disabled to prevent changes, showing the account being affected. The password visibility toggle uses proper ARIA attributes (`aria-label`, `aria-pressed`, `aria-controls`) for screen reader support.
+</Note>

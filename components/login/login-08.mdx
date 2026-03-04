@@ -1,0 +1,102 @@
+---
+title: "Login with SSO"
+description: "Professional login card with password toggle, remember me, and SSO button"
+icon: "lock"
+---
+
+A polished login interface in a card layout featuring password visibility toggle, remember me option, and single sign-on (SSO) capability.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://blocks.so/r/login-08
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- button
+- card
+- checkbox
+- input
+- label
+
+### External Dependencies
+
+- lucide-react (for icons)
+- next/link (for routing)
+
+## Usage
+
+```tsx
+import Login08 from "@/components/login-08";
+
+export default function LoginPage() {
+  return <Login08 />;
+}
+```
+
+## Features
+
+- Card-based layout with header, content, and footer
+- Custom logo in header
+- Email and password fields
+- Password visibility toggle with eye icons
+- Reset password link next to password label
+- Remember me checkbox (pre-checked)
+- Primary sign-in button
+- SSO button with Key icon
+- Sign-up link in card footer
+- Client-side state for password visibility
+- Accessible form elements
+- Border-top footer separator
+
+## Component Structure
+
+### CardHeader
+- Centered logo
+- "Sign in to Acme" heading
+- Welcome back subtitle
+
+### CardContent
+- Email input field
+- Password field with reset link
+- Password visibility toggle button
+- Remember me checkbox
+- Two action buttons (Sign In and SSO)
+
+### CardFooter
+- New user sign-up prompt
+- Sign-up link
+
+## Form Fields
+
+### Email Field
+- Type: email
+- Label: Email address
+- Placeholder: ephraim@blocks.so
+
+### Password Field
+- Type: password/text (toggleable)
+- Label: Password
+- Inline reset link
+- Eye icon toggle
+
+## Icons Used
+
+- **EyeIcon/EyeOffIcon**: Password visibility toggle
+- **Key**: SSO button indicator
+
+## Customization
+
+Customize the component by:
+
+- Replacing brand name and logo
+- Modifying card max-width
+- Adjusting default checkbox state
+- Customizing SSO provider
+- Adding form validation
+- Implementing authentication logic
+- Styling card shadows and borders
+- Modifying button variants

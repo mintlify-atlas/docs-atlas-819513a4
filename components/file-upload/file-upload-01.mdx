@@ -1,0 +1,70 @@
+---
+title: File Upload with Preview
+description: A file upload with preview block.
+---
+
+<ComponentPreview name="file-upload-01" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add "https://ui.shadcn.com/r/file-upload-01"
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install lucide-react
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="file-upload-01" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import FileUpload01 from "@/components/file-upload-01"
+
+export default function Page() {
+  return <FileUpload01 />
+}
+```
+
+## Features
+
+This component includes:
+
+- Drag and drop file upload functionality
+- Click to browse file selection
+- Image preview with thumbnails
+- Upload progress tracking for each file
+- File removal capability
+- Project name and project lead selection
+- Responsive design with card layout
+- Help tooltip with upload instructions
+- File size display
+- Multiple file support

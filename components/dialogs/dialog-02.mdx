@@ -1,0 +1,71 @@
+---
+title: "Dialog with Warning Icon"
+description: "A destructive action dialog with warning icon and confirmation buttons"
+---
+
+A dialog component for confirming destructive actions, featuring a warning icon, clear messaging about consequences, and action buttons.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx shadcn@latest add @blocks/dialog-02
+```
+
+```bash pnpm
+pnpm dlx shadcn@latest add @blocks/dialog-02
+```
+
+```bash yarn
+npx shadcn@latest add @blocks/dialog-02
+```
+
+```bash bun
+bunx --bun shadcn@latest add @blocks/dialog-02
+```
+
+</CodeGroup>
+
+## Dependencies
+
+This component requires the following dependencies:
+
+- `button` - shadcn/ui button component
+- `dialog` - shadcn/ui dialog component
+- `lucide-react` - Icon library (AlertTriangleIcon)
+
+## Usage
+
+```tsx
+import Dialog02 from "@/components/dialog-02";
+
+export default function Page() {
+  return <Dialog02 />;
+}
+```
+
+## Features
+
+- **Warning visual** - Red alert triangle icon in circular background
+- **Destructive trigger** - Uses `variant="destructive"` for the trigger button
+- **Horizontal layout** - Icon and text arranged side-by-side
+- **Clear consequences** - Description explains what will happen
+- **Dual actions** - Cancel and confirm buttons in footer
+- **Accessible** - Proper semantic structure and ARIA attributes
+
+## Component Structure
+
+The component includes:
+
+- `Dialog` wrapper with controlled state
+- `DialogTrigger` with destructive styling
+- `DialogContent` with horizontal layout using flexbox
+- Warning icon (AlertTriangleIcon) in red circular background
+- `DialogHeader` with title and warning description
+- `DialogFooter` with Cancel and Deactivate buttons
+- State management for open/close behavior
+
+<Note>
+This pattern is ideal for destructive actions like account deactivation, data deletion, or other irreversible operations. Always clearly communicate the consequences to users.
+</Note>

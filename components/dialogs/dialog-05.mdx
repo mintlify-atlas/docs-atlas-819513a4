@@ -1,0 +1,76 @@
+---
+title: "Dialog with Password Confirmation"
+description: "A destructive action dialog requiring password confirmation"
+---
+
+An alert dialog for confirming destructive actions that requires password entry with a visibility toggle for security.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx shadcn@latest add @blocks/dialog-05
+```
+
+```bash pnpm
+pnpm dlx shadcn@latest add @blocks/dialog-05
+```
+
+```bash yarn
+npx shadcn@latest add @blocks/dialog-05
+```
+
+```bash bun
+bunx --bun shadcn@latest add @blocks/dialog-05
+```
+
+</CodeGroup>
+
+## Dependencies
+
+This component requires the following dependencies:
+
+- `alert-dialog` - shadcn/ui alert dialog component
+- `button` - shadcn/ui button component
+- `input` - shadcn/ui input component
+- `label` - shadcn/ui label component
+- `lucide-react` - Icon library (EyeIcon, EyeOffIcon)
+
+## Usage
+
+```tsx
+import Dialog05 from "@/components/dialog-05";
+
+export default function Page() {
+  return <Dialog05 />;
+}
+```
+
+## Features
+
+- **Password confirmation** - Requires password entry for destructive actions
+- **Visibility toggle** - Eye icon to show/hide password
+- **Form validation** - Uses HTML5 required attribute
+- **Form submission** - Handles submit event properly
+- **AlertDialog** - Uses AlertDialog component for important confirmations
+- **Destructive styling** - Red button to emphasize danger
+- **Accessible** - Proper ARIA labels for password visibility toggle
+
+## Component Structure
+
+The component includes:
+
+- `AlertDialog` wrapper with controlled state
+- `AlertDialogTrigger` with destructive variant
+- `AlertDialogContent` containing the form
+- `AlertDialogHeader` with warning title and description
+- Password input field with visibility toggle button
+- Eye/EyeOff icons for password visibility control
+- `AlertDialogFooter` with Cancel and Delete buttons
+- Form submit handler to prevent default and close dialog
+- State management for open/close and password visibility
+
+<Note>
+This component uses AlertDialog instead of Dialog to prevent accidental dismissal. The password field includes proper accessibility attributes like `aria-label`, `aria-pressed`, and `aria-controls`.
+</Note>

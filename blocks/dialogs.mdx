@@ -1,0 +1,208 @@
+---
+title: 'Dialog Blocks'
+description: 'Modal dialogs and popups for confirmations, forms, and user interactions'
+---
+
+## Overview
+
+Dialog blocks provide modal interfaces for focused user interactions. From simple confirmations to complex multi-step wizards, these components help you create effective modal experiences that guide users through important actions.
+
+## Available Blocks
+
+<CardGroup cols={2}>
+  <Card title="Dialog Confirmation" icon="circle-check" href="/blocks/dialog-01">
+    Simple confirmation dialog for user actions
+  </Card>
+  
+  <Card title="Dialog with Warning Icon" icon="triangle-exclamation" href="/blocks/dialog-02">
+    Alert dialog with warning styling for destructive actions
+  </Card>
+  
+  <Card title="Dialog with Input Field" icon="input-text" href="/blocks/dialog-03">
+    Dialog containing a single input field for quick data entry
+  </Card>
+  
+  <Card title="Dialog with Two Buttons" icon="square-2" href="/blocks/dialog-04">
+    Two-action dialog for binary choices
+  </Card>
+  
+  <Card title="Dialog with Password Confirmation" icon="lock" href="/blocks/dialog-05">
+    Secure dialog requiring password verification
+  </Card>
+  
+  <Card title="Dialog with Privacy Toggle" icon="shield" href="/blocks/dialog-06">
+    Dialog with privacy settings and toggle controls
+  </Card>
+  
+  <Card title="Dialog with Member List" icon="users" href="/blocks/dialog-07">
+    Dialog displaying and managing a list of members or users
+  </Card>
+  
+  <Card title="Dialog with Email and Password Fields" icon="envelope" href="/blocks/dialog-08">
+    Authentication dialog with email and password inputs
+  </Card>
+  
+  <Card title="Dialog with Link Share and Toggles" icon="link" href="/blocks/dialog-09">
+    Sharing dialog with link copying and permission toggles
+  </Card>
+  
+  <Card title="Dialog with Calendar and Time Picker" icon="calendar" href="/blocks/dialog-10">
+    Date and time selection dialog with calendar interface
+  </Card>
+  
+  <Card title="Dialog Multi-Step Wizard" icon="route" href="/blocks/dialog-11">
+    Multi-step wizard dialog for complex workflows
+  </Card>
+  
+  <Card title="Dialog with Avatar Upload" icon="image" href="/blocks/dialog-12">
+    Profile picture upload dialog with preview and cropping
+  </Card>
+</CardGroup>
+
+## Dialog Types
+
+### Confirmation Dialogs
+Use for getting user consent before performing actions, especially destructive ones like deletions.
+
+### Input Dialogs
+Collect single pieces of information quickly without navigating to a new page.
+
+### Form Dialogs
+Handle more complex data entry with multiple fields and validation.
+
+### Multi-Step Wizards
+Guide users through complex processes broken into manageable steps.
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="Confirmations">
+    Confirm destructive actions like deleting accounts, removing data, or canceling subscriptions. The warning icon variant is perfect for these scenarios.
+  </Accordion>
+  
+  <Accordion title="Quick Edits">
+    Allow users to make quick changes without leaving their current context, such as renaming items or updating settings.
+  </Accordion>
+  
+  <Accordion title="User Onboarding">
+    Use multi-step wizard dialogs to guide new users through setup processes or feature introductions.
+  </Accordion>
+  
+  <Accordion title="Sharing & Permissions">
+    Manage sharing settings, permissions, and access controls with link share and toggle dialogs.
+  </Accordion>
+  
+  <Accordion title="Authentication">
+    Handle login, signup, or re-authentication flows within modal dialogs.
+  </Accordion>
+</AccordionGroup>
+
+## Implementation Example
+
+```tsx
+import { DialogConfirmation } from '@/components/blocks/dialog-01'
+import { useState } from 'react'
+
+export default function DeleteButton() {
+  const [showDialog, setShowDialog] = useState(false)
+  
+  const handleDelete = async () => {
+    // Perform deletion
+    await deleteItem()
+    setShowDialog(false)
+  }
+  
+  return (
+    <>
+      <button onClick={() => setShowDialog(true)}>
+        Delete Item
+      </button>
+      
+      <DialogConfirmation
+        open={showDialog}
+        onOpenChange={setShowDialog}
+        title="Delete item?"
+        description="This action cannot be undone. This will permanently delete the item."
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={handleDelete}
+        variant="destructive"
+      />
+    </>
+  )
+}
+```
+
+## Best Practices
+
+<Note>
+  Always provide a clear way to close dialogs, including an X button, Cancel action, and ESC key support. Users should never feel trapped in a modal.
+</Note>
+
+### Writing Dialog Content
+
+- **Clear Titles**: Use action-oriented titles ("Delete account?" not "Are you sure?")
+- **Descriptive Text**: Explain what will happen and any consequences
+- **Action Labels**: Use specific verbs ("Delete Account" not "OK")
+- **Destructive Actions**: Use warning styling and require confirmation
+
+### User Experience
+
+- Keep dialogs focused on a single task
+- Avoid nested dialogs (dialog within dialog)
+- Use appropriate sizes - don't make dialogs larger than needed
+- Provide loading states for async actions
+- Return focus to the trigger element when closed
+
+### Accessibility
+
+- Trap keyboard focus within the dialog
+- Support ESC key to close
+- Use proper ARIA attributes
+- Ensure sufficient color contrast
+- Make interactive elements keyboard accessible
+
+## Multi-Step Wizards
+
+For complex workflows, use the multi-step wizard dialog:
+
+```tsx
+import { DialogMultiStepWizard } from '@/components/blocks/dialog-11'
+
+const steps = [
+  {
+    title: 'Basic Information',
+    fields: [...]
+  },
+  {
+    title: 'Preferences',
+    fields: [...]
+  },
+  {
+    title: 'Review',
+    fields: [...]
+  }
+]
+
+<DialogMultiStepWizard
+  steps={steps}
+  onComplete={handleComplete}
+/>
+```
+
+## Common Patterns
+
+| Pattern | When to Use | Example Block |
+|---------|-------------|---------------|
+| Confirmation | Before destructive actions | Dialog 01, 02 |
+| Single Input | Quick data entry | Dialog 03 |
+| Form | Multiple related fields | Dialog 08 |
+| Picker | Selecting from options | Dialog 10 |
+| Wizard | Multi-step process | Dialog 11 |
+| Upload | File selection and preview | Dialog 12 |
+
+## Related Components
+
+- [Form Layout](/blocks/form-layout) - For full-page forms
+- [File Upload](/blocks/file-upload) - Enhanced upload interfaces
+- [Login](/blocks/login) - Full authentication pages

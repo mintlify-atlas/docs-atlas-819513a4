@@ -1,0 +1,81 @@
+---
+title: "Login with Social Buttons"
+description: "Login form featuring prominent GitHub and Google social login buttons"
+icon: "lock"
+---
+
+A feature-rich login interface with a custom logo, prominent social login buttons (GitHub and Google), and traditional email/password form.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://blocks.so/r/login-04
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- button
+- input
+- label
+- separator
+
+## Usage
+
+```tsx
+import Login04 from "@/components/login-04";
+
+export default function LoginPage() {
+  return <Login04 />;
+}
+```
+
+## Features
+
+- Custom logo component with brand name
+- Dual social login buttons (GitHub and Google)
+- Side-by-side social button layout on desktop
+- Email and password form fields
+- Sign-up link in header
+- Password reset link
+- Custom SVG icons for GitHub and Google
+- Responsive flex layout
+- Dark mode support
+- Accessible button labels
+
+## Component Structure
+
+The interface includes:
+
+- Header with logo and brand name "Acme"
+- Main heading and sign-up prompt
+- Two-column social login buttons
+- Horizontal separator with "or" text
+- Traditional email/password form
+- Bottom password reset link
+- Professional spacing and typography
+
+## Social Login Options
+
+### GitHub Button
+- Custom GitHub icon
+- "Login with GitHub" label
+- Outline button style
+
+### Google Button
+- Custom Google icon
+- "Login with Google" label
+- Outline button style
+
+## Customization
+
+Customize the component by:
+
+- Replacing the logo with your brand
+- Adding more social providers
+- Modifying button arrangement
+- Customizing color scheme
+- Adding form validation
+- Implementing OAuth flows
+- Adjusting responsive breakpoints

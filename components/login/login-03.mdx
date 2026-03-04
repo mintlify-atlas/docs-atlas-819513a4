@@ -1,0 +1,77 @@
+---
+title: "Login with Email and Password"
+description: "Simple email and password login form with password reset link"
+icon: "lock"
+---
+
+A streamlined login form focusing on email and password authentication with a clean "Welcome Back" heading and password recovery option.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://blocks.so/r/login-03
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- button
+- input
+- label
+
+## Usage
+
+```tsx
+import Login03 from "@/components/login-03";
+
+export default function LoginPage() {
+  return <Login03 />;
+}
+```
+
+## Features
+
+- Welcoming header with subtitle
+- Email and password input fields
+- Full-width sign-in button
+- Password reset link
+- Clean, minimal design
+- Client-side component (uses "use client" directive)
+- Dark mode compatible
+- Accessible form labels
+- Responsive layout
+
+## Component Structure
+
+The form includes:
+
+- Centered welcome message
+- Descriptive subtitle text
+- Two-field form with spacing
+- Submit button with consistent styling
+- Bottom-aligned password reset link
+- Professional typography
+
+## Text Content
+
+### Heading
+"Welcome Back"
+
+### Subtitle
+"Enter your credentials to access your account."
+
+### Reset Link
+"Forgot your password? Reset password"
+
+## Customization
+
+You can customize by:
+
+- Modifying heading and subtitle text
+- Adding remember me checkbox
+- Implementing password visibility toggle
+- Adding loading states to submit button
+- Customizing link colors and hover states
+- Integrating form validation
+- Adding error message displays

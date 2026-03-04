@@ -1,0 +1,56 @@
+---
+title: "Table with Accordion"
+description: "A table with accordion block."
+---
+
+Interactive data table with expandable rows. Perfect for displaying hierarchical data with parent-child relationships.
+
+## Installation
+
+Install the component from the Blocks registry:
+
+```bash
+npx shadcn@latest add @blocks/table-01
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- `button`
+- `collapsible`
+- `table`
+
+And the following npm packages:
+
+```bash
+npm install lucide-react
+```
+
+## Usage
+
+```tsx
+import Table01 from "@/components/table-01";
+
+export default function Page() {
+  return <Table01 />;
+}
+```
+
+## Features
+
+- **Expandable rows** - Accordion-style row expansion
+- **Hierarchical data** - Parent-child data relationships
+- **Collapsible sections** - Toggle row visibility
+- **Nested content** - Show detailed sub-items
+- **Icon indicators** - Chevron expand/collapse icons
+- **Interactive controls** - Click to expand/collapse
+
+## Use Cases
+
+- Project breakdowns
+- Invoice line items
+- Organizational hierarchies
+- Budget categories
+- Nested task lists
+- Product catalogs with variants

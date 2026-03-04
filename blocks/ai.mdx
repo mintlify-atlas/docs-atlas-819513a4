@@ -1,0 +1,105 @@
+---
+title: 'AI Chat Blocks'
+description: 'AI-powered chat interfaces with voice input, model selection, and file attachments'
+---
+
+## Overview
+
+AI chat blocks provide ready-to-use conversational interfaces for integrating AI capabilities into your application. These components support various features like voice input, model selection, file attachments, and compact interfaces suitable for different use cases.
+
+## Available Blocks
+
+<CardGroup cols={2}>
+  <Card title="AI Chat with Voice Input" icon="microphone" href="/blocks/ai-01">
+    Chat interface with integrated voice input capability for hands-free interaction
+  </Card>
+  
+  <Card title="AI Chat with Model Selection" icon="sliders" href="/blocks/ai-02">
+    Chat interface allowing users to choose between different AI models
+  </Card>
+  
+  <Card title="AI Chat Compact Interface" icon="compress" href="/blocks/ai-03">
+    Minimalist chat interface optimized for space-constrained layouts
+  </Card>
+  
+  <Card title="AI Chat with File Attachments" icon="paperclip" href="/blocks/ai-04">
+    Full-featured chat with support for attaching and sharing files
+  </Card>
+  
+  <Card title="AI Elements Chat" icon="sparkles" href="/blocks/ai-05">
+    Advanced chat interface with rich UI elements and interactions
+  </Card>
+</CardGroup>
+
+## Common Features
+
+All AI chat blocks include:
+
+- **Message History**: Display conversation threads with proper formatting
+- **Input Controls**: Text input with send functionality
+- **Responsive Design**: Adapts to different screen sizes
+- **Loading States**: Visual feedback during AI processing
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="Customer Support">
+    Implement AI-powered customer service chatbots that can handle common queries, provide instant responses, and escalate to human agents when needed.
+  </Accordion>
+  
+  <Accordion title="Content Generation">
+    Build interfaces for AI writing assistants, code generation tools, or creative content creation platforms.
+  </Accordion>
+  
+  <Accordion title="Document Analysis">
+    Create chat interfaces that allow users to upload documents and ask questions about their content using file attachment capabilities.
+  </Accordion>
+  
+  <Accordion title="Voice Assistants">
+    Develop voice-enabled applications using the voice input variant for hands-free interaction.
+  </Accordion>
+</AccordionGroup>
+
+## Implementation Example
+
+Here's a basic example of integrating an AI chat block:
+
+```tsx
+import { AIChatWithVoiceInput } from '@/components/blocks/ai-01'
+
+export default function ChatPage() {
+  return (
+    <div className="container mx-auto p-4">
+      <AIChatWithVoiceInput 
+        onSendMessage={(message) => {
+          // Handle message sending
+          console.log('Sending:', message)
+        }}
+        onVoiceInput={(audio) => {
+          // Handle voice input
+          console.log('Voice input:', audio)
+        }}
+      />
+    </div>
+  )
+}
+```
+
+<Note>
+  Most AI chat blocks require integration with an AI service API (OpenAI, Anthropic, etc.). Make sure to configure your API keys and endpoints before deployment.
+</Note>
+
+## Customization
+
+Each AI chat block can be customized with:
+
+- **Themes**: Light/dark mode support
+- **Styling**: Tailwind CSS classes for consistent branding
+- **Behavior**: Custom message handlers and processing logic
+- **Features**: Enable/disable specific capabilities like voice or file uploads
+
+## Related Components
+
+- [Command Menu](/blocks/command-menu) - For quick AI command access
+- [File Upload](/blocks/file-upload) - Enhanced file handling for chat
+- [Dialogs](/blocks/dialogs) - Modal interactions with AI

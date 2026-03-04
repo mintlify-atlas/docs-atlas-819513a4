@@ -1,0 +1,99 @@
+---
+title: "Dialog Multi-Step Wizard"
+description: "A project initialization wizard with multi-step form and sidebar layout"
+---
+
+A sophisticated multi-step wizard dialog featuring a two-column layout with informational sidebar and step-by-step configuration form.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx shadcn@latest add @blocks/dialog-11
+```
+
+```bash pnpm
+pnpm dlx shadcn@latest add @blocks/dialog-11
+```
+
+```bash yarn
+npx shadcn@latest add @blocks/dialog-11
+```
+
+```bash bun
+bunx --bun shadcn@latest add @blocks/dialog-11
+```
+
+</CodeGroup>
+
+## Dependencies
+
+This component requires the following dependencies:
+
+- `button` - shadcn/ui button component
+- `dialog` - shadcn/ui dialog component
+- `label` - shadcn/ui label component
+- `select` - shadcn/ui select component
+- `separator` - shadcn/ui separator component
+- `lucide-react` - Icon library (AppWindowIcon)
+
+## Usage
+
+```tsx
+import Dialog11 from "@/components/dialog-11";
+
+export default function Page() {
+  return <Dialog11 />;
+}
+```
+
+## Features
+
+- **Two-column layout** - Sidebar for information, main area for form
+- **Multi-step design** - Numbered steps with clear progression
+- **Responsive layout** - Columns stack on mobile, side-by-side on desktop
+- **Information sidebar** - Icon, description, and contextual help
+- **Step indicators** - Numbered badges for each configuration step
+- **Multiple selects** - Dropdowns for framework, package manager, linter, and testing tool
+- **Helper text** - Additional context for complex options
+- **Sticky footer** - Actions remain visible at bottom of sidebar
+- **Large dialog** - Uses `sm:max-w-2xl` for wide layout
+- **Overflow handling** - Uses `overflow-visible` for select dropdowns
+
+## Component Structure
+
+The component includes:
+
+- `Dialog` with controlled state
+- `DialogTrigger` button
+- `DialogContent` with:
+  - `overflow-visible` for dropdowns
+  - Custom padding (`p-0`)
+  - Extra large width (`sm:max-w-2xl`)
+  - No gap (`gap-0`)
+- Bordered `DialogHeader`
+- Form with two-column flex layout:
+  - **Left sidebar** (`md:w-80 md:border-r`):
+    - Icon and title section
+    - `Separator`
+    - Description sections
+    - Info sections
+    - Sticky footer with Cancel and Initialize buttons
+  - **Right content area** (flex-1):
+    - Step 1: Framework selection
+    - Step 2: Package manager selection
+    - Step 3: Linter/formatter selection with helper text
+    - Step 4: Testing tool selection with helper text
+- Each step includes:
+  - Numbered badge indicator
+  - Label
+  - Select component with options
+  - Optional helper text
+- Responsive classes:
+  - `flex-col-reverse md:flex-row` for layout direction
+  - `border-t md:border-none` for conditional borders
+
+<Note>
+The dialog uses `overflow-visible` to prevent select dropdowns from being clipped. The two-column layout uses `flex-col-reverse` on mobile so the form appears above the sidebar, improving mobile UX. The sidebar footer uses flexbox to stay at the bottom.
+</Note>

@@ -1,0 +1,55 @@
+---
+title: "Onboarding"
+description: "A onboarding block."
+---
+
+An interactive onboarding component with collapsible steps and progress tracking. Perfect for guiding users through initial setup and key features.
+
+## Installation
+
+Install the component from the Blocks registry:
+
+```bash
+npx shadcn@latest add @blocks/onboarding-01
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- `button`
+- `collapsible`
+- `dropdown-menu`
+
+And the following npm packages:
+
+```bash
+npm install @tabler/icons-react
+```
+
+## Usage
+
+```tsx
+import Onboarding01 from "@/components/onboarding-01";
+
+export default function Page() {
+  return <Onboarding01 />;
+}
+```
+
+## Features
+
+- **Step-by-step guidance** - Clear progression through onboarding tasks
+- **Progress tracking** - Visual indicators for completed and pending steps
+- **Collapsible sections** - Expand and collapse individual steps
+- **Action buttons** - Direct links to complete each onboarding task
+- **Dropdown menu** - Additional options for each step
+- **Completion status** - Visual checkmarks for finished steps
+
+## Use Cases
+
+- Welcome new users to your application
+- Guide users through essential setup tasks
+- Introduce key features and capabilities
+- Track onboarding completion progress
+- Drive user activation and engagement

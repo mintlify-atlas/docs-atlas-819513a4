@@ -1,0 +1,380 @@
+---
+title: 'Stats Blocks'
+description: 'Statistical displays and metric dashboards with charts, progress bars, and trend indicators'
+---
+
+## Overview
+
+Stats blocks provide powerful ways to display metrics, KPIs, and statistical data. From simple metric cards to complex usage dashboards with charts and progress indicators, these components help you create compelling data visualizations.
+
+## Available Blocks
+
+<CardGroup cols={2}>
+  <Card title="Stats with Trending" icon="chart-line" href="/blocks/stats-01">
+    Metric cards with trend indicators showing increase or decrease
+  </Card>
+  
+  <Card title="Stats with Borders" icon="border-all" href="/blocks/stats-02">
+    Bordered metric cards for clear visual separation
+  </Card>
+  
+  <Card title="Stats with Card Layout" icon="square" href="/blocks/stats-03">
+    Elevated card-style metric displays
+  </Card>
+  
+  <Card title="Stats with Badges" icon="tag" href="/blocks/stats-04">
+    Metrics with badge indicators for status or categories
+  </Card>
+  
+  <Card title="Stats with Links" icon="link" href="/blocks/stats-05">
+    Clickable metric cards that navigate to detailed views
+  </Card>
+  
+  <Card title="Stats with Status" icon="circle-dot" href="/blocks/stats-06">
+    Metrics with status indicators (success, warning, error)
+  </Card>
+  
+  <Card title="Stats with Circular Progress" icon="circle-notch" href="/blocks/stats-07">
+    Circular progress indicators for percentage-based metrics
+  </Card>
+  
+  <Card title="Stats with Circular Progress and Links" icon="arrow-up-right-from-square" href="/blocks/stats-08">
+    Clickable circular progress metrics
+  </Card>
+  
+  <Card title="Stats with Progress" icon="bars-progress" href="/blocks/stats-09">
+    Linear progress bars for goal tracking
+  </Card>
+  
+  <Card title="Stats with Area Chart" icon="chart-area" href="/blocks/stats-10">
+    Metrics with mini area charts showing trends
+  </Card>
+  
+  <Card title="Stats Dashboard with Progress Bars" icon="grip" href="/blocks/stats-11">
+    Comprehensive dashboard with multiple progress-based metrics
+  </Card>
+  
+  <Card title="Stats Usage Dashboard" icon="gauge" href="/blocks/stats-12">
+    Full usage dashboard with multiple metric types and visualizations
+  </Card>
+  
+  <Card title="Stats with Segmented Progress" icon="layer-group" href="/blocks/stats-13">
+    Progress bars with multiple segments for breakdown visualization
+  </Card>
+  
+  <Card title="Stats with Usage Breakdown" icon="chart-pie" href="/blocks/stats-14">
+    Detailed usage metrics with category breakdowns
+  </Card>
+  
+  <Card title="Stats with Value Breakdown" icon="table" href="/blocks/stats-15">
+    Value distribution across different categories or segments
+  </Card>
+</CardGroup>
+
+## Metric Display Patterns
+
+### Simple Metrics
+Display key numbers with optional trend indicators. Best for high-level KPIs.
+
+### Progress-Based
+Show progress toward goals using progress bars or circular indicators.
+
+### Chart-Enhanced
+Combine numbers with mini charts (sparklines, area charts) for context.
+
+### Segmented
+Break down metrics into multiple categories or time periods.
+
+### Usage Dashboards
+Comprehensive views combining multiple metric types and visualizations.
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="Business Dashboards">
+    Display KPIs like revenue, user growth, conversion rates, and other business metrics with trend indicators.
+  </Accordion>
+  
+  <Accordion title="Analytics Platforms">
+    Show website or app analytics including page views, sessions, bounce rate, and user engagement metrics.
+  </Accordion>
+  
+  <Accordion title="Resource Monitoring">
+    Track resource usage like storage, bandwidth, API calls, or compute resources with progress bars.
+  </Accordion>
+  
+  <Accordion title="Goal Tracking">
+    Visualize progress toward targets using circular or linear progress indicators.
+  </Accordion>
+  
+  <Accordion title="SaaS Metrics">
+    Monitor subscription metrics, user activity, feature adoption, and usage limits.
+  </Accordion>
+</AccordionGroup>
+
+## Implementation Example
+
+```tsx
+import { StatsWithTrending } from '@/components/blocks/stats-01'
+
+export default function Dashboard() {
+  const metrics = [
+    {
+      label: 'Total Revenue',
+      value: '$45,231',
+      change: '+20.1%',
+      trend: 'up',
+      period: 'from last month'
+    },
+    {
+      label: 'Active Users',
+      value: '2,345',
+      change: '+12.5%',
+      trend: 'up',
+      period: 'from last month'
+    },
+    {
+      label: 'Conversion Rate',
+      value: '3.24%',
+      change: '-2.3%',
+      trend: 'down',
+      period: 'from last month'
+    },
+    {
+      label: 'Avg. Session',
+      value: '4m 32s',
+      change: '+8.2%',
+      trend: 'up',
+      period: 'from last month'
+    }
+  ]
+  
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {metrics.map((metric) => (
+        <StatsWithTrending key={metric.label} {...metric} />
+      ))}
+    </div>
+  )
+}
+```
+
+## Progress Indicators
+
+Implement progress-based metrics:
+
+```tsx
+import { StatsWithProgress } from '@/components/blocks/stats-09'
+
+const usageMetrics = [
+  {
+    label: 'Storage Used',
+    value: '45.2 GB',
+    max: '100 GB',
+    progress: 45.2,
+    status: 'normal'
+  },
+  {
+    label: 'API Calls',
+    value: '8,234',
+    max: '10,000',
+    progress: 82.34,
+    status: 'warning' // Near limit
+  },
+  {
+    label: 'Team Members',
+    value: '12',
+    max: '15',
+    progress: 80,
+    status: 'normal'
+  }
+]
+
+<div className="space-y-4">
+  {usageMetrics.map(metric => (
+    <StatsWithProgress key={metric.label} {...metric} />
+  ))}
+</div>
+```
+
+<Note>
+  When displaying usage metrics, consider adding warning states when users approach their limits (e.g., >80% usage). This helps prevent unexpected service interruptions.
+</Note>
+
+## Best Practices
+
+### Data Visualization
+
+- **Clear Labels**: Use descriptive, concise metric names
+- **Consistent Formatting**: Format numbers consistently (currency, percentages, etc.)
+- **Appropriate Precision**: Don't show unnecessary decimal places
+- **Context**: Provide comparison periods or benchmarks
+- **Color Coding**: Use color meaningfully (green for positive, red for negative)
+- **Real-time Updates**: Update metrics at appropriate intervals
+
+### Trend Indicators
+
+- **Direction**: Use arrows or icons to show increase/decrease
+- **Magnitude**: Show percentage or absolute change
+- **Time Context**: Specify the comparison period
+- **Neutral Trends**: Some changes aren't positive or negative
+- **Thresholds**: Consider what constitutes significant change
+
+### Layout
+
+- **Grid Organization**: Use consistent grid layouts
+- **Visual Hierarchy**: Prioritize most important metrics
+- **Responsive Design**: Ensure metrics are readable on all devices
+- **Loading States**: Show skeletons while data loads
+- **Empty States**: Handle cases where data isn't available
+
+## Chart Integration
+
+Add mini charts to metrics:
+
+```tsx
+import { StatsWithAreaChart } from '@/components/blocks/stats-10'
+import { AreaChart, Area, ResponsiveContainer } from 'recharts'
+
+const revenueData = [
+  { date: 'Jan', value: 4000 },
+  { date: 'Feb', value: 3000 },
+  { date: 'Mar', value: 5000 },
+  { date: 'Apr', value: 4500 },
+  { date: 'May', value: 6000 },
+  { date: 'Jun', value: 5500 }
+]
+
+<StatsWithAreaChart
+  label="Monthly Revenue"
+  value="$5,500"
+  change="+10%"
+  chartData={revenueData}
+/>
+```
+
+## Formatting Numbers
+
+Format metrics appropriately:
+
+```tsx
+function formatMetric(value: number, type: 'currency' | 'number' | 'percentage' | 'duration') {
+  switch (type) {
+    case 'currency':
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0
+      }).format(value)
+    
+    case 'number':
+      return new Intl.NumberFormat('en-US', {
+        notation: value > 999999 ? 'compact' : 'standard'
+      }).format(value)
+    
+    case 'percentage':
+      return `${value.toFixed(1)}%`
+    
+    case 'duration':
+      const minutes = Math.floor(value / 60)
+      const seconds = value % 60
+      return `${minutes}m ${seconds}s`
+    
+    default:
+      return value.toString()
+  }
+}
+
+// Usage
+formatMetric(45231, 'currency') // "$45,231"
+formatMetric(1234567, 'number')   // "1.2M"
+formatMetric(3.24, 'percentage')   // "3.2%"
+formatMetric(272, 'duration')      // "4m 32s"
+```
+
+## Segmented Progress
+
+Show breakdown by categories:
+
+```tsx
+import { StatsWithSegmentedProgress } from '@/components/blocks/stats-13'
+
+const storageBreakdown = [
+  { category: 'Images', value: 25, color: 'blue' },
+  { category: 'Videos', value: 45, color: 'purple' },
+  { category: 'Documents', value: 15, color: 'green' },
+  { category: 'Other', value: 15, color: 'gray' }
+]
+
+<StatsWithSegmentedProgress
+  label="Storage Usage"
+  total="100 GB"
+  segments={storageBreakdown}
+/>
+```
+
+## Status Indicators
+
+| Status | Color | Use Case |
+|--------|-------|----------|
+| Success | Green | Metrics meeting targets |
+| Warning | Yellow/Orange | Approaching limits |
+| Error | Red | Exceeded limits or critical issues |
+| Info | Blue | Neutral information |
+| Default | Gray | Normal state |
+
+## Real-time Updates
+
+Implement live metric updates:
+
+```tsx
+import { useEffect, useState } from 'react'
+
+function LiveMetric({ metricId }: { metricId: string }) {
+  const [value, setValue] = useState(0)
+  
+  useEffect(() => {
+    // Poll for updates
+    const interval = setInterval(async () => {
+      const response = await fetch(`/api/metrics/${metricId}`)
+      const data = await response.json()
+      setValue(data.value)
+    }, 30000) // Update every 30 seconds
+    
+    return () => clearInterval(interval)
+  }, [metricId])
+  
+  return <StatsCard value={value} />
+}
+```
+
+## Accessibility
+
+- Use semantic HTML for structure
+- Provide text alternatives for visual indicators
+- Ensure sufficient color contrast
+- Don't rely solely on color to convey information
+- Make interactive stats keyboard accessible
+- Announce dynamic updates to screen readers
+
+## Loading States
+
+```tsx
+function StatsSkeleton() {
+  return (
+    <div className="border rounded-lg p-6">
+      <div className="animate-pulse">
+        <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
+        <div className="h-8 bg-gray-200 rounded w-3/4 mb-2"></div>
+        <div className="h-3 bg-gray-200 rounded w-1/3"></div>
+      </div>
+    </div>
+  )
+}
+```
+
+## Related Components
+
+- [Grid List](/blocks/grid-list) - Organizing multiple stats
+- [Sidebar](/blocks/sidebar) - Navigation for analytics pages
+- [Tables](/blocks/tables) - Detailed data tables

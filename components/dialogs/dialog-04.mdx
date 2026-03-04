@@ -1,0 +1,72 @@
+---
+title: "Dialog with Two Buttons"
+description: "A confirmation dialog with two action buttons side by side"
+---
+
+A dialog component featuring dual action buttons arranged side-by-side, perfect for confirming or canceling operations.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx shadcn@latest add @blocks/dialog-04
+```
+
+```bash pnpm
+pnpm dlx shadcn@latest add @blocks/dialog-04
+```
+
+```bash yarn
+npx shadcn@latest add @blocks/dialog-04
+```
+
+```bash bun
+bunx --bun shadcn@latest add @blocks/dialog-04
+```
+
+</CodeGroup>
+
+## Dependencies
+
+This component requires the following dependencies:
+
+- `button` - shadcn/ui button component
+- `dialog` - shadcn/ui dialog component
+- `input` - shadcn/ui input component
+- `label` - shadcn/ui label component
+
+## Usage
+
+```tsx
+import Dialog04 from "@/components/dialog-04";
+
+export default function Page() {
+  return <Dialog04 />;
+}
+```
+
+## Features
+
+- **Dual actions** - Two buttons side-by-side for different actions
+- **Responsive layout** - Stacks vertically on mobile, horizontal on desktop
+- **Equal width buttons** - Each button takes 50% width on larger screens
+- **Centered content** - Icon and text centered for visual appeal
+- **Success indicator** - Green checkmark icon in circular background
+- **Flexible gap** - Different spacing for mobile and desktop layouts
+
+## Component Structure
+
+The component includes:
+
+- `Dialog` wrapper with state control
+- `DialogTrigger` to open the dialog
+- Centered success icon (Check) in green background
+- `DialogHeader` with centered title and description
+- `DialogFooter` with responsive flex layout
+- Two `DialogClose` wrapped buttons (Deactivate and Cancel)
+- Responsive classes: `flex-col` on mobile, `sm:flex-row` on desktop
+
+<Note>
+The footer uses `flex flex-col sm:flex-row sm:gap-3 w-full gap-2` to create a responsive button layout that stacks vertically on mobile and arranges horizontally on larger screens.
+</Note>

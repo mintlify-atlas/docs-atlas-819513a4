@@ -1,0 +1,218 @@
+---
+title: AI Chat with Model Selection
+description: A ai chat with model selection block.
+author: ephraim duncan
+---
+
+<ComponentPreview name="ai-02" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsContent value="cli">
+
+<Steps>
+
+<Step>Install dependencies</Step>
+
+```bash
+npx shadcn@latest add @blocks/ai-02
+```
+
+This will install the following dependencies:
+- `@tabler/icons-react`
+
+And add the following shadcn/ui components:
+- `button`
+- `select`
+- `textarea`
+
+</Steps>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install dependencies</Step>
+
+```bash
+npm install @tabler/icons-react
+```
+
+<Step>Add shadcn/ui components</Step>
+
+```bash
+npx shadcn@latest add button select textarea
+```
+
+<Step>Copy the source code</Step>
+
+Create `components/ai-02.tsx` and paste the component code.
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import Ai02 from "@/components/ai-02";
+
+export default function Page() {
+  return <Ai02 />;
+}
+```
+
+## Features
+
+This AI chat component offers model selection and quick prompt suggestions:
+
+### Model Selection
+
+<Note>
+**Multi-Model Support** - Choose from different AI models including GPT-5, GPT-4o, GPT-4, and Claude 3.5 Sonnet, each optimized for different use cases.
+</Note>
+
+The component includes a curated list of AI models:
+
+```tsx
+const MODELS = [
+  {
+    value: "gpt-5",
+    name: "GPT-5",
+    description: "Most advanced model",
+    max: true,
+  },
+  {
+    value: "gpt-4o",
+    name: "GPT-4o",
+    description: "Fast and capable",
+  },
+  {
+    value: "gpt-4",
+    name: "GPT-4",
+    description: "Reliable and accurate",
+  },
+  {
+    value: "claude-3.5",
+    name: "Claude 3.5 Sonnet",
+    description: "Great for coding tasks",
+  },
+];
+```
+
+### Quick Prompts
+
+Pre-configured prompt buttons for common tasks:
+
+- **Write Documentation** - Generate comprehensive documentation with setup instructions and API references
+- **Optimize Performance** - Analyze code for bottlenecks and suggest improvements
+- **Find and Fix Bugs** - Scan codebase to identify and fix critical issues
+
+### Special Badge System
+
+The "MAX" badge indicates premium or advanced models:
+
+```tsx
+const renderMaxBadge = () => (
+  <div className="flex h-[14px] items-center gap-1.5 rounded border border-border px-1 py-0">
+    <span
+      className="text-[9px] font-bold uppercase"
+      style={{
+        background: "linear-gradient(to right, rgb(129, 161, 193), rgb(125, 124, 155))",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+      }}
+    >
+      MAX
+    </span>
+  </div>
+);
+```
+
+## Component Props
+
+This component doesn't accept external props. All state is managed internally:
+
+- `inputValue` - Current input text
+- `selectedModel` - Currently selected AI model
+- `inputRef` - Reference to the textarea element
+
+## Customization
+
+### Adding Custom Models
+
+Extend the `MODELS` array with your own model configurations:
+
+```tsx
+const MODELS = [
+  // ... existing models
+  {
+    value: "custom-model",
+    name: "Custom Model",
+    description: "Your custom description",
+    max: false, // Set to true for premium badge
+  },
+];
+```
+
+### Adding Custom Prompts
+
+Add new quick prompt buttons:
+
+```tsx
+const PROMPTS = [
+  // ... existing prompts
+  {
+    icon: IconCustom,
+    text: "Your action",
+    prompt: "Your detailed prompt text here",
+  },
+];
+```
+
+### Styling the Input Container
+
+The component uses a fixed width that can be customized:
+
+```tsx
+<div className="flex flex-col gap-4 w-[calc(42rem-5rem)]">
+  {/* Adjust width by changing the calculation */}
+</div>
+```
+
+## Implementation Details
+
+### Prompt Click Handler
+
+When a user clicks a quick prompt button, the text is automatically populated:
+
+```tsx
+const handlePromptClick = (prompt: string) => {
+  if (inputRef.current) {
+    inputRef.current.value = prompt;
+    setInputValue(prompt);
+    inputRef.current.focus();
+  }
+};
+```
+
+### Model Change Handler
+
+```tsx
+const handleModelChange = (value: string) => {
+  const model = MODELS.find((m) => m.value === value);
+  if (model) {
+    setSelectedModel(model);
+  }
+};
+```
+
+### Image Attachment
+
+The component includes an image attachment button that can be extended with file upload functionality.

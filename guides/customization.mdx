@@ -1,0 +1,283 @@
+---
+title: Customization
+description: Learn how to customize block components to match your design requirements
+---
+
+# Customization
+
+Blocks are built with flexibility in mind. Every component can be customized using Tailwind utility classes, CSS variables, and component props.
+
+## Understanding the Component Structure
+
+All block components follow a consistent pattern using the `cn()` utility function for class merging:
+
+```tsx
+import { cn } from "@/lib/utils"
+
+function Component({ className, ...props }) {
+  return (
+    <div
+      className={cn(
+        "base-classes",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+```
+
+The `cn()` function combines clsx and tailwind-merge to intelligently merge class names, allowing you to override default styles.
+
+## Customizing with Tailwind Classes
+
+<Steps>
+  <Step title="Override default styles">
+    Pass custom classes through the `className` prop to override or extend default styles:
+
+    ```tsx
+    import { Button } from "@/components/ui/button"
+
+    export default function Example() {
+      return (
+        <Button className="bg-blue-500 hover:bg-blue-600">
+          Custom Button
+        </Button>
+      )
+    }
+    ```
+  </Step>
+
+  <Step title="Adjust spacing and layout">
+    Modify spacing, sizing, and layout properties:
+
+    ```tsx
+    import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+
+    export default function CustomCard() {
+      return (
+        <Card className="max-w-md p-8 gap-8">
+          <CardHeader className="gap-4">
+            <CardTitle className="text-3xl">Custom Spacing</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <p>Content with custom spacing</p>
+          </CardContent>
+        </Card>
+      )
+    }
+    ```
+  </Step>
+
+  <Step title="Customize colors and borders">
+    Apply custom colors, borders, and shadows:
+
+    ```tsx
+    import { Badge } from "@/components/ui/badge"
+
+    export default function ColoredBadges() {
+      return (
+        <div className="flex gap-2">
+          <Badge className="bg-emerald-500 border-emerald-600">
+            Success
+          </Badge>
+          <Badge className="bg-amber-500 border-amber-600">
+            Warning
+          </Badge>
+        </div>
+      )
+    }
+    ```
+  </Step>
+</Steps>
+
+## Using Component Variants
+
+Many components use `class-variance-authority` (CVA) to provide predefined variants:
+
+<Tabs>
+  <Tab title="Button Variants">
+    ```tsx
+    import { Button } from "@/components/ui/button"
+
+    export default function ButtonVariants() {
+      return (
+        <div className="flex gap-2">
+          <Button variant="default">Default</Button>
+          <Button variant="destructive">Destructive</Button>
+          <Button variant="outline">Outline</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button variant="link">Link</Button>
+        </div>
+      )
+    }
+    ```
+  </Tab>
+
+  <Tab title="Button Sizes">
+    ```tsx
+    import { Button } from "@/components/ui/button"
+
+    export default function ButtonSizes() {
+      return (
+        <div className="flex items-center gap-2">
+          <Button size="sm">Small</Button>
+          <Button size="default">Default</Button>
+          <Button size="lg">Large</Button>
+          <Button size="icon">🔍</Button>
+        </div>
+      )
+    }
+    ```
+  </Tab>
+
+  <Tab title="Badge Variants">
+    ```tsx
+    import { Badge } from "@/components/ui/badge"
+
+    export default function BadgeVariants() {
+      return (
+        <div className="flex gap-2">
+          <Badge variant="default">Default</Badge>
+          <Badge variant="secondary">Secondary</Badge>
+          <Badge variant="destructive">Destructive</Badge>
+          <Badge variant="outline">Outline</Badge>
+        </div>
+      )
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Modifying Component Layout
+
+Components like Card use CSS Grid and Flexbox for layout. You can customize these:
+
+```tsx
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+
+export default function GridCard() {
+  return (
+    <Card className="grid grid-cols-2 gap-4">
+      <CardHeader className="col-span-2">
+        <CardTitle>Two Column Layout</CardTitle>
+        <CardDescription>Custom grid layout</CardDescription>
+      </CardHeader>
+      <div className="p-6">Column 1</div>
+      <div className="p-6">Column 2</div>
+    </Card>
+  )
+}
+```
+
+## Responsive Customization
+
+Use Tailwind's responsive modifiers to create adaptive designs:
+
+```tsx
+import { Button } from "@/components/ui/button"
+
+export default function ResponsiveButton() {
+  return (
+    <Button 
+      className="
+        w-full sm:w-auto 
+        text-sm sm:text-base 
+        px-4 sm:px-6 lg:px-8
+      "
+    >
+      Responsive Button
+    </Button>
+  )
+}
+```
+
+<Note>
+  Always test responsive customizations across different screen sizes to ensure a consistent user experience.
+</Note>
+
+## Customizing Input Components
+
+Input components support extensive customization:
+
+```tsx
+import { Input } from "@/components/ui/input"
+
+export default function CustomInput() {
+  return (
+    <div className="space-y-4">
+      <Input 
+        placeholder="Custom styled input"
+        className="h-12 text-lg border-2 border-primary focus-visible:ring-4"
+      />
+      <Input 
+        placeholder="Rounded input"
+        className="rounded-full px-6"
+      />
+    </div>
+  )
+}
+```
+
+## Real-World Example
+
+Here's a complete example from the Blocks codebase showing customization in action:
+
+```tsx
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import { cn } from "@/lib/utils"
+import { useState } from "react"
+
+export default function CustomComposer() {
+  const [message, setMessage] = useState("")
+  const [isExpanded, setIsExpanded] = useState(false)
+
+  return (
+    <div
+      className={cn(
+        "w-full max-w-2xl mx-auto bg-transparent dark:bg-muted/50",
+        "p-2.5 shadow-lg border border-border transition-[border-radius]",
+        isExpanded ? "rounded-3xl" : "rounded-3xl"
+      )}
+    >
+      <Textarea
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Ask anything"
+        className="
+          min-h-0 resize-none rounded-none border-0 p-0 
+          text-base placeholder:text-muted-foreground 
+          focus-visible:ring-0 focus-visible:ring-offset-0 
+          dark:bg-transparent
+        "
+      />
+      <Button
+        type="submit"
+        size="icon"
+        className="rounded-full"
+      >
+        Send
+      </Button>
+    </div>
+  )
+}
+```
+
+<Tip>
+  Use the `cn()` utility when you need to conditionally apply classes based on component state.
+</Tip>
+
+## Best Practices
+
+- **Use Tailwind utilities first**: Leverage Tailwind's utility classes before writing custom CSS
+- **Preserve accessibility**: Don't remove focus indicators or ARIA attributes
+- **Test dark mode**: Ensure customizations work in both light and dark themes
+- **Keep semantic structure**: Maintain the component's HTML structure for accessibility
+- **Use CSS variables**: Reference theme variables for consistent theming
+
+## Next Steps
+
+- Learn about [theming](/guides/theming) to customize the entire design system
+- Explore [TypeScript support](/guides/typescript) for type-safe customizations

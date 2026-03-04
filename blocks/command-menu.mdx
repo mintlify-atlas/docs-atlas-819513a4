@@ -1,0 +1,146 @@
+---
+title: 'Command Menu Blocks'
+description: 'Keyboard-driven command palettes for quick navigation and actions'
+---
+
+## Overview
+
+Command menu blocks provide powerful keyboard-driven interfaces that allow users to quickly search, navigate, and execute actions within your application. These components are essential for creating productivity-focused applications.
+
+## Available Blocks
+
+<CardGroup cols={2}>
+  <Card title="Command Menu with Groups" icon="layer-group" href="/blocks/command-menu-01">
+    Organized command palette with categorized groups for better navigation
+  </Card>
+  
+  <Card title="Command Menu with Keyboard Shortcuts" icon="keyboard" href="/blocks/command-menu-02">
+    Command menu displaying keyboard shortcuts for power users
+  </Card>
+  
+  <Card title="Command Menu with Documentation Search" icon="search" href="/blocks/command-menu-03">
+    Specialized command menu for searching documentation and help content
+  </Card>
+</CardGroup>
+
+## Key Features
+
+- **Instant Search**: Fast, fuzzy search across all available commands
+- **Keyboard Navigation**: Full keyboard support with arrow keys and shortcuts
+- **Command Groups**: Organize commands by category for better discoverability
+- **Recent Actions**: Show recently used commands for quick access
+- **Customizable Actions**: Define any action or navigation command
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="Application Navigation">
+    Allow users to quickly jump to any page or section in your application without using the mouse.
+  </Accordion>
+  
+  <Accordion title="Action Execution">
+    Provide quick access to common actions like creating new items, exporting data, or changing settings.
+  </Accordion>
+  
+  <Accordion title="Documentation Search">
+    Enable users to search through help documentation, API references, or knowledge bases.
+  </Accordion>
+  
+  <Accordion title="Power User Workflows">
+    Create keyboard-first experiences for advanced users who prefer not to use the mouse.
+  </Accordion>
+</AccordionGroup>
+
+## Implementation Example
+
+Basic command menu integration:
+
+```tsx
+import { CommandMenuWithGroups } from '@/components/blocks/command-menu-01'
+import { useState } from 'react'
+
+export default function App() {
+  const [open, setOpen] = useState(false)
+  
+  // Listen for Cmd+K or Ctrl+K
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        setOpen((open) => !open)
+      }
+    }
+    document.addEventListener('keydown', down)
+    return () => document.removeEventListener('keydown', down)
+  }, [])
+  
+  return (
+    <>
+      <CommandMenuWithGroups 
+        open={open}
+        onOpenChange={setOpen}
+        commands={[
+          {
+            group: 'Navigation',
+            items: [
+              { label: 'Dashboard', action: () => router.push('/dashboard') },
+              { label: 'Projects', action: () => router.push('/projects') },
+            ]
+          },
+          {
+            group: 'Actions',
+            items: [
+              { label: 'New Project', action: () => createProject() },
+              { label: 'Export Data', action: () => exportData() },
+            ]
+          }
+        ]}
+      />
+    </>
+  )
+}
+```
+
+## Best Practices
+
+<Note>
+  The standard keyboard shortcut for command menus is **Cmd+K** (Mac) or **Ctrl+K** (Windows/Linux). Users expect this convention, so stick with it unless you have a specific reason to change it.
+</Note>
+
+### Organizing Commands
+
+- Group related commands together
+- Use clear, action-oriented labels ("Create New Project" not "Project Creation")
+- Show keyboard shortcuts next to commands when available
+- Prioritize frequently used commands at the top
+
+### Search Optimization
+
+- Implement fuzzy search to handle typos
+- Include aliases for commands (e.g., "settings" and "preferences")
+- Show recent commands for quick access
+- Clear the search input when the menu closes
+
+## Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Cmd/Ctrl + K` | Open command menu |
+| `↑/↓` | Navigate commands |
+| `Enter` | Execute selected command |
+| `Esc` | Close menu |
+| `Cmd/Ctrl + 1-9` | Quick access to first 9 commands |
+
+## Customization Options
+
+- **Appearance**: Customize colors, spacing, and typography
+- **Icons**: Add custom icons for different command types
+- **Sections**: Define custom command groups and separators
+- **Filtering**: Implement custom search and filter logic
+- **Analytics**: Track command usage to optimize your interface
+
+## Related Components
+
+- [Sidebar](/blocks/sidebar) - Alternative navigation pattern
+- [Dialogs](/blocks/dialogs) - Modal interactions
+- [AI Chat](/blocks/ai) - Conversational command interface

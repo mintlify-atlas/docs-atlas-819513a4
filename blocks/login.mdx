@@ -1,0 +1,312 @@
+---
+title: 'Login Blocks'
+description: 'Authentication forms with email, password, social login, and SSO options'
+---
+
+## Overview
+
+Login blocks provide ready-to-use authentication interfaces for user sign-in and registration. From simple email/password forms to advanced SSO and magic link authentication, these components cover all common authentication patterns.
+
+## Available Blocks
+
+<CardGroup cols={2}>
+  <Card title="Login with Email and Google" icon="envelope" href="/blocks/login-01">
+    Email-based login with Google OAuth integration
+  </Card>
+  
+  <Card title="Login with Email, Password and Google" icon="lock" href="/blocks/login-02">
+    Traditional email/password form with Google sign-in option
+  </Card>
+  
+  <Card title="Login with Email and Password" icon="key" href="/blocks/login-03">
+    Simple email and password authentication form
+  </Card>
+  
+  <Card title="Login with Social Buttons" icon="share-nodes" href="/blocks/login-04">
+    Multiple social login providers (Google, GitHub, Facebook, etc.)
+  </Card>
+  
+  <Card title="Login Card Signup Form" icon="user-plus" href="/blocks/login-05">
+    Registration form with card layout
+  </Card>
+  
+  <Card title="Login with Magic Link and SSO" icon="wand-magic-sparkles" href="/blocks/login-06">
+    Passwordless magic link authentication with SSO support
+  </Card>
+  
+  <Card title="Login Full Page with Icons" icon="desktop" href="/blocks/login-07">
+    Full-page login layout with brand icons and visuals
+  </Card>
+  
+  <Card title="Login with SSO" icon="building" href="/blocks/login-08">
+    Enterprise SSO authentication interface
+  </Card>
+  
+  <Card title="Login Signup with Role Selection" icon="user-tag" href="/blocks/login-09">
+    Registration form with user role or account type selection
+  </Card>
+</CardGroup>
+
+## Authentication Methods
+
+### Email & Password
+Traditional authentication with email and password. Includes forgot password functionality.
+
+### Social Login
+OAuth integration with providers like Google, GitHub, Microsoft, and more.
+
+### Magic Link
+Passwordless authentication via email link. Better UX and security.
+
+### SSO (Single Sign-On)
+Enterprise authentication with SAML or OAuth providers.
+
+### Role-based Registration
+Allow users to select their role or account type during signup.
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="SaaS Applications">
+    Implement user authentication for SaaS products with support for individual users and enterprise SSO.
+  </Accordion>
+  
+  <Accordion title="Consumer Apps">
+    Use social login buttons to reduce friction and increase conversion rates for consumer applications.
+  </Accordion>
+  
+  <Accordion title="Enterprise Portals">
+    Deploy SSO-based authentication for enterprise customers who need centralized identity management.
+  </Accordion>
+  
+  <Accordion title="Multi-tenant Platforms">
+    Implement role selection during signup to route users to appropriate dashboards and experiences.
+  </Accordion>
+  
+  <Accordion title="Passwordless Apps">
+    Use magic link authentication for improved security and user experience without password management.
+  </Accordion>
+</AccordionGroup>
+
+## Implementation Example
+
+```tsx
+import { LoginWithEmailAndPassword } from '@/components/blocks/login-03'
+import { signIn } from 'next-auth/react'
+import { useState } from 'react'
+
+export default function LoginPage() {
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  
+  const handleLogin = async (email: string, password: string) => {
+    setLoading(true)
+    setError('')
+    
+    try {
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false
+      })
+      
+      if (result?.error) {
+        setError('Invalid email or password')
+      } else {
+        router.push('/dashboard')
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+  
+  return (
+    <LoginWithEmailAndPassword
+      onSubmit={handleLogin}
+      error={error}
+      loading={loading}
+    />
+  )
+}
+```
+
+## Social Login Integration
+
+Implement OAuth providers:
+
+```tsx
+import { LoginWithSocialButtons } from '@/components/blocks/login-04'
+
+const socialProviders = [
+  {
+    id: 'google',
+    name: 'Google',
+    icon: GoogleIcon,
+    onClick: () => signIn('google')
+  },
+  {
+    id: 'github',
+    name: 'GitHub',
+    icon: GitHubIcon,
+    onClick: () => signIn('github')
+  },
+  {
+    id: 'microsoft',
+    name: 'Microsoft',
+    icon: MicrosoftIcon,
+    onClick: () => signIn('azure-ad')
+  }
+]
+
+<LoginWithSocialButtons
+  providers={socialProviders}
+  onProviderClick={(providerId) => signIn(providerId)}
+/>
+```
+
+<Note>
+  When implementing social login, ensure you handle OAuth callbacks properly and store user sessions securely. Use established libraries like NextAuth.js, Supabase Auth, or Firebase Authentication.
+</Note>
+
+## Best Practices
+
+### Security
+
+- **HTTPS Only**: Always use HTTPS for authentication pages
+- **Password Requirements**: Enforce strong password policies
+- **Rate Limiting**: Prevent brute force attacks with rate limits
+- **CSRF Protection**: Implement CSRF tokens for form submissions
+- **Session Management**: Use secure, HTTP-only cookies
+- **2FA Support**: Offer two-factor authentication for enhanced security
+
+### User Experience
+
+- **Clear Error Messages**: Be specific but don't reveal whether email exists
+- **Loading States**: Show feedback during authentication
+- **Remember Me**: Offer option to stay logged in
+- **Password Visibility**: Toggle to show/hide password
+- **Auto-focus**: Focus email field on page load
+- **Link to Signup**: Clear path to create account
+- **Forgot Password**: Easy access to password reset
+
+### Form Validation
+
+```tsx
+const loginSchema = z.object({
+  email: z.string()
+    .min(1, 'Email is required')
+    .email('Invalid email address'),
+  password: z.string()
+    .min(1, 'Password is required')
+    .min(8, 'Password must be at least 8 characters')
+})
+
+const form = useForm({
+  resolver: zodResolver(loginSchema),
+  defaultValues: {
+    email: '',
+    password: ''
+  }
+})
+```
+
+## Magic Link Authentication
+
+Implement passwordless auth:
+
+```tsx
+import { LoginWithMagicLink } from '@/components/blocks/login-06'
+
+const handleMagicLink = async (email: string) => {
+  setLoading(true)
+  
+  try {
+    // Send magic link
+    await fetch('/api/auth/magic-link', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    
+    setMessage('Check your email for the login link')
+  } catch (error) {
+    setError('Failed to send magic link')
+  } finally {
+    setLoading(false)
+  }
+}
+
+<LoginWithMagicLink
+  onSendMagicLink={handleMagicLink}
+  loading={loading}
+  message={message}
+/>
+```
+
+## SSO Configuration
+
+For enterprise SSO:
+
+```tsx
+import { LoginWithSSO } from '@/components/blocks/login-08'
+
+const handleSSOLogin = async (domain: string) => {
+  // Lookup SSO configuration for domain
+  const config = await fetchSSOConfig(domain)
+  
+  if (config) {
+    // Redirect to SSO provider
+    window.location.href = config.ssoUrl
+  } else {
+    setError('No SSO configuration found for this domain')
+  }
+}
+
+<LoginWithSSO
+  onSSOLogin={handleSSOLogin}
+  placeholder="company.com"
+/>
+```
+
+## Error Handling
+
+Provide helpful error messages:
+
+| Error | User Message |
+|-------|-------------|
+| Invalid credentials | "Email or password is incorrect" |
+| Account not found | "No account found with this email" |
+| Account locked | "Account locked. Contact support" |
+| Network error | "Connection failed. Please try again" |
+| Rate limited | "Too many attempts. Try again in 5 minutes" |
+
+## Accessibility
+
+- Label all form inputs clearly
+- Provide error messages with ARIA live regions
+- Ensure keyboard navigation works
+- Use appropriate input types (email, password)
+- Support password managers
+- Clear focus indicators
+- Screen reader friendly error messages
+
+## Password Reset Flow
+
+```tsx
+<div className="text-sm text-center mt-4">
+  <a 
+    href="/forgot-password"
+    className="text-primary hover:underline"
+  >
+    Forgot your password?
+  </a>
+</div>
+```
+
+## Related Components
+
+- [Form Layout](/blocks/form-layout) - Additional form patterns
+- [Dialogs](/blocks/dialogs) - Modal login forms
+- [Onboarding](/blocks/onboarding) - Post-login onboarding flows

@@ -1,0 +1,290 @@
+---
+title: AI Chat with File Attachments
+description: A ai chat with file attachments block.
+author: ephraim duncan
+---
+
+<ComponentPreview name="ai-04" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsContent value="cli">
+
+<Steps>
+
+<Step>Install dependencies</Step>
+
+```bash
+npx shadcn@latest add @blocks/ai-04
+```
+
+This will install the following dependencies:
+- `@tabler/icons-react`
+
+And add the following shadcn/ui components:
+- `badge`
+- `button`
+- `dropdown-menu`
+- `label`
+- `switch`
+- `textarea`
+
+</Steps>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install dependencies</Step>
+
+```bash
+npm install @tabler/icons-react
+```
+
+<Step>Add shadcn/ui components</Step>
+
+```bash
+npx shadcn@latest add badge button dropdown-menu label switch textarea
+```
+
+<Step>Copy the source code</Step>
+
+Create `components/ai-04.tsx` and paste the component code.
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import Ai04 from "@/components/ai-04";
+
+export default function Page() {
+  const handleSubmit = (prompt: string) => {
+    console.log("Submitted:", prompt);
+    // Handle prompt submission
+  };
+
+  return <Ai04 onSubmit={handleSubmit} />;
+}
+```
+
+## Features
+
+A full-featured AI chat interface with drag-and-drop file attachments and comprehensive settings:
+
+### File Attachment System
+
+<Note>
+**Drag & Drop Support** - Upload files by dragging them directly onto the input area, or use the traditional file picker.
+</Note>
+
+The component supports multiple file types with visual previews:
+
+```tsx
+interface AttachedFile {
+  id: string;
+  name: string;
+  file: File;
+  preview?: string; // For image files
+}
+```
+
+Images automatically generate preview thumbnails:
+
+```tsx
+if (file.type.startsWith("image/")) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    setAttachedFiles((prev) =>
+      prev.map((f) =>
+        f.id === fileId ? { ...f, preview: reader.result as string } : f
+      )
+    );
+  };
+  reader.readAsDataURL(file);
+}
+```
+
+### Quick Actions
+
+Pre-configured action buttons for common workflows:
+
+- **Clone a Screenshot** - Convert UI screenshots to code
+- **Import from Figma** - Import Figma designs
+- **Upload a Project** - Upload entire project folders
+- **Landing Page** - Generate landing page templates
+
+### Advanced Settings
+
+Toggleable settings via dropdown menu:
+
+**Auto-complete** - Enable AI-powered auto-completion
+
+**Streaming** - Stream responses in real-time
+
+**Show History** - Display chat history
+
+```tsx
+const [settings, setSettings] = useState({
+  autoComplete: true,
+  streaming: false,
+  showHistory: false,
+});
+```
+
+### Drag & Drop Functionality
+
+The component handles drag events with visual feedback:
+
+```tsx
+const handleDragOver = (e: React.DragEvent) => {
+  e.preventDefault();
+  setIsDragOver(true);
+};
+
+const handleDrop = (e: React.DragEvent) => {
+  e.preventDefault();
+  setIsDragOver(false);
+  
+  const files = Array.from(e.dataTransfer.files);
+  if (files.length > 0) {
+    processFiles(files);
+  }
+};
+```
+
+## Component Props
+
+<ParamField path="onSubmit" type="(prompt: string) => void" optional>
+  Callback function called when the user submits a prompt
+</ParamField>
+
+## Customization
+
+### Adding Custom Actions
+
+Extend the `ACTIONS` array with new quick action buttons:
+
+```tsx
+const ACTIONS = [
+  // ... existing actions
+  { 
+    id: "custom-action", 
+    icon: IconCustom, 
+    label: "Custom Action" 
+  },
+];
+```
+
+### Modifying File Type Support
+
+Customize which file types can be uploaded:
+
+```tsx
+<input
+  className="sr-only"
+  multiple
+  accept=".pdf,.doc,.docx,image/*" // Customize accepted types
+  onChange={handleFileSelect}
+  ref={fileInputRef}
+  type="file"
+/>
+```
+
+### Styling Attached Files
+
+File badges use a custom design that can be modified:
+
+```tsx
+<Badge
+  variant="outline"
+  className="group relative h-6 max-w-30 cursor-pointer overflow-hidden text-[13px] transition-colors hover:bg-accent px-0"
+  key={file.id}
+>
+  {/* Badge content */}
+</Badge>
+```
+
+### Attachment Menu Options
+
+Extend the attachment dropdown with custom options:
+
+```tsx
+<DropdownMenuGroup className="space-y-1">
+  <DropdownMenuItem
+    className="rounded-md text-xs"
+    onClick={() => handleCustomImport()}
+  >
+    <div className="flex items-center gap-2">
+      <IconCustom className="text-muted-foreground" size={16} />
+      <span>Custom Import</span>
+    </div>
+  </DropdownMenuItem>
+</DropdownMenuGroup>
+```
+
+## Implementation Details
+
+### File Processing
+
+The `processFiles` function handles multiple files:
+
+```tsx
+const processFiles = (files: File[]) => {
+  for (const file of files) {
+    const fileId = generateFileId();
+    const attachedFile: AttachedFile = {
+      id: fileId,
+      name: file.name,
+      file,
+    };
+
+    if (file.type.startsWith("image/")) {
+      // Generate preview for images
+    }
+
+    setAttachedFiles((prev) => [...prev, attachedFile]);
+  }
+};
+```
+
+### Settings Management
+
+```tsx
+const updateSetting = (key: keyof typeof settings, value: boolean) => {
+  setSettings((prev) => ({ ...prev, [key]: value }));
+};
+```
+
+### Submit Handler
+
+```tsx
+const submitPrompt = () => {
+  if (prompt.trim() && onSubmit) {
+    onSubmit(prompt.trim());
+    setPrompt("");
+  }
+};
+```
+
+### Keyboard Shortcuts
+
+- **Enter** - Submit the prompt
+- **Shift + Enter** - Insert new line
+
+```tsx
+const handleKeyDown = (e: React.KeyboardEvent) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    submitPrompt();
+  }
+};
+```

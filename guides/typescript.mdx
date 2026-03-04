@@ -1,0 +1,582 @@
+---
+title: TypeScript Support
+description: Learn how to use TypeScript with Blocks for type-safe component development
+---
+
+# TypeScript Support
+
+Blocks is built with TypeScript and provides comprehensive type definitions for all components and utilities.
+
+## Component Props Types
+
+All components extend native HTML element types using `React.ComponentProps`:
+
+```tsx
+import * as React from "react"
+
+function Input({ className, type, ...props }: React.ComponentProps<"input">) {
+  return <input type={type} className={className} {...props} />
+}
+```
+
+This provides:
+- Full autocomplete for native HTML attributes
+- Type safety for event handlers
+- Proper typing for refs
+
+## Variant Props with CVA
+
+Components use `class-variance-authority` for type-safe variants:
+
+<Tabs>
+  <Tab title="Button Example">
+    ```tsx
+    import { cva, type VariantProps } from "class-variance-authority"
+
+    const buttonVariants = cva(
+      "inline-flex items-center justify-center gap-2",
+      {
+        variants: {
+          variant: {
+            default: "bg-primary text-primary-foreground",
+            destructive: "bg-destructive text-white",
+            outline: "border bg-background",
+            secondary: "bg-secondary text-secondary-foreground",
+            ghost: "hover:bg-accent hover:text-accent-foreground",
+            link: "text-primary underline-offset-4",
+          },
+          size: {
+            default: "h-9 px-4 py-2",
+            sm: "h-8 rounded-md gap-1.5 px-3",
+            lg: "h-10 rounded-md px-6",
+            icon: "size-9",
+          },
+        },
+        defaultVariants: {
+          variant: "default",
+          size: "default",
+        },
+      }
+    )
+
+    function Button({
+      className,
+      variant,
+      size,
+      asChild = false,
+      ...props
+    }: React.ComponentProps<"button"> &
+      VariantProps<typeof buttonVariants> & {
+        asChild?: boolean
+      }) {
+      const Comp = asChild ? Slot : "button"
+      return <Comp className={buttonVariants({ variant, size, className })} {...props} />
+    }
+    ```
+  </Tab>
+
+  <Tab title="Badge Example">
+    ```tsx
+    import { cva, type VariantProps } from "class-variance-authority"
+
+    const badgeVariants = cva(
+      "inline-flex items-center justify-center rounded-full border",
+      {
+        variants: {
+          variant: {
+            default: "border-transparent bg-primary text-primary-foreground",
+            secondary: "border-transparent bg-secondary text-secondary-foreground",
+            destructive: "border-transparent bg-destructive text-white",
+            outline: "text-foreground",
+          },
+        },
+        defaultVariants: {
+          variant: "default",
+        },
+      }
+    )
+
+    function Badge({
+      className,
+      variant,
+      asChild = false,
+      ...props
+    }: React.ComponentProps<"span"> &
+      VariantProps<typeof badgeVariants> & {
+        asChild?: boolean
+      }) {
+      const Comp = asChild ? Slot : "span"
+      return <Comp className={badgeVariants({ variant, className })} {...props} />
+    }
+    ```
+  </Tab>
+</Tabs>
+
+<Note>
+  `VariantProps` automatically infers the correct types from your variant definitions.
+</Note>
+
+## Utility Function Types
+
+The `cn()` utility function is properly typed using clsx:
+
+```tsx
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+```
+
+Usage with type safety:
+
+```tsx
+import { cn } from "@/lib/utils"
+
+// All valid ClassValue types
+cn("base-class")
+cn("class-1", "class-2")
+cn({ "conditional-class": true })
+cn(["array", "of", "classes"])
+cn(undefined, null, "class") // Handles falsy values
+```
+
+## Component Composition Types
+
+Composite components like Card have proper type exports:
+
+<Steps>
+  <Step title="Define sub-components">
+    ```tsx
+    import * as React from "react"
+    import { cn } from "@/lib/utils"
+
+    function Card({ className, ...props }: React.ComponentProps<"div">) {
+      return (
+        <div
+          className={cn("rounded-xl border shadow-sm", className)}
+          {...props}
+        />
+      )
+    }
+
+    function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
+      return (
+        <div
+          className={cn("grid gap-2 p-6", className)}
+          {...props}
+        />
+      )
+    }
+
+    function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+      return (
+        <div
+          className={cn("font-semibold leading-none", className)}
+          {...props}
+        />
+      )
+    }
+    ```
+  </Step>
+
+  <Step title="Export all components">
+    ```tsx
+    export {
+      Card,
+      CardHeader,
+      CardTitle,
+      CardDescription,
+      CardContent,
+      CardFooter,
+    }
+    ```
+  </Step>
+
+  <Step title="Use with full type safety">
+    ```tsx
+    import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+
+    export default function TypedCard() {
+      return (
+        <Card>
+          <CardHeader>
+            <CardTitle>Fully Typed</CardTitle>
+          </CardHeader>
+          <CardContent>
+            All props are type-checked
+          </CardContent>
+        </Card>
+      )
+    }
+    ```
+  </Step>
+</Steps>
+
+## Complex Component Types
+
+For complex components with multiple types, define interfaces:
+
+```tsx
+import type { ReactNode } from "react"
+import type { SupportedLanguages } from "@pierre/diffs/react"
+
+interface BlockViewState {
+  view: "preview" | "code"
+  size: "desktop" | "tablet" | "mobile"
+}
+
+interface BaseItem {
+  name: string
+  path: string
+}
+
+interface FileItem extends BaseItem {
+  type: "file"
+  content: string
+}
+
+interface FolderItem extends BaseItem {
+  type: "folder"
+  children: FileTreeItem[]
+}
+
+type FileTreeItem = FileItem | FolderItem
+
+interface BlocksProps {
+  name: string
+  code?: string | ReactNode
+  fileTree?: FileTreeItem[]
+  blocksId: string
+  blocksCategory: string
+  meta?: {
+    iframeHeight?: string
+    type?: "file" | "directory"
+  }
+}
+```
+
+## Generic Component Types
+
+Create reusable generic components with proper typing:
+
+```tsx
+import type { ReactNode } from "react"
+
+interface ListProps<T> {
+  items: T[]
+  renderItem: (item: T, index: number) => ReactNode
+  keyExtractor: (item: T, index: number) => string
+  className?: string
+}
+
+function List<T>({
+  items,
+  renderItem,
+  keyExtractor,
+  className,
+}: ListProps<T>) {
+  return (
+    <ul className={className}>
+      {items.map((item, index) => (
+        <li key={keyExtractor(item, index)}>
+          {renderItem(item, index)}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+// Usage with type inference
+interface User {
+  id: string
+  name: string
+}
+
+const users: User[] = [
+  { id: "1", name: "Alice" },
+  { id: "2", name: "Bob" },
+]
+
+<List
+  items={users}
+  renderItem={(user) => <span>{user.name}</span>}
+  keyExtractor={(user) => user.id}
+/>
+```
+
+## Event Handler Types
+
+Properly type event handlers for type safety:
+
+<CodeGroup>
+  ```tsx Form Events
+  import type React from "react"
+  import { useState } from "react"
+
+  export default function TypedForm() {
+    const [value, setValue] = useState("")
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      console.log(value)
+    }
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value)
+    }
+
+    return (
+      <form onSubmit={handleSubmit}>
+        <input value={value} onChange={handleChange} />
+      </form>
+    )
+  }
+  ```
+
+  ```tsx Keyboard Events
+  import type React from "react"
+
+  export default function KeyboardHandler() {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault()
+        // Submit logic
+      }
+    }
+
+    return <textarea onKeyDown={handleKeyDown} />
+  }
+  ```
+
+  ```tsx Mouse Events
+  import type React from "react"
+
+  export default function ClickHandler() {
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      console.log("Clicked at", e.clientX, e.clientY)
+    }
+
+    return <button onClick={handleClick}>Click me</button>
+  }
+  ```
+</CodeGroup>
+
+## Ref Types
+
+Properly type component refs:
+
+```tsx
+import { useRef, useEffect } from "react"
+import type { ImperativePanelHandle } from "react-resizable-panels"
+
+export default function TypedRefs() {
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const panelRef = useRef<ImperativePanelHandle>(null)
+
+  useEffect(() => {
+    // TypeScript knows these might be null
+    if (textareaRef.current) {
+      textareaRef.current.focus()
+    }
+
+    if (panelRef.current) {
+      panelRef.current.resize(50)
+    }
+  }, [])
+
+  return (
+    <>
+      <textarea ref={textareaRef} />
+    </>
+  )
+}
+```
+
+## Type Assertions and Guards
+
+Use type guards for runtime type safety:
+
+```tsx
+function isFile(item: FileTreeItem): item is FileItem {
+  return item.type === "file"
+}
+
+function isFolder(item: FileTreeItem): item is FolderItem {
+  return item.type === "folder"
+}
+
+// Usage
+const items: FileTreeItem[] = getFileTree()
+
+items.forEach((item) => {
+  if (isFile(item)) {
+    // TypeScript knows item is FileItem
+    console.log(item.content)
+  } else if (isFolder(item)) {
+    // TypeScript knows item is FolderItem
+    console.log(item.children)
+  }
+})
+```
+
+## Extending Component Types
+
+Extend existing component types for custom props:
+
+```tsx
+import type React from "react"
+import { Button, type buttonVariants } from "@/components/ui/button"
+import type { VariantProps } from "class-variance-authority"
+
+interface IconButtonProps extends React.ComponentProps<"button">,
+  VariantProps<typeof buttonVariants> {
+  icon: React.ReactNode
+  label: string
+  asChild?: boolean
+}
+
+export function IconButton({
+  icon,
+  label,
+  variant,
+  size = "icon",
+  ...props
+}: IconButtonProps) {
+  return (
+    <Button variant={variant} size={size} {...props}>
+      {icon}
+      <span className="sr-only">{label}</span>
+    </Button>
+  )
+}
+```
+
+## Real-World Example
+
+Here's a complete typed component from the Blocks codebase:
+
+```tsx
+"use client"
+
+import type React from "react"
+import { useRef, useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import { cn } from "@/lib/utils"
+
+interface ComposerState {
+  message: string
+  isExpanded: boolean
+}
+
+export default function TypedComposer() {
+  const [state, setState] = useState<ComposerState>({
+    message: "",
+    isExpanded: false,
+  })
+  
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    
+    if (state.message.trim()) {
+      setState({ message: "", isExpanded: false })
+      
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "auto"
+      }
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newMessage = e.target.value
+    
+    setState({
+      message: newMessage,
+      isExpanded: newMessage.length > 100 || newMessage.includes("\n"),
+    })
+    
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto"
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault()
+      handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>)
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div
+        className={cn(
+          "w-full max-w-2xl mx-auto border",
+          state.isExpanded ? "rounded-3xl" : "rounded-3xl"
+        )}
+      >
+        <Textarea
+          ref={textareaRef}
+          value={state.message}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          placeholder="Type a message"
+          className="resize-none border-0"
+        />
+        <Button type="submit" disabled={!state.message.trim()}>
+          Send
+        </Button>
+      </div>
+    </form>
+  )
+}
+```
+
+<Tip>
+  Enable strict mode in `tsconfig.json` for maximum type safety.
+</Tip>
+
+## TypeScript Configuration
+
+The recommended `tsconfig.json` for Blocks:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "jsx": "preserve",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}
+```
+
+## Best Practices
+
+- **Use strict mode**: Enable all strict type checking options
+- **Avoid `any`**: Use `unknown` or proper types instead
+- **Export types**: Export interfaces and types for component consumers
+- **Type event handlers**: Always type React event handlers explicitly
+- **Use type inference**: Let TypeScript infer types when possible
+- **Document complex types**: Add JSDoc comments for complex type definitions
+
+## Next Steps
+
+- Learn about [customization](/guides/customization) with type-safe props
+- Explore [theming](/guides/theming) with typed CSS variables

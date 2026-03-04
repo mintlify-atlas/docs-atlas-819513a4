@@ -1,0 +1,61 @@
+---
+title: "Sidebar Collapsible Sections"
+description: "A sidebar collapsible sections block."
+---
+
+A fully-featured sidebar with collapsible sections for favorites, teams, and topics. Includes search functionality, user profile dropdown, and customizable navigation items.
+
+## Installation
+
+Install the component from the Blocks registry:
+
+```bash
+npx shadcn@latest add @blocks/sidebar-01
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- `avatar`
+- `button`
+- `collapsible`
+- `command`
+- `dropdown-menu`
+- `sidebar`
+- `tooltip`
+
+And the following npm packages:
+
+```bash
+npm install @tabler/icons-react lucide-react
+```
+
+## Usage
+
+```tsx
+import Sidebar01 from "@/components/sidebar-01";
+
+export default function Page() {
+  return <Sidebar01 />;
+}
+```
+
+## Features
+
+- **Collapsible sections** - Organize navigation items into expandable groups
+- **Search functionality** - Quick command menu with keyboard shortcuts (⌘K)
+- **User profile** - Avatar with dropdown menu for settings and logout
+- **Favorites management** - Color-coded favorite items
+- **Team navigation** - Organize items by team
+- **Topic organization** - Categorize content by topics
+- **Icon support** - Custom icons for all navigation items
+- **Active state** - Visual indicator for current page
+
+## Use Cases
+
+- Application navigation sidebar
+- Dashboard layouts
+- Project management interfaces
+- Team collaboration tools
+- Content organization systems

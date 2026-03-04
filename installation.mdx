@@ -1,0 +1,211 @@
+---
+title: Installation
+description: Set up your project to use Blocks with React, Tailwind CSS, and shadcn/ui
+---
+
+# Installation
+
+Blocks is built on top of shadcn/ui and requires a React project with Tailwind CSS. Follow these steps to set up your project and start using Blocks.
+
+## Prerequisites
+
+Before installing Blocks, ensure you have:
+
+- **Node.js 18+** - Required for running the shadcn CLI and build tools
+- **React 19+** - Blocks uses React 19 features
+- **A React project** - Next.js, Remix, Vite, or any React framework
+- **Tailwind CSS** - Configured in your project for styling
+
+<Warning>
+If you don't have Tailwind CSS set up yet, follow the [Tailwind CSS installation guide](https://tailwindcss.com/docs/installation) for your framework before proceeding.
+</Warning>
+
+## Step-by-Step Installation
+
+<Steps>
+  <Step title="Install shadcn/ui">
+    If you haven't already set up shadcn/ui in your project, initialize it:
+
+    ```bash
+    npx shadcn@latest init
+    ```
+
+    This will:
+    - Create a `components.json` configuration file
+    - Set up your `components/ui` directory
+    - Configure Tailwind CSS with the necessary presets
+    - Install required dependencies like `class-variance-authority`, `clsx`, and `tailwind-merge`
+
+    <Tip>
+    Choose the style and color scheme that matches your design system. You can always customize these later.
+    </Tip>
+  </Step>
+
+  <Step title="Configure the Blocks Registry">
+    Open your `components.json` file and add the Blocks registry:
+
+    ```json
+    {
+      "$schema": "https://ui.shadcn.com/schema.json",
+      "style": "new-york",
+      "rsc": true,
+      "tsx": true,
+      "tailwind": {
+        "config": "tailwind.config.ts",
+        "css": "app/globals.css",
+        "baseColor": "slate",
+        "cssVariables": true
+      },
+      "aliases": {
+        "components": "@/components",
+        "utils": "@/lib/utils"
+      },
+      "registries": {
+        "@blocks": "https://blocks.so/r/{name}.json"
+      }
+    }
+    ```
+
+    <Note>
+    The `registries` configuration tells shadcn CLI where to fetch block definitions. The `{name}` placeholder will be replaced with the block ID when you add blocks.
+    </Note>
+  </Step>
+
+  <Step title="Install Base Dependencies">
+    Blocks uses several Radix UI primitives and other dependencies. Install the core packages:
+
+    ```bash
+    npm install @radix-ui/react-dialog @radix-ui/react-label @radix-ui/react-separator @radix-ui/react-slot
+    ```
+
+    Or with other package managers:
+
+    <CodeGroup>
+    ```bash npm
+    npm install @radix-ui/react-dialog @radix-ui/react-label @radix-ui/react-separator @radix-ui/react-slot
+    ```
+
+    ```bash yarn
+    yarn add @radix-ui/react-dialog @radix-ui/react-label @radix-ui/react-separator @radix-ui/react-slot
+    ```
+
+    ```bash pnpm
+    pnpm add @radix-ui/react-dialog @radix-ui/react-label @radix-ui/react-separator @radix-ui/react-slot
+    ```
+
+    ```bash bun
+    bun add @radix-ui/react-dialog @radix-ui/react-label @radix-ui/react-separator @radix-ui/react-slot
+    ```
+    </CodeGroup>
+
+    <Tip>
+    Don't worry about installing all dependencies upfront. When you add a block, the shadcn CLI will prompt you to install any missing dependencies automatically.
+    </Tip>
+  </Step>
+
+  <Step title="Verify Installation">
+    Test that everything is set up correctly by adding your first block:
+
+    ```bash
+    npx shadcn@latest add @blocks/login-01
+    ```
+
+    This command will:
+    1. Fetch the block definition from `https://blocks.so/r/login-01.json`
+    2. Download the component files to your project
+    3. Install any missing dependencies
+    4. Place the component in your components directory
+
+    If successful, you'll see:
+
+    ```bash
+    ✔ Done. Component added to your project.
+    ```
+
+    <Note>
+    The block will be added to your components directory based on your `components.json` aliases configuration.
+    </Note>
+  </Step>
+</Steps>
+
+## Configuration Options
+
+### Registry URL Format
+
+The Blocks registry uses this URL format:
+
+```
+https://blocks.so/r/{name}.json
+```
+
+Where `{name}` is the block ID (e.g., `login-01`, `dialog-05`, `sidebar-02`).
+
+### Alternative: Direct Registry URLs
+
+You can also add blocks without configuring the registry by using direct URLs:
+
+```bash
+npx shadcn@latest add https://blocks.so/r/login-01.json
+```
+
+This method works without modifying `components.json`, but the registry configuration provides a cleaner syntax.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Command not found: shadcn">
+    Use `npx` to run shadcn without installing it globally:
+
+    ```bash
+    npx shadcn@latest add @blocks/login-01
+    ```
+
+    The `@latest` ensures you're using the most recent version of the CLI.
+  </Accordion>
+
+  <Accordion title="Module not found errors">
+    If you see import errors after adding a block, the block may depend on shadcn/ui components you haven't installed yet. Add them individually:
+
+    ```bash
+    npx shadcn@latest add button
+    npx shadcn@latest add input
+    npx shadcn@latest add label
+    ```
+
+    Or check the error message for the specific component name.
+  </Accordion>
+
+  <Accordion title="Tailwind styles not working">
+    Ensure your `tailwind.config.js` includes the components directory in the `content` array:
+
+    ```js
+    module.exports = {
+      content: [
+        "./app/**/*.{js,ts,jsx,tsx,mdx}",
+        "./components/**/*.{js,ts,jsx,tsx,mdx}",
+      ],
+      // ...
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Registry URL not found">
+    Double-check that the `registries` configuration in `components.json` exactly matches:
+
+    ```json
+    "registries": {
+      "@blocks": "https://blocks.so/r/{name}.json"
+    }
+    ```
+
+    The `{name}` placeholder is required for the shadcn CLI to substitute block IDs.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+Now that your project is configured, learn how to add and customize blocks:
+
+<Card title="Usage Guide" icon="book" href="/usage">
+  Learn how to add blocks to your project and customize them
+</Card>

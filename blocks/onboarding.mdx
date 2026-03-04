@@ -1,0 +1,313 @@
+---
+title: 'Onboarding Blocks'
+description: 'User onboarding flows and guided setup experiences'
+---
+
+## Overview
+
+Onboarding blocks provide guided experiences that help new users get started with your application. These components walk users through setup processes, feature introductions, and initial configuration in a structured, engaging way.
+
+## Available Blocks
+
+<CardGroup cols={2}>
+  <Card title="Onboarding" icon="rocket" href="/blocks/onboarding-01">
+    Multi-step onboarding flow with progress tracking and guided setup
+  </Card>
+</CardGroup>
+
+## Key Features
+
+- **Multi-step Flows**: Break complex setup into manageable steps
+- **Progress Tracking**: Show users how far they've progressed
+- **Skip Options**: Allow users to skip optional steps
+- **Visual Guidance**: Use illustrations and clear instructions
+- **Validation**: Ensure required information is collected
+- **Personalization**: Tailor experience based on user choices
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="Account Setup">
+    Guide new users through profile creation, preferences, and initial configuration after signup.
+  </Accordion>
+  
+  <Accordion title="Workspace Creation">
+    Help teams set up their workspace, invite members, and configure settings for collaboration.
+  </Accordion>
+  
+  <Accordion title="Feature Introduction">
+    Introduce key features and capabilities to new users through interactive walkthroughs.
+  </Accordion>
+  
+  <Accordion title="Integration Setup">
+    Walk users through connecting third-party services, APIs, or external tools.
+  </Accordion>
+  
+  <Accordion title="Preference Collection">
+    Gather user preferences, interests, or goals to personalize their experience.
+  </Accordion>
+</AccordionGroup>
+
+## Implementation Example
+
+```tsx
+import { Onboarding } from '@/components/blocks/onboarding-01'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+
+export default function OnboardingPage() {
+  const router = useRouter()
+  const [currentStep, setCurrentStep] = useState(0)
+  const [userData, setUserData] = useState({})
+  
+  const steps = [
+    {
+      title: 'Welcome to Our Platform',
+      description: 'Let\'s get you set up in just a few steps',
+      component: WelcomeStep
+    },
+    {
+      title: 'Tell Us About Yourself',
+      description: 'Help us personalize your experience',
+      component: ProfileStep,
+      required: true
+    },
+    {
+      title: 'Choose Your Preferences',
+      description: 'Customize your workspace',
+      component: PreferencesStep
+    },
+    {
+      title: 'Invite Your Team',
+      description: 'Collaboration is better together',
+      component: InviteStep,
+      skippable: true
+    },
+    {
+      title: 'You\'re All Set!',
+      description: 'Ready to get started',
+      component: CompletionStep
+    }
+  ]
+  
+  const handleNext = async (stepData: any) => {
+    setUserData({ ...userData, ...stepData })
+    
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1)
+    } else {
+      // Complete onboarding
+      await completeOnboarding(userData)
+      router.push('/dashboard')
+    }
+  }
+  
+  const handleSkip = () => {
+    if (steps[currentStep].skippable) {
+      setCurrentStep(currentStep + 1)
+    }
+  }
+  
+  const handleBack = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1)
+    }
+  }
+  
+  return (
+    <Onboarding
+      steps={steps}
+      currentStep={currentStep}
+      onNext={handleNext}
+      onBack={handleBack}
+      onSkip={handleSkip}
+      progress={(currentStep / (steps.length - 1)) * 100}
+    />
+  )
+}
+```
+
+## Best Practices
+
+### Flow Design
+
+- **Keep It Short**: Limit to 3-5 steps for optimal completion rates
+- **Essential First**: Collect only essential information upfront
+- **Allow Skipping**: Let users skip optional steps and complete later
+- **Show Progress**: Display clear progress indicators
+- **One Goal Per Step**: Focus each step on a single objective
+- **Save Progress**: Auto-save so users can return later
+
+### Content Guidelines
+
+- **Clear Headings**: Use descriptive titles for each step
+- **Concise Instructions**: Keep descriptions brief and actionable
+- **Visual Aids**: Include illustrations or screenshots where helpful
+- **Value Proposition**: Explain why each step matters
+- **Encouraging Tone**: Use friendly, supportive language
+
+<Note>
+  Research shows that each additional onboarding step reduces completion rates by ~10%. Only include steps that are truly necessary for a good user experience.
+</Note>
+
+## Progress Tracking
+
+Implement clear progress indicators:
+
+```tsx
+function ProgressBar({ current, total }: { current: number; total: number }) {
+  const percentage = (current / total) * 100
+  
+  return (
+    <div className="w-full">
+      <div className="flex justify-between text-sm mb-2">
+        <span>Step {current + 1} of {total}</span>
+        <span>{Math.round(percentage)}% complete</span>
+      </div>
+      <div className="w-full bg-gray-200 rounded-full h-2">
+        <div 
+          className="bg-primary h-2 rounded-full transition-all duration-300"
+          style={{ width: `${percentage}%` }}
+        />
+      </div>
+    </div>
+  )
+}
+```
+
+## Step Validation
+
+Validate step data before allowing progression:
+
+```tsx
+const validateStep = (stepIndex: number, data: any) => {
+  const step = steps[stepIndex]
+  
+  if (!step.required) return true
+  
+  // Step-specific validation
+  switch (stepIndex) {
+    case 1: // Profile step
+      return data.name && data.role
+    case 2: // Preferences step
+      return data.preferences && data.preferences.length > 0
+    default:
+      return true
+  }
+}
+
+const handleNext = (stepData: any) => {
+  if (validateStep(currentStep, stepData)) {
+    // Proceed to next step
+    setCurrentStep(currentStep + 1)
+  } else {
+    setError('Please complete all required fields')
+  }
+}
+```
+
+## Completion Tracking
+
+Track onboarding completion for analytics:
+
+```tsx
+const trackOnboardingEvent = (event: string, data?: any) => {
+  analytics.track(event, {
+    step: currentStep,
+    totalSteps: steps.length,
+    timestamp: new Date().toISOString(),
+    ...data
+  })
+}
+
+// Track step completion
+trackOnboardingEvent('onboarding_step_completed', {
+  stepName: steps[currentStep].title
+})
+
+// Track onboarding abandonment
+trackOnboardingEvent('onboarding_abandoned', {
+  lastCompletedStep: currentStep
+})
+
+// Track completion
+trackOnboardingEvent('onboarding_completed', {
+  timeSpent: calculateTimeSpent()
+})
+```
+
+## Common Onboarding Steps
+
+| Step Type | Purpose | Example |
+|-----------|---------|----------|
+| Welcome | Introduce product value | "Welcome! Here's what you can do..." |
+| Profile | Collect basic user info | Name, role, company |
+| Preferences | Gather customization data | Interests, goals, settings |
+| Integrations | Connect external services | Connect Slack, GitHub, etc. |
+| Team Invite | Enable collaboration | Invite teammates |
+| Tutorial | Show key features | Interactive product tour |
+| Completion | Celebrate and next steps | "You're ready to go!" |
+
+## Personalization
+
+Customize the experience based on user input:
+
+```tsx
+const [userRole, setUserRole] = useState('')
+
+// Show different steps based on role
+const getStepsForRole = (role: string) => {
+  const baseSteps = [welcomeStep, profileStep]
+  
+  if (role === 'developer') {
+    return [...baseSteps, apiSetupStep, integrationStep]
+  } else if (role === 'designer') {
+    return [...baseSteps, themeCustomizationStep, assetUploadStep]
+  } else {
+    return [...baseSteps, generalPreferencesStep]
+  }
+}
+
+const steps = getStepsForRole(userRole)
+```
+
+## Exit Intent
+
+Handle users leaving onboarding:
+
+```tsx
+useEffect(() => {
+  const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+    if (currentStep > 0 && currentStep < steps.length - 1) {
+      e.preventDefault()
+      e.returnValue = 'You haven\'t finished onboarding. Are you sure you want to leave?'
+    }
+  }
+  
+  window.addEventListener('beforeunload', handleBeforeUnload)
+  return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+}, [currentStep, steps.length])
+```
+
+## Accessibility
+
+- Ensure keyboard navigation works (Tab, Enter, Arrow keys)
+- Provide skip links for screen reader users
+- Use ARIA labels for progress indicators
+- Announce step changes to screen readers
+- Maintain logical focus order
+- Ensure sufficient color contrast
+
+## Testing Onboarding
+
+- **Completion Rate**: Track what percentage of users complete onboarding
+- **Drop-off Points**: Identify where users abandon the flow
+- **Time to Complete**: Monitor how long onboarding takes
+- **Step Skipping**: Track which steps are commonly skipped
+- **Return Rate**: Measure how many users return to complete it later
+
+## Related Components
+
+- [Form Layout](/blocks/form-layout) - Form patterns for onboarding steps
+- [Login](/blocks/login) - Authentication before onboarding
+- [Dialogs](/blocks/dialogs) - Modal onboarding tooltips

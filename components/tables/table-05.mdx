@@ -1,0 +1,57 @@
+---
+title: "Data Table"
+description: "A data table block."
+---
+
+Full-featured data table with sorting, pagination, and selection. A comprehensive table component for complex data management.
+
+## Installation
+
+Install the component from the Blocks registry:
+
+```bash
+npx shadcn@latest add @blocks/table-05
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- `button`
+- `checkbox`
+- `pagination`
+- `table`
+
+And the following npm packages:
+
+```bash
+npm install lucide-react
+```
+
+## Usage
+
+```tsx
+import Table05 from "@/components/table-05";
+
+export default function Page() {
+  return <Table05 />;
+}
+```
+
+## Features
+
+- **Column sorting** - Sort by any column
+- **Row selection** - Multi-select with checkboxes
+- **Pagination** - Navigate large datasets
+- **Bulk actions** - Operate on selected rows
+- **Responsive design** - Mobile-friendly layout
+- **Customizable columns** - Flexible column configuration
+
+## Use Cases
+
+- Large dataset management
+- Admin panels
+- Data grids
+- Report tables
+- Entity management
+- Complex data visualization

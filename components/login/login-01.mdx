@@ -1,0 +1,64 @@
+---
+title: "Login with Email and Google"
+description: "A clean login form with email input and Google sign-in option"
+icon: "lock"
+---
+
+A simple and modern login interface featuring email-based authentication with a Google OAuth option separated by a divider.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://blocks.so/r/login-01
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- button
+- input
+- label
+- separator
+
+## Usage
+
+```tsx
+import Login01 from "@/components/login-01";
+
+export default function LoginPage() {
+  return <Login01 />;
+}
+```
+
+## Features
+
+- Email input field with validation attributes
+- Primary action button for email sign-in
+- Horizontal separator with "or with" text
+- Google OAuth button with custom icon
+- Terms of service and privacy policy links
+- Fully responsive layout
+- Centered container design
+- Accessible form elements with proper labels
+
+## Component Structure
+
+The component uses a centered flexbox layout with:
+
+- Form container with max-width constraint
+- Email input with autocomplete
+- Submit button spanning full width
+- Visual separator for alternative sign-in methods
+- Social login button styled as outline variant
+- Footer text with legal links
+
+## Customization
+
+You can customize the component by:
+
+- Modifying form action handlers
+- Adding additional social login providers
+- Adjusting spacing and typography
+- Customizing button styles and colors
+- Adding form validation logic

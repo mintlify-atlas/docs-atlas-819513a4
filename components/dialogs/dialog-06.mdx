@@ -1,0 +1,79 @@
+---
+title: "Dialog with Privacy Toggle"
+description: "A workspace creation dialog with privacy settings toggle"
+---
+
+A dialog for creating workspaces with an integrated privacy toggle in a styled footer section.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx shadcn@latest add @blocks/dialog-06
+```
+
+```bash pnpm
+pnpm dlx shadcn@latest add @blocks/dialog-06
+```
+
+```bash yarn
+npx shadcn@latest add @blocks/dialog-06
+```
+
+```bash bun
+bunx --bun shadcn@latest add @blocks/dialog-06
+```
+
+</CodeGroup>
+
+## Dependencies
+
+This component requires the following dependencies:
+
+- `button` - shadcn/ui button component
+- `dialog` - shadcn/ui dialog component
+- `input` - shadcn/ui input component
+- `label` - shadcn/ui label component
+- `switch` - shadcn/ui switch component
+
+## Usage
+
+```tsx
+import Dialog06 from "@/components/dialog-06";
+
+export default function Page() {
+  return <Dialog06 />;
+}
+```
+
+## Features
+
+- **Form input** - Text input for workspace name with required field indicator
+- **Privacy toggle** - Switch component for private workspace setting
+- **Styled sections** - Separated footer with muted background
+- **Descriptive text** - Clear explanations for workspace purpose and privacy
+- **Custom padding** - Uses `p-0` on content and custom padding on sections
+- **Required field** - Visual indicator with red asterisk
+- **Rounded footer** - Bottom corners rounded to match dialog styling
+
+## Component Structure
+
+The component includes:
+
+- `Dialog` with controlled state
+- `DialogTrigger` button
+- `DialogContent` with custom padding (`p-0`)
+- `DialogHeader` with title and descriptive text
+- Form element containing two sections
+- Main section with workspace name input
+- Footer section with:
+  - Muted background (`bg-muted`)
+  - Border top separation
+  - Rounded bottom corners
+  - Switch component for privacy setting
+  - Helper text explaining the privacy option
+
+<Note>
+The dialog uses `p-0` on DialogContent and applies padding to individual sections (`px-6 pt-4`, `px-6 pb-4`, `px-6 py-4`) for precise control over spacing. The footer section uses `bg-muted` and `border-t` to create visual separation.
+</Note>

@@ -1,0 +1,527 @@
+---
+title: Usage
+description: Learn how to add, import, and customize blocks in your React project
+---
+
+# Using Blocks
+
+Once you've completed the [installation](/installation), you can start adding blocks to your project. This guide covers how to add blocks, import them in your code, and customize them to match your design.
+
+## Adding Blocks
+
+Blocks are added using the shadcn CLI. Each block has a unique ID that you use to install it.
+
+### Basic Usage
+
+Add a block using the registry prefix:
+
+```bash
+npx shadcn@latest add @blocks/login-01
+```
+
+The CLI will:
+1. Fetch the block definition from the registry
+2. Download all component files
+3. Install any missing dependencies
+4. Add the files to your components directory
+
+### Block IDs and Categories
+
+Blocks are organized by category with numbered IDs:
+
+<CodeGroup>
+```bash Login & Signup
+npx shadcn@latest add @blocks/login-01
+npx shadcn@latest add @blocks/login-02
+npx shadcn@latest add @blocks/login-05
+```
+
+```bash Dialogs
+npx shadcn@latest add @blocks/dialog-01
+npx shadcn@latest add @blocks/dialog-03
+npx shadcn@latest add @blocks/dialog-11
+```
+
+```bash Sidebars
+npx shadcn@latest add @blocks/sidebar-01
+npx shadcn@latest add @blocks/sidebar-04
+npx shadcn@latest add @blocks/sidebar-06
+```
+
+```bash File Upload
+npx shadcn@latest add @blocks/file-upload-01
+npx shadcn@latest add @blocks/file-upload-03
+npx shadcn@latest add @blocks/file-upload-05
+```
+
+```bash AI Components
+npx shadcn@latest add @blocks/ai-01
+npx shadcn@latest add @blocks/ai-04
+npx shadcn@latest add @blocks/ai-05
+```
+
+```bash Tables
+npx shadcn@latest add @blocks/table-01
+npx shadcn@latest add @blocks/table-03
+npx shadcn@latest add @blocks/table-05
+```
+</CodeGroup>
+
+<Tip>
+Visit [blocks.so](https://blocks.so) to browse all available blocks with live previews and see their IDs.
+</Tip>
+
+### Block Types
+
+Blocks come in two types:
+
+- **Single file blocks** - A single `.tsx` file added to your components directory
+- **Directory blocks** - Multiple files organized in a folder (common for complex blocks like sidebars)
+
+For example:
+- `login-01` creates `components/login/login-01.tsx`
+- `sidebar-01` creates `components/sidebar/sidebar-01/` with multiple files
+
+## Importing and Using Blocks
+
+After adding a block, import it into your React components:
+
+### Single File Blocks
+
+```tsx
+import Login01 from "@/components/login/login-01";
+
+export default function LoginPage() {
+  return <Login01 />;
+}
+```
+
+### Directory Blocks
+
+Directory blocks typically export from an `index.tsx` file:
+
+```tsx
+import Sidebar01 from "@/components/sidebar/sidebar-01";
+
+export default function DashboardLayout({ children }) {
+  return (
+    <div className="flex h-screen">
+      <Sidebar01 />
+      <main className="flex-1">{children}</main>
+    </div>
+  );
+}
+```
+
+### Dialog and Modal Blocks
+
+Dialog blocks are client components that manage their own state:
+
+```tsx
+"use client";
+
+import Dialog01 from "@/components/dialogs/dialog-01";
+
+export default function PaymentSuccess() {
+  return <Dialog01 />;
+}
+```
+
+<Note>
+Most dialog blocks include state management with `useState` and are already marked with `"use client"` directive.
+</Note>
+
+## Customizing Blocks
+
+### Styling with Tailwind
+
+All blocks use Tailwind CSS classes. Customize them by modifying the class names:
+
+```tsx
+// Original
+<Button type="submit" className="mt-4 w-full">
+  Sign in
+</Button>
+
+// Customized
+<Button type="submit" className="mt-6 w-full bg-blue-600 hover:bg-blue-700">
+  Sign in
+</Button>
+```
+
+### Modifying Layout
+
+Blocks are fully editable. Change the layout structure as needed:
+
+```tsx
+// Original: Centered login
+<div className="flex items-center justify-center min-h-dvh">
+  <div className="flex flex-1 flex-col justify-center px-4 py-10 lg:px-6">
+    {/* Form content */}
+  </div>
+</div>
+
+// Custom: Full-width with side image
+<div className="grid min-h-screen lg:grid-cols-2">
+  <div className="flex flex-col justify-center px-8 py-12">
+    {/* Form content */}
+  </div>
+  <div className="hidden lg:block">
+    <img src="/hero.jpg" alt="Hero" className="h-full w-full object-cover" />
+  </div>
+</div>
+```
+
+### Adding Form Handling
+
+Many blocks include form markup but no submission logic. Add your own:
+
+```tsx
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+export default function Login01() {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      
+      if (response.ok) {
+        // Handle success
+      }
+    } catch (error) {
+      console.error("Login failed", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-dvh">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 className="text-balance text-center text-xl font-semibold">
+          Log in or create account
+        </h2>
+        <form onSubmit={handleSubmit} className="mt-6">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="john@company.com"
+            className="mt-2"
+            required
+          />
+          <Button type="submit" className="mt-4 w-full" disabled={loading}>
+            {loading ? "Signing in..." : "Sign in"}
+          </Button>
+        </form>
+      </div>
+    </div>
+  );
+}
+```
+
+### Using with React Hook Form
+
+For more complex forms, integrate with React Hook Form:
+
+```tsx
+"use client";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
+
+type LoginForm = z.infer<typeof loginSchema>;
+
+export default function Login03() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginForm>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = async (data: LoginForm) => {
+    // Handle form submission
+    console.log(data);
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-dvh">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              type="email"
+              id="email"
+              {...register("email")}
+              placeholder="john@company.com"
+              className="mt-2"
+            />
+            {errors.email && (
+              <p className="mt-1 text-sm text-destructive">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
+          
+          <div>
+            <Label htmlFor="password">Password</Label>
+            <Input
+              type="password"
+              id="password"
+              {...register("password")}
+              className="mt-2"
+            />
+            {errors.password && (
+              <p className="mt-1 text-sm text-destructive">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+          
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? "Signing in..." : "Sign in"}
+          </Button>
+        </form>
+      </div>
+    </div>
+  );
+}
+```
+
+<Note>
+Blocks use shadcn/ui form components, which are built on top of Radix UI. They work seamlessly with React Hook Form and other form libraries.
+</Note>
+
+## Real-World Examples
+
+### Stats Dashboard
+
+Combine multiple stats blocks to create a dashboard:
+
+```tsx
+import Stats01 from "@/components/stats/stats-01";
+import Stats03 from "@/components/stats/stats-03";
+import Stats10 from "@/components/stats/stats-10";
+
+export default function Dashboard() {
+  return (
+    <div className="space-y-8 p-8">
+      <h1 className="text-3xl font-bold">Analytics Dashboard</h1>
+      
+      <div className="grid gap-4 md:grid-cols-3">
+        <Stats01 />
+        <Stats01 />
+        <Stats01 />
+      </div>
+      
+      <div className="grid gap-8 lg:grid-cols-2">
+        <Stats03 />
+        <Stats10 />
+      </div>
+    </div>
+  );
+}
+```
+
+### Multi-Block Page
+
+Combine different block types on a single page:
+
+```tsx
+import Sidebar02 from "@/components/sidebar/sidebar-02";
+import CommandMenu01 from "@/components/command-menu/command-menu-01";
+import Table03 from "@/components/tables/table-03";
+
+export default function ProjectsPage() {
+  return (
+    <div className="flex h-screen">
+      <Sidebar02 />
+      <main className="flex-1 overflow-auto">
+        <CommandMenu01 />
+        <div className="p-8">
+          <h1 className="text-2xl font-bold mb-6">Projects</h1>
+          <Table03 />
+        </div>
+      </main>
+    </div>
+  );
+}
+```
+
+## Block Dependencies
+
+Some blocks require specific shadcn/ui components. If you encounter import errors, install the missing components:
+
+```bash
+# Common dependencies
+npx shadcn@latest add button
+npx shadcn@latest add input
+npx shadcn@latest add label
+npx shadcn@latest add separator
+npx shadcn@latest add dialog
+
+# For specific blocks
+npx shadcn@latest add select      # For forms with dropdowns
+npx shadcn@latest add checkbox    # For forms with checkboxes
+npx shadcn@latest add calendar    # For date pickers
+npx shadcn@latest add table       # For table blocks
+npx shadcn@latest add command     # For command menus
+```
+
+<Tip>
+The shadcn CLI will show you which components are missing when you try to add a block. Install them as prompted.
+</Tip>
+
+## Best Practices
+
+### Component Organization
+
+Keep blocks organized in your components directory:
+
+```
+components/
+├── ui/              # Base shadcn/ui components
+├── login/           # Login blocks
+├── dialogs/         # Dialog blocks
+├── sidebar/         # Sidebar blocks
+└── stats/           # Stats blocks
+```
+
+### Rename Components
+
+Give blocks meaningful names in your project:
+
+```tsx
+// Instead of
+import Login01 from "@/components/login/login-01";
+
+// Use
+import AuthForm from "@/components/login/login-01";
+// or move and rename the file
+import AuthForm from "@/components/auth/auth-form";
+```
+
+### Extract Reusable Logic
+
+If you customize a block significantly, extract shared logic:
+
+```tsx
+// hooks/useAuth.ts
+export function useAuth() {
+  const [loading, setLoading] = useState(false);
+  
+  const login = async (email: string) => {
+    setLoading(true);
+    try {
+      // Auth logic
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  return { login, loading };
+}
+
+// components/auth/auth-form.tsx
+import { useAuth } from "@/hooks/useAuth";
+
+export default function AuthForm() {
+  const { login, loading } = useAuth();
+  // Use in your block
+}
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Import path not found">
+    Check your `components.json` aliases configuration:
+
+    ```json
+    {
+      "aliases": {
+        "components": "@/components",
+        "utils": "@/lib/utils"
+      }
+    }
+    ```
+
+    And ensure your `tsconfig.json` has matching path mappings:
+
+    ```json
+    {
+      "compilerOptions": {
+        "paths": {
+          "@/*": ["./*"]
+        }
+      }
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Styles not applying correctly">
+    Ensure your Tailwind CSS is configured to scan the components directory:
+
+    ```js
+    // tailwind.config.js
+    module.exports = {
+      content: [
+        "./app/**/*.{js,ts,jsx,tsx,mdx}",
+        "./components/**/*.{js,ts,jsx,tsx,mdx}",
+      ],
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="'use client' directive errors">
+    If you're using Next.js App Router and see errors about client components, ensure the file has the `"use client"` directive at the top:
+
+    ```tsx
+    "use client";
+
+    import { useState } from "react";
+    // Rest of component
+    ```
+
+    Most interactive blocks already include this directive.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Browse Blocks" icon="grid" href="https://blocks.so">
+    View all 60+ blocks with live previews and get their IDs
+  </Card>
+  <Card title="Contribute" icon="github" href="https://github.com/ephraimduncan/blocks">
+    Submit your own blocks or improve existing ones
+  </Card>
+</CardGroup>

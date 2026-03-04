@@ -1,0 +1,59 @@
+---
+title: "Sidebar Dashboard Inset"
+description: "A sidebar dashboard inset block."
+---
+
+A sophisticated dashboard sidebar with team switching, notifications popover, and nested navigation. Features smooth animations and responsive design.
+
+## Installation
+
+Install the component from the Blocks registry:
+
+```bash
+npx shadcn@latest add @blocks/sidebar-02
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- `avatar`
+- `button`
+- `collapsible`
+- `dropdown-menu`
+- `sidebar`
+
+And the following npm packages:
+
+```bash
+npm install framer-motion lucide-react
+```
+
+## Usage
+
+```tsx
+import Sidebar02 from "@/components/sidebar-02";
+
+export default function Page() {
+  return <Sidebar02 />;
+}
+```
+
+## Features
+
+- **Team switching** - Multi-team support with dropdown selector
+- **Notifications** - Integrated notification popover
+- **Nested navigation** - Sub-menu support for hierarchical navigation
+- **Smooth animations** - Powered by Framer Motion
+- **Custom logo** - Branded sidebar header
+- **Collapsible sub-items** - Expand/collapse navigation groups
+- **Icon integration** - Lucide React icons throughout
+- **Inset layout** - Professional dashboard appearance
+
+## Use Cases
+
+- Multi-tenant dashboards
+- E-commerce admin panels
+- SaaS application interfaces
+- Team management platforms
+- Analytics dashboards

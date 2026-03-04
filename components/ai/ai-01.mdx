@@ -1,0 +1,155 @@
+---
+title: AI Chat with Voice Input
+description: A ai chat with voice input block.
+author: ephraim duncan
+---
+
+<ComponentPreview name="ai-01" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsContent value="cli">
+
+<Steps>
+
+<Step>Install dependencies</Step>
+
+```bash
+npx shadcn@latest add @blocks/ai-01
+```
+
+This will install the following dependencies:
+- `@tabler/icons-react`
+
+And add the following shadcn/ui components:
+- `button`
+- `dropdown-menu`
+- `textarea`
+
+</Steps>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install dependencies</Step>
+
+```bash
+npm install @tabler/icons-react
+```
+
+<Step>Add shadcn/ui components</Step>
+
+```bash
+npx shadcn@latest add button dropdown-menu textarea
+```
+
+<Step>Copy the source code</Step>
+
+Create `components/ai-01.tsx` and paste the component code.
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import Ai01 from "@/components/ai-01";
+
+export default function Page() {
+  return <Ai01 />;
+}
+```
+
+## Features
+
+This AI chat component provides a modern, expandable interface with the following features:
+
+<Note>
+**Dynamic Layout** - The component intelligently expands from a compact single-line input to a multi-line interface as users type longer messages or multi-line content.
+</Note>
+
+### Voice Input
+
+- **Audio Recording** - Built-in microphone button for voice message recording
+- **Audio Visualization** - Wave visualization button to display audio feedback
+- **Multi-modal Input** - Seamlessly switch between text and voice input
+
+### Smart Attachments
+
+- **File Uploads** - Add photos and files through a dropdown menu
+- **Agent Mode** - Enable AI agent capabilities for advanced interactions
+- **Deep Research** - Trigger comprehensive research mode
+
+### Auto-Expanding Textarea
+
+- Automatically adjusts height based on content
+- Supports multi-line input with proper formatting
+- Expands layout when content exceeds 100 characters or includes line breaks
+
+### Keyboard Shortcuts
+
+- **Enter** - Submit message
+- **Shift + Enter** - New line
+
+## Component Props
+
+This component doesn't accept external props. All state is managed internally.
+
+## Customization
+
+The component uses a grid-based layout system that adapts based on the `isExpanded` state:
+
+```tsx
+className={cn(
+  "w-full max-w-2xl mx-auto bg-transparent dark:bg-muted/50",
+  isExpanded
+    ? "rounded-3xl grid [grid-template-areas:'header'_'primary'_'footer']"
+    : "rounded-3xl grid [grid-template-areas:'header_header_header'_'leading_primary_trailing'_'._footer_.']"
+)}
+```
+
+### Styling Options
+
+- Modify the `max-w-2xl` class to change the maximum width
+- Customize the rounded corners by changing `rounded-3xl`
+- Adjust the expansion threshold by modifying the condition: `e.target.value.length > 100`
+
+### Adding Custom Actions
+
+Extend the dropdown menu with additional options:
+
+```tsx
+<DropdownMenuItem
+  className="rounded-md"
+  onClick={() => handleCustomAction()}
+>
+  <IconCustom size={20} className="opacity-60" />
+  Custom Action
+</DropdownMenuItem>
+```
+
+## Implementation Details
+
+The component manages several state variables:
+
+- `message` - Current input text
+- `isExpanded` - Layout expansion state
+- `textareaRef` - Reference for auto-resizing
+- `fileInputRef` - Reference for file upload input
+
+The `handleTextareaChange` function automatically adjusts the textarea height:
+
+```tsx
+if (textareaRef.current) {
+  textareaRef.current.style.height = "auto";
+  textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+}
+```

@@ -1,0 +1,106 @@
+---
+title: "Dialog with Avatar Upload"
+description: "An author profile dialog with avatar upload and form inputs"
+---
+
+A dialog for adding or editing author profiles featuring avatar image upload with preview, file size validation, and form inputs.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx shadcn@latest add @blocks/dialog-12
+```
+
+```bash pnpm
+pnpm dlx shadcn@latest add @blocks/dialog-12
+```
+
+```bash yarn
+npx shadcn@latest add @blocks/dialog-12
+```
+
+```bash bun
+bunx --bun shadcn@latest add @blocks/dialog-12
+```
+
+</CodeGroup>
+
+## Dependencies
+
+This component requires the following dependencies:
+
+- `avatar` - shadcn/ui avatar component
+- `button` - shadcn/ui button component
+- `dialog` - shadcn/ui dialog component
+- `input` - shadcn/ui input component
+- `label` - shadcn/ui label component
+- `lucide-react` - Icon library (Plus, UserRoundIcon, X)
+
+## Usage
+
+```tsx
+import Dialog12 from "@/components/dialog-12";
+
+export default function Page() {
+  return <Dialog12 />;
+}
+```
+
+## Features
+
+- **Avatar upload** - Click to upload profile image with preview
+- **File validation** - 1MB file size limit with user feedback
+- **Image preview** - Shows uploaded image in avatar component
+- **Remove image** - X button to clear uploaded image
+- **Add/remove toggle** - Plus icon becomes X icon when image is present
+- **Fallback avatar** - UserRoundIcon shown when no image uploaded
+- **Form inputs** - Author name (required) and title fields
+- **Grid layout** - Two-column responsive grid for avatar and form
+- **State management** - Manages image, form values, and file input
+- **useRef** - Direct access to file input for programmatic triggering
+- **FileReader API** - Reads and displays uploaded images
+- **Rounded dialog** - Extra rounded corners (`rounded-3xl`)
+
+## Component Structure
+
+The component includes:
+
+- `Dialog` with controlled state
+- `DialogTrigger` button
+- `DialogContent` with:
+  - Custom padding (`p-0`)
+  - Large width (`sm:max-w-lg`)
+  - Extra rounded corners (`rounded-3xl`)
+  - No gap (`gap-0`)
+- Bordered `DialogHeader`
+- Grid layout (`grid-cols-1 md:grid-cols-5`):
+  - **Avatar column** (`md:col-span-2`):
+    - Large Avatar (h-24 w-24) with border
+    - AvatarImage showing uploaded file
+    - AvatarFallback with UserRoundIcon
+    - Add/remove button (absolute positioned):
+      - Plus icon when no image
+      - X icon when image present
+    - Upload instructions and file size limit
+    - Hidden file input
+    - "Add Image" button
+  - **Form column** (`md:col-span-3`):
+    - Author name input (required, with asterisk)
+    - Title input (optional)
+    - Action buttons (Cancel and Save)
+- State management for:
+  - Dialog visibility
+  - Author name and title
+  - Uploaded image (base64)
+- useRef for file input element
+- File change handler with:
+  - Size validation (1MB limit)
+  - FileReader for image preview
+  - Base64 conversion
+- Click handler to trigger file input
+
+<Note>
+The component uses FileReader to convert uploaded images to base64 strings for preview. File size is validated at 1MB (1048576 bytes) before processing. The add/remove button changes icon based on whether an image is present.
+</Note>

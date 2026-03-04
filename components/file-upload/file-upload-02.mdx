@@ -1,0 +1,62 @@
+---
+title: File Upload Simple
+description: A file upload simple block.
+---
+
+<ComponentPreview name="file-upload-02" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add "https://ui.shadcn.com/r/file-upload-02"
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="file-upload-02" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import FileUpload02 from "@/components/file-upload-02"
+
+export default function Page() {
+  return <FileUpload02 />
+}
+```
+
+## Features
+
+This component includes:
+
+- Simple form-based file upload
+- File type restrictions (CSV, XLSX, XLS)
+- Workspace name input field
+- Native file input with accept attribute
+- Helper text for allowed file types
+- Form validation with required fields
+- Cancel and submit actions
+- Clean card-based layout

@@ -1,0 +1,208 @@
+---
+title: 'File Upload Blocks'
+description: 'File upload components with drag-and-drop, preview, and progress tracking'
+---
+
+## Overview
+
+File upload blocks provide intuitive interfaces for users to upload files to your application. These components support drag-and-drop, file previews, progress tracking, and multi-file uploads with various styling options.
+
+## Available Blocks
+
+<CardGroup cols={2}>
+  <Card title="File Upload with Preview" icon="image" href="/blocks/file-upload-01">
+    Upload interface with image preview thumbnails
+  </Card>
+  
+  <Card title="File Upload Simple" icon="upload" href="/blocks/file-upload-02">
+    Minimalist file upload button for basic use cases
+  </Card>
+  
+  <Card title="File Upload Multi-File Dropzone" icon="files" href="/blocks/file-upload-03">
+    Drag-and-drop zone supporting multiple file uploads
+  </Card>
+  
+  <Card title="File Upload Drag & Drop" icon="hand" href="/blocks/file-upload-04">
+    Enhanced drag-and-drop interface with visual feedback
+  </Card>
+  
+  <Card title="File Upload with Progress" icon="chart-line" href="/blocks/file-upload-05">
+    Upload interface with real-time progress indicators
+  </Card>
+  
+  <Card title="File Upload with Status Sections" icon="list-check" href="/blocks/file-upload-06">
+    Organized upload manager with status sections for pending, uploading, and completed files
+  </Card>
+</CardGroup>
+
+## Key Features
+
+- **Drag & Drop**: Intuitive drag-and-drop file selection
+- **File Previews**: Visual previews for images and documents
+- **Progress Tracking**: Real-time upload progress bars
+- **Multi-File Support**: Upload multiple files simultaneously
+- **File Validation**: Size limits, type restrictions, and error handling
+- **Status Management**: Track upload states (pending, uploading, complete, error)
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="Profile Pictures">
+    Use the preview variant for avatar or profile image uploads with instant visual feedback.
+  </Accordion>
+  
+  <Accordion title="Document Management">
+    Implement multi-file dropzones for document management systems where users need to upload multiple files at once.
+  </Accordion>
+  
+  <Accordion title="Media Libraries">
+    Create media upload interfaces with preview thumbnails and organized status sections.
+  </Accordion>
+  
+  <Accordion title="Form Attachments">
+    Add file upload capabilities to forms for supporting documents, receipts, or other attachments.
+  </Accordion>
+  
+  <Accordion title="Bulk Imports">
+    Handle CSV, Excel, or data file uploads with progress tracking for import operations.
+  </Accordion>
+</AccordionGroup>
+
+## Implementation Example
+
+```tsx
+import { FileUploadWithProgress } from '@/components/blocks/file-upload-05'
+import { useState } from 'react'
+
+export default function UploadPage() {
+  const [files, setFiles] = useState<File[]>([])
+  const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
+  
+  const handleUpload = async (file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    
+    // Upload with progress tracking
+    await fetch('/api/upload', {
+      method: 'POST',
+      body: formData,
+      // Track progress
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        )
+        setUploadProgress(prev => ({
+          ...prev,
+          [file.name]: percentCompleted
+        }))
+      }
+    })
+  }
+  
+  return (
+    <FileUploadWithProgress
+      onFilesSelected={setFiles}
+      uploadProgress={uploadProgress}
+      maxSize={10 * 1024 * 1024} // 10MB
+      acceptedTypes={['image/*', 'application/pdf']}
+    />
+  )
+}
+```
+
+## File Validation
+
+Implement proper validation to ensure uploaded files meet your requirements:
+
+```tsx
+const validateFile = (file: File) => {
+  // Check file size (e.g., 10MB limit)
+  const maxSize = 10 * 1024 * 1024
+  if (file.size > maxSize) {
+    return 'File size must be less than 10MB'
+  }
+  
+  // Check file type
+  const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf']
+  if (!allowedTypes.includes(file.type)) {
+    return 'Only JPEG, PNG, and PDF files are allowed'
+  }
+  
+  return null // Valid
+}
+```
+
+<Note>
+  Always validate files on both the client and server side. Client-side validation provides immediate feedback, but server-side validation is essential for security.
+</Note>
+
+## Best Practices
+
+### User Experience
+
+- **Clear Instructions**: Tell users what file types and sizes are accepted
+- **Visual Feedback**: Show clear drag-over states and upload progress
+- **Error Handling**: Provide specific error messages for validation failures
+- **File Limits**: Clearly communicate any file size or quantity restrictions
+- **Preview Support**: Show thumbnails for images when possible
+
+### Performance
+
+- **Chunked Uploads**: For large files, implement chunked uploading
+- **Parallel Uploads**: Allow multiple files to upload simultaneously
+- **Compression**: Consider client-side image compression for large images
+- **Cancel Support**: Allow users to cancel ongoing uploads
+
+### Security
+
+- **File Type Validation**: Verify file types on the server, not just by extension
+- **Size Limits**: Enforce maximum file sizes to prevent abuse
+- **Virus Scanning**: Scan uploaded files for malware
+- **Storage Limits**: Implement per-user storage quotas
+
+## Upload States
+
+| State | Description | Visual Indicator |
+|-------|-------------|------------------|
+| Idle | Ready to accept files | Dropzone with instructions |
+| Drag Over | File being dragged over | Highlighted border |
+| Validating | Checking file validity | Spinner icon |
+| Uploading | File being uploaded | Progress bar |
+| Complete | Upload successful | Checkmark icon |
+| Error | Upload failed | Error icon and message |
+
+## Multi-File Management
+
+For the status sections variant, files are organized by state:
+
+```tsx
+import { FileUploadWithStatusSections } from '@/components/blocks/file-upload-06'
+
+const filesByStatus = {
+  pending: files.filter(f => f.status === 'pending'),
+  uploading: files.filter(f => f.status === 'uploading'),
+  completed: files.filter(f => f.status === 'completed'),
+  failed: files.filter(f => f.status === 'failed')
+}
+
+<FileUploadWithStatusSections
+  files={filesByStatus}
+  onUpload={handleUpload}
+  onRemove={handleRemove}
+  onRetry={handleRetry}
+/>
+```
+
+## Accessibility
+
+- Ensure keyboard navigation works for all upload controls
+- Provide clear ARIA labels for screen readers
+- Announce upload progress and status changes
+- Make sure error messages are associated with inputs
+- Support both click and drag-and-drop interactions
+
+## Related Components
+
+- [Dialogs](/blocks/dialogs) - Modal file upload interfaces
+- [Form Layout](/blocks/form-layout) - Forms with file attachments
+- [AI Chat](/blocks/ai) - Chat with file sharing

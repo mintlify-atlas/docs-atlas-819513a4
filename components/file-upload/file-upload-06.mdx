@@ -1,0 +1,72 @@
+---
+title: File Upload with Status Sections
+description: A file upload with status sections block.
+---
+
+<ComponentPreview name="file-upload-06" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add "https://ui.shadcn.com/r/file-upload-06"
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install lucide-react
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="file-upload-06" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import FileUpload06 from "@/components/file-upload-06"
+
+export default function Page() {
+  return <FileUpload06 />
+}
+```
+
+## Features
+
+This component includes:
+
+- Organized upload sections (Uploading and Finished)
+- Multiple file upload support
+- Real-time progress tracking per file
+- Visual status indicators (Loader for uploading, CheckCircle for completed)
+- Drag and drop dropzone
+- Click to browse files
+- File type restrictions (JPG, PNG, GIF)
+- Individual file removal on hover
+- Progress bars with percentage display
+- Separated sections with visual dividers
+- Maximum file size information (10 MB)
+- Responsive design with flex layout

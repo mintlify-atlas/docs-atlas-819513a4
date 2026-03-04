@@ -1,0 +1,70 @@
+---
+title: "Dialog Confirmation"
+description: "A centered confirmation dialog with success icon and action button"
+---
+
+A dialog confirmation component featuring a centered layout with a success icon, title, description, and call-to-action button.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx shadcn@latest add @blocks/dialog-01
+```
+
+```bash pnpm
+pnpm dlx shadcn@latest add @blocks/dialog-01
+```
+
+```bash yarn
+npx shadcn@latest add @blocks/dialog-01
+```
+
+```bash bun
+bunx --bun shadcn@latest add @blocks/dialog-01
+```
+
+</CodeGroup>
+
+## Dependencies
+
+This component requires the following dependencies:
+
+- `button` - shadcn/ui button component
+- `dialog` - shadcn/ui dialog component
+- `lucide-react` - Icon library
+
+## Usage
+
+```tsx
+import Dialog01 from "@/components/dialog-01";
+
+export default function Page() {
+  return <Dialog01 />;
+}
+```
+
+## Features
+
+- **Centered layout** - All content is centered for visual balance
+- **Success icon** - Green checkmark in circular background
+- **Controlled state** - Uses React state to manage open/close
+- **Responsive design** - Adapts to different screen sizes with `sm:max-w-sm`
+- **Accessible** - Built on Radix UI primitives with proper ARIA attributes
+
+## Component Structure
+
+The component includes:
+
+- `Dialog` wrapper with controlled open state
+- `DialogTrigger` button to show the dialog
+- `DialogContent` with centered content layout
+- Success icon (Check) in green circular background
+- `DialogHeader` with title and description
+- `DialogFooter` with primary action button
+- `DialogClose` to handle dismissal
+
+<Note>
+The dialog state is initialized as `true` for demonstration purposes. In production, you'll want to control this based on user actions.
+</Note>

@@ -1,0 +1,57 @@
+---
+title: "Table with Filters"
+description: "A table with filters block."
+---
+
+Advanced data table with filtering capabilities. Features column filters, search, and status filtering.
+
+## Installation
+
+Install the component from the Blocks registry:
+
+```bash
+npx shadcn@latest add @blocks/table-03
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- `button`
+- `input`
+- `select`
+- `table`
+
+And the following npm packages:
+
+```bash
+npm install lucide-react
+```
+
+## Usage
+
+```tsx
+import Table03 from "@/components/table-03";
+
+export default function Page() {
+  return <Table03 />;
+}
+```
+
+## Features
+
+- **Column filtering** - Filter by specific columns
+- **Search functionality** - Full-text search
+- **Status filters** - Filter by status categories
+- **Multiple filters** - Combine various filter types
+- **Clear filters** - Reset all filters
+- **Real-time filtering** - Instant results
+
+## Use Cases
+
+- Data exploration
+- Report filtering
+- Inventory management
+- Customer relationship management
+- Analytics dashboards
+- Search results

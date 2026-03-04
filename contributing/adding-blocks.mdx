@@ -1,0 +1,293 @@
+---
+title: Adding Blocks
+description: Step-by-step guide to adding new blocks to the registry
+---
+
+## Overview
+
+Adding new blocks to the Blocks registry involves several steps, from creating the component to registering it in the metadata files. This guide walks you through the entire process.
+
+<Note>
+  We ask that you **add blocks to existing categories** rather than creating new ones. If you have ideas for a new category, please open an issue to discuss it with the maintainers.
+</Note>
+
+## Available Categories
+
+Blocks must be added to one of the existing categories defined in `content/blocks-categories.tsx`:
+
+- **AI Components** - AI-powered components and interfaces
+- **Command Menu** - Command palettes and quick actions
+- **Dialogs** - Modal dialogs and alerts
+- **File Upload** - File upload interfaces and dropzones
+- **Form Layout** - Form layouts and input groups
+- **Grid List** - Grid and list layouts
+- **Login & Signup** - Authentication interfaces
+- **Onboarding** - User onboarding flows
+- **Sidebar** - Sidebar navigation components
+- **Stats** - Statistics and metrics displays
+- **Tables** - Data tables and lists
+
+## Step-by-Step Guide
+
+<Steps>
+  <Step title="Create the component file">
+    Create your component in the appropriate category directory:
+
+    ```bash
+    content/components/{category}/{block-id}.tsx
+    ```
+
+    For example, to add a new login block:
+
+    ```tsx
+    // content/components/login/login-10.tsx
+    import { Button } from "@/components/ui/button";
+    import { Input } from "@/components/ui/input";
+    import { Label } from "@/components/ui/label";
+
+    export default function Login10() {
+      return (
+        <div className="flex items-center justify-center min-h-dvh">
+          <div className="flex flex-1 flex-col justify-center px-4 py-10 lg:px-6">
+            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+              <h2 className="text-balance text-center text-xl font-semibold text-foreground">
+                Sign in to your account
+              </h2>
+              <form action="#" method="post" className="mt-6">
+                <Label htmlFor="email" className="font-medium text-foreground">
+                  Email
+                </Label>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  autoComplete="email"
+                  placeholder="john@company.com"
+                  className="mt-2"
+                />
+                <Button type="submit" className="mt-4 w-full">
+                  Sign in
+                </Button>
+              </form>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    ```
+
+    <Warning>
+      Use kebab-case for file names (e.g., `login-10.tsx`) and PascalCase for component names (e.g., `Login10`).
+    </Warning>
+  </Step>
+
+  <Step title="Export from category index">
+    Add an export for your component in the category's `index.ts` file:
+
+    ```tsx
+    // content/components/login/index.ts
+    export { default as Login01 } from "./login-01";
+    export { default as Login02 } from "./login-02";
+    // ... other exports
+    export { default as Login10 } from "./login-10"; // Add this line
+    ```
+
+    This makes your component available for import in the registry.
+  </Step>
+
+  <Step title="Register metadata">
+    Add metadata for your block in `content/blocks-metadata.ts`:
+
+    ```tsx
+    // content/blocks-metadata.ts
+    import { BlocksMetadata, categoryIds } from "./declarations";
+
+    export const blocksMetadata: BlocksMetadata[] = [
+      // ... existing blocks
+      {
+        id: "login-10",
+        category: categoryIds.Login,
+        name: "Login with Email Link",
+        iframeHeight: "500px",
+        type: "file",
+      },
+    ];
+    ```
+
+    **Metadata fields:**
+    - `id` - Unique identifier for the block (matches filename)
+    - `category` - Category ID from `categoryIds` constant
+    - `name` - Display name for the block
+    - `iframeHeight` - Height for the preview iframe (optional)
+    - `type` - Either `"file"` or `"directory"` based on block structure
+  </Step>
+
+  <Step title="Map the component">
+    Add your component to the component mapping in `content/blocks-components.tsx`:
+
+    ```tsx
+    // content/blocks-components.tsx
+    import * as components from "./components";
+
+    export const blocksComponents: { [blocksId: string]: React.ElementType } = {
+      // ... existing mappings
+      "login-10": components.Login10,
+    };
+    ```
+
+    This connects your component to its metadata.
+  </Step>
+
+  <Step title="Generate the registry">
+    Run the registry generation script to create the JSON files:
+
+    ```bash
+    bun run generate:registry
+    ```
+
+    This will:
+    - Generate individual JSON files for each block in `public/r/`
+    - Create the main `registry.json` file
+    - Validate the registry structure
+
+    You can use the verbose flag for more detailed output:
+
+    ```bash
+    bun run generate:registry:verbose
+    ```
+  </Step>
+
+  <Step title="Test your block">
+    Test your new block in the development environment:
+
+    ```bash
+    bun run dev
+    ```
+
+    Navigate to your block's category and verify:
+    - The block appears in the list
+    - The preview renders correctly
+    - The code can be copied
+    - All interactions work as expected
+  </Step>
+</Steps>
+
+## Block Types
+
+Blocks can be one of two types:
+
+### File Type
+
+Single-file components that are self-contained:
+
+```tsx
+{
+  id: "login-01",
+  type: "file",
+  // ...
+}
+```
+
+Most blocks are file type and exist as a single `.tsx` file.
+
+### Directory Type
+
+Multi-file components with additional dependencies or sub-components:
+
+```tsx
+{
+  id: "file-upload-01",
+  type: "directory",
+  // ...
+}
+```
+
+Directory type blocks should be organized in a folder with the same name as the block ID.
+
+## File Structure Example
+
+Here's how a category directory should look:
+
+```
+content/components/login/
+├── index.ts           # Export all login components
+├── login-01.tsx       # Individual block files
+├── login-02.tsx
+├── login-03.tsx
+└── login-10.tsx       # Your new block
+```
+
+## Testing Blocks Locally
+
+Before submitting your block, test it thoroughly:
+
+<CodeGroup>
+
+```bash Development
+# Start dev server
+bun run dev
+
+# Build to check for errors
+bun run build
+```
+
+```bash Validation
+# Validate registry structure
+bun run validate:registry
+
+# Check registry information
+bun run registry:info
+```
+
+```bash Linting
+# Run linter
+bunx ultracite lint
+```
+
+</CodeGroup>
+
+## Common Issues
+
+### Block not appearing
+
+If your block doesn't appear after adding it:
+
+1. Verify the block is exported in the category's `index.ts`
+2. Check that metadata is added to `blocks-metadata.ts`
+3. Ensure component mapping exists in `blocks-components.tsx`
+4. Run `bun run generate:registry` to regenerate the registry
+5. Restart the development server
+
+### Registry generation fails
+
+If registry generation fails:
+
+1. Check for syntax errors in your component
+2. Verify all imports are correct
+3. Ensure the category ID is valid
+4. Run with verbose flag to see detailed errors:
+   ```bash
+   bun run generate:registry:verbose
+   ```
+
+### TypeScript errors
+
+Ensure your component:
+- Uses proper TypeScript types
+- Imports components from the correct paths
+- Follows the existing code patterns
+
+<Note>
+  The registry generation script automatically validates your block structure and will report errors if something is misconfigured.
+</Note>
+
+## Next Steps
+
+After adding your block:
+
+1. Follow the [guidelines](/contributing/guidelines) for code quality
+2. Review the [overview](/contributing/overview) for the pull request process
+3. Test your block thoroughly before submitting
+4. Include screenshots in your pull request description
+
+Thank you for contributing a new block to the library!

@@ -1,0 +1,99 @@
+---
+title: "Login Full Page with Icons"
+description: "Comprehensive login form with input icons, password toggle, and remember me"
+icon: "lock"
+---
+
+A full-featured login page with input field icons, password visibility toggle, remember me checkbox, and Google sign-in option.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://blocks.so/r/login-07
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- button
+- checkbox
+- input
+- label
+- separator
+
+### External Dependencies
+
+- lucide-react (for icons)
+
+## Usage
+
+```tsx
+import Login07 from "@/components/login-07";
+
+export default function LoginPage() {
+  return <Login07 />;
+}
+```
+
+## Features
+
+- Large centered logo
+- Descriptive welcome message
+- Google sign-in button with icon
+- Email input with mail icon prefix
+- Password input with lock icon prefix
+- Password visibility toggle button
+- Forgot password link
+- Remember me checkbox (30 days)
+- Sign-in button with arrow icon
+- Create account link
+- Client-side state management
+- Fully accessible form
+- Icon indicators for all inputs
+
+## Component Structure
+
+The page includes:
+
+- Large logo (16x16)
+- Welcome heading and description
+- Google OAuth button
+- Email separator with instructional text
+- Email field with Mail icon
+- Password field with Lock icon and Eye toggle
+- Remember me checkbox
+- Submit button with ArrowRight icon
+- Sign-up link at bottom
+
+## Icons Used
+
+- **Mail**: Email input prefix
+- **Lock**: Password input prefix
+- **Eye/EyeOff**: Password visibility toggle
+- **ArrowRight**: Submit button suffix
+- **Google**: Custom SVG for Google button
+
+## Interactive Features
+
+### Password Visibility Toggle
+- Click eye icon to show/hide password
+- Accessible aria-label and aria-pressed
+- Icon changes between Eye and EyeOff
+
+### Remember Me
+- Checkbox with descriptive label
+- "Remember for 30 days" text
+
+## Customization
+
+You can customize by:
+
+- Replacing logo with your brand
+- Modifying icon styles and sizes
+- Adjusting remember me duration
+- Adding more OAuth providers
+- Customizing button colors
+- Implementing form validation
+- Adding loading states
+- Modifying spacing and typography

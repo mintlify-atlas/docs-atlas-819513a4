@@ -1,0 +1,99 @@
+---
+title: "Dialog with Calendar and Time Picker"
+description: "A meeting scheduler dialog with calendar, time picker, and form inputs"
+---
+
+A comprehensive meeting scheduling dialog featuring a calendar picker, time selection, and multiple form inputs for meeting details.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx shadcn@latest add @blocks/dialog-10
+```
+
+```bash pnpm
+pnpm dlx shadcn@latest add @blocks/dialog-10
+```
+
+```bash yarn
+npx shadcn@latest add @blocks/dialog-10
+```
+
+```bash bun
+bunx --bun shadcn@latest add @blocks/dialog-10
+```
+
+</CodeGroup>
+
+## Dependencies
+
+This component requires the following dependencies:
+
+- `button` - shadcn/ui button component
+- `calendar` - shadcn/ui calendar component
+- `dialog` - shadcn/ui dialog component
+- `input` - shadcn/ui input component
+- `label` - shadcn/ui label component
+- `popover` - shadcn/ui popover component
+- `select` - shadcn/ui select component
+- `textarea` - shadcn/ui textarea component
+- `date-fns` - Date formatting library
+- `lucide-react` - Icon library (CalendarIcon)
+
+## Usage
+
+```tsx
+import Dialog10 from "@/components/dialog-10";
+
+export default function Page() {
+  return <Dialog10 />;
+}
+```
+
+## Features
+
+- **Calendar picker** - Full calendar component in popover for date selection
+- **Time picker** - Select dropdown with 30-minute intervals
+- **Multiple inputs** - Title, attendees, location, and description fields
+- **Date formatting** - Uses date-fns for consistent date display
+- **Responsive grid** - Date and time arranged in responsive grid layout
+- **Form sections** - Well-organized sections with labels and helper text
+- **Textarea** - Multi-line description input
+- **Bordered header** - Separated header section
+- **Large dialog** - Uses `sm:max-w-lg` for comfortable form layout
+- **Memoized time options** - Efficient time slot generation with useMemo
+
+## Component Structure
+
+The component includes:
+
+- `Dialog` with controlled state
+- `DialogTrigger` button
+- `DialogContent` with:
+  - Custom padding (`p-0`)
+  - Large width (`sm:max-w-lg`)
+  - No gap (`gap-0`)
+- Bordered `DialogHeader`
+- Form with multiple sections:
+  - Meeting title input
+  - Attendees input with helper text
+  - Grid layout (3 columns) for:
+    - Date picker (2 columns) with Popover and Calendar
+    - Time picker (1 column) with Select
+  - Location/conference link input
+  - Description textarea
+- Bordered footer with:
+  - Cancel button (ghost variant)
+  - Schedule button
+- State management for:
+  - Dialog visibility
+  - Selected date
+  - Selected time
+- useMemo hook for generating time options
+- date-fns format function for date display
+
+<Note>
+The time picker generates options dynamically using useMemo for performance. It creates 30-minute intervals from 00:00 to 23:59. The calendar uses the Popover component to display inline when the date button is clicked.
+</Note>

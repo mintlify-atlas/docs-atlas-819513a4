@@ -1,0 +1,90 @@
+---
+title: "Dialog with Link Share and Toggles"
+description: "A sharing dialog with copy-to-clipboard functionality and toggle settings"
+---
+
+A dialog for sharing content with copy-to-clipboard functionality, toggle settings, and multiple action buttons.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx shadcn@latest add @blocks/dialog-09
+```
+
+```bash pnpm
+pnpm dlx shadcn@latest add @blocks/dialog-09
+```
+
+```bash yarn
+npx shadcn@latest add @blocks/dialog-09
+```
+
+```bash bun
+bunx --bun shadcn@latest add @blocks/dialog-09
+```
+
+</CodeGroup>
+
+## Dependencies
+
+This component requires the following dependencies:
+
+- `button` - shadcn/ui button component
+- `dialog` - shadcn/ui dialog component
+- `input` - shadcn/ui input component
+- `label` - shadcn/ui label component
+- `switch` - shadcn/ui switch component
+- `tooltip` - shadcn/ui tooltip component
+- `lucide-react` - Icon library (CheckIcon, CopyIcon, ExternalLink, Link, Share2)
+
+## Usage
+
+```tsx
+import Dialog09 from "@/components/dialog-09";
+
+export default function Page() {
+  return <Dialog09 />;
+}
+```
+
+## Features
+
+- **Copy to clipboard** - Click to copy share link with visual feedback
+- **Animated icons** - Smooth transition between copy and check icons
+- **Toggle settings** - Switch for enabling comments and suggestions
+- **Multiple actions** - Copy Link and Preview buttons
+- **Tooltip feedback** - Shows "Copied!" confirmation
+- **Read-only input** - Share URL displayed in non-editable field
+- **Icon buttons** - Multiple action options with icons
+- **Ref usage** - Uses useRef for direct input access
+
+## Component Structure
+
+The component includes:
+
+- `Dialog` with controlled state
+- `DialogTrigger` with Share2 icon
+- `DialogContent` with medium width
+- `DialogHeader` with title and description
+- Toggle section:
+  - Switch for comments and suggestions
+- Share link section:
+  - Read-only Input with share URL
+  - Copy button with:
+    - Animated CheckIcon/CopyIcon transition
+    - Tooltip showing copy status
+    - useRef for clipboard access
+- Action buttons:
+  - Copy Link button
+  - Preview button with ExternalLink icon
+- State management for:
+  - Dialog visibility
+  - Copy status
+  - Input ref
+- Copy handler with timeout for feedback
+
+<Note>
+The copy button uses CSS transitions (`transition-[transform,opacity] duration-200`) to smoothly animate between the copy and check icons. The component uses `cn()` utility to conditionally apply classes based on the copied state.
+</Note>

@@ -1,0 +1,406 @@
+---
+title: Contribution Guidelines
+description: Code style, conventions, and best practices for contributing to Blocks
+---
+
+## Code Quality Standards
+
+Maintaining high code quality ensures the Blocks library remains reliable, accessible, and easy to maintain. Follow these guidelines when contributing.
+
+## Code Style and Formatting
+
+The project uses **Biome** for linting and code formatting. Always run the linter before committing:
+
+```bash
+bunx ultracite lint
+```
+
+<Note>
+  The project includes git hooks that automatically validate commit messages using commitlint.
+</Note>
+
+### TypeScript Usage
+
+All components should be written in TypeScript:
+
+- Use explicit types for props and component parameters
+- Leverage TypeScript's type inference where appropriate
+- Avoid using `any` type unless absolutely necessary
+- Define proper interfaces for complex prop structures
+
+```tsx
+// Good
+interface ButtonProps {
+  variant: "primary" | "secondary";
+  size?: "sm" | "md" | "lg";
+  onClick?: () => void;
+}
+
+export default function CustomButton({ variant, size = "md", onClick }: ButtonProps) {
+  // ...
+}
+
+// Avoid
+export default function CustomButton(props: any) {
+  // ...
+}
+```
+
+### Import Organization
+
+Organize imports in the following order:
+
+1. External packages (React, third-party libraries)
+2. Internal UI components from `@/components/ui`
+3. Other internal imports
+4. Types and interfaces
+
+```tsx
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import type { FormProps } from "@/types";
+```
+
+## Component Naming Conventions
+
+### File Naming
+
+Use kebab-case for file names:
+
+- `login-01.tsx`
+- `file-upload-03.tsx`
+- `command-menu-02.tsx`
+
+### Component Naming
+
+Use PascalCase for component names:
+
+- `Login01`
+- `FileUpload03`
+- `CommandMenu02`
+
+### Block IDs
+
+Block IDs should match the file name and follow this pattern:
+
+```
+{category}-{number}
+```
+
+Examples:
+- `login-01`
+- `stats-15`
+- `file-upload-06`
+
+<Warning>
+  Block IDs must be unique across the entire registry. Always check existing blocks before choosing an ID.
+</Warning>
+
+## Accessibility Requirements
+
+Accessibility is a core principle of the Blocks library. All components must meet the following standards:
+
+### Semantic HTML
+
+Use semantic HTML elements:
+
+```tsx
+// Good
+<nav>
+  <ul>
+    <li><a href="/home">Home</a></li>
+  </ul>
+</nav>
+
+// Avoid
+<div>
+  <div>
+    <div><a href="/home">Home</a></div>
+  </div>
+</div>
+```
+
+### ARIA Attributes
+
+Use ARIA attributes when semantic HTML is insufficient:
+
+- Add `aria-label` for icon-only buttons
+- Use `aria-describedby` for form field descriptions
+- Include `aria-hidden` for decorative elements
+- Implement proper focus management for interactive components
+
+```tsx
+// Icon button with accessible label
+<Button aria-label="Close dialog">
+  <X className="h-4 w-4" />
+</Button>
+
+// Decorative icon
+<GoogleIcon className="size-5" aria-hidden={true} />
+```
+
+### Keyboard Navigation
+
+Ensure all interactive elements are keyboard accessible:
+
+- All interactive elements should be focusable
+- Focus states should be clearly visible
+- Implement logical tab order
+- Support standard keyboard shortcuts (Enter, Space, Escape)
+
+### Color Contrast
+
+Maintain proper color contrast ratios:
+
+- Use CSS variables from the theme system
+- Test with different themes (light/dark)
+- Ensure text meets WCAG AA standards (4.5:1 for normal text)
+
+```tsx
+// Use theme variables
+<h2 className="text-foreground">
+  Sign in to your account
+</h2>
+
+<p className="text-muted-foreground">
+  Enter your credentials below
+</p>
+```
+
+## Component Structure
+
+### Layout and Styling
+
+Use Tailwind CSS classes for styling:
+
+- Prefer utility classes over custom CSS
+- Use responsive classes (`sm:`, `md:`, `lg:`) for responsive design
+- Leverage the `cn()` utility for conditional classes
+- Follow mobile-first approach
+
+```tsx
+<div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
+  {/* Content */}
+</div>
+```
+
+### Component Composition
+
+Build components using existing UI components from `@/components/ui`:
+
+- Button
+- Input
+- Label
+- Card
+- Dialog
+- Separator
+- And other shadcn/ui components
+
+```tsx
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+export default function MyBlock() {
+  return (
+    <form>
+      <Label htmlFor="email">Email</Label>
+      <Input type="email" id="email" />
+      <Button type="submit">Submit</Button>
+    </form>
+  );
+}
+```
+
+### State Management
+
+For blocks with state:
+
+- Use React hooks (`useState`, `useEffect`) appropriately
+- Keep state as local as possible
+- Consider uncontrolled components for form inputs
+- Document any required external state management
+
+## Documentation Standards
+
+### Component Documentation
+
+While blocks are primarily visual components, consider adding JSDoc comments for complex logic:
+
+```tsx
+/**
+ * Login form with email verification
+ * Sends a magic link to the user's email address
+ */
+export default function Login10() {
+  // ...
+}
+```
+
+### Metadata Quality
+
+Provide clear, descriptive metadata:
+
+```tsx
+{
+  id: "login-10",
+  category: categoryIds.Login,
+  name: "Login with Email Link", // Clear, descriptive name
+  iframeHeight: "500px", // Appropriate preview height
+  type: "file",
+}
+```
+
+## Performance Considerations
+
+### Optimize Imports
+
+Import only what you need:
+
+```tsx
+// Good
+import { Button } from "@/components/ui/button";
+
+// Avoid importing entire modules when not needed
+import * as AllComponents from "@/components/ui";
+```
+
+### Image Optimization
+
+If your block includes images:
+
+- Use Next.js `Image` component
+- Provide appropriate `alt` text
+- Specify width and height
+- Use appropriate formats (WebP, AVIF)
+
+```tsx
+import Image from "next/image";
+
+<Image
+  src="/path/to/image.png"
+  alt="Descriptive alt text"
+  width={200}
+  height={200}
+/>
+```
+
+### Avoid Heavy Dependencies
+
+Minimize external dependencies:
+
+- Use built-in browser APIs when possible
+- Leverage existing project dependencies
+- Avoid adding new packages unless necessary
+
+## Testing Your Contribution
+
+Before submitting, verify your block:
+
+<Steps>
+  <Step title="Visual testing">
+    Test the block in both light and dark themes:
+
+    ```bash
+    bun run dev
+    ```
+
+    Toggle between themes in the UI to ensure proper styling.
+  </Step>
+
+  <Step title="Build testing">
+    Ensure the project builds without errors:
+
+    ```bash
+    bun run build
+    ```
+  </Step>
+
+  <Step title="Accessibility testing">
+    Test with keyboard navigation:
+    - Tab through all interactive elements
+    - Verify focus indicators are visible
+    - Test screen reader compatibility if possible
+  </Step>
+
+  <Step title="Responsive testing">
+    Test on different screen sizes:
+    - Mobile (320px+)
+    - Tablet (768px+)
+    - Desktop (1024px+)
+  </Step>
+
+  <Step title="Code quality">
+    Run the linter:
+
+    ```bash
+    bunx ultracite lint
+    ```
+  </Step>
+</Steps>
+
+## Commit Message Format
+
+The project uses conventional commits with commitlint. Follow this format:
+
+```
+<type>: <description>
+
+[optional body]
+
+[optional footer]
+```
+
+### Commit Types
+
+- `feat:` - New feature or block
+- `fix:` - Bug fix
+- `docs:` - Documentation changes
+- `style:` - Code style changes (formatting, etc.)
+- `refactor:` - Code refactoring
+- `test:` - Adding or updating tests
+- `chore:` - Maintenance tasks
+
+### Examples
+
+```bash
+# Adding a new block
+git commit -m "feat: add login-10 block with email link authentication"
+
+# Fixing a bug
+git commit -m "fix: correct button alignment in login-01 block"
+
+# Documentation
+git commit -m "docs: update contributing guidelines for accessibility"
+```
+
+## Code Review Checklist
+
+Before submitting your pull request, verify:
+
+- [ ] Code follows TypeScript best practices
+- [ ] Component uses proper naming conventions
+- [ ] All accessibility requirements are met
+- [ ] Component works in both light and dark themes
+- [ ] Responsive design works on all screen sizes
+- [ ] Registry has been regenerated
+- [ ] Linter passes without errors
+- [ ] Build completes successfully
+- [ ] Commit messages follow conventional format
+- [ ] Metadata is clear and descriptive
+
+<Note>
+  Reviewers will check these items when reviewing your pull request. Following these guidelines helps speed up the review process.
+</Note>
+
+## Questions?
+
+If you have questions about these guidelines:
+
+- Review existing blocks for examples
+- Check the project's GitHub discussions
+- Open an issue for clarification
+
+Thank you for helping maintain high-quality standards in the Blocks project!

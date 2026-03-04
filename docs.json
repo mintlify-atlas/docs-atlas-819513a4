@@ -1,122 +1,211 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Blocks",
+  "theme": "palm",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#040404",
+    "light": "#848484",
+    "dark": "#dcdcdc"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "https://media.brand.dev/61af19c8-628a-4aa7-8b10-2d1caa08d08b.png",
+  "logo": {
+    "light": "https://media.brand.dev/b71c1358-9205-4b13-a8bb-475e9c7f89c5.svg",
+    "dark": "https://media.brand.dev/b71c1358-9205-4b13-a8bb-475e9c7f89c5.svg"
+  },
+  "navbar": {
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/ephraimduncan/blocks"
+    }
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/ephraimduncan/blocks",
+      "twitter": "https://twitter.com/ephraimduncan_"
+    }
+  },
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Get Started",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "introduction",
+              "installation",
+              "usage"
             ]
           },
           {
-            "group": "Customization",
+            "group": "Blocks",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "blocks/ai",
+              "blocks/command-menu",
+              "blocks/dialogs",
+              "blocks/file-upload",
+              "blocks/form-layout",
+              "blocks/grid-list",
+              "blocks/login",
+              "blocks/onboarding",
+              "blocks/sidebar",
+              "blocks/stats",
+              "blocks/tables"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Guides",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "guides/customization",
+              "guides/theming",
+              "guides/typescript"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "Components",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "AI Components",
             "pages": [
-              "api-reference/introduction"
+              "components/ai/ai-01",
+              "components/ai/ai-02",
+              "components/ai/ai-03",
+              "components/ai/ai-04",
+              "components/ai/ai-05"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Command Menu",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "components/command-menu/command-menu-01",
+              "components/command-menu/command-menu-02",
+              "components/command-menu/command-menu-03"
+            ]
+          },
+          {
+            "group": "Dialogs",
+            "pages": [
+              "components/dialogs/dialog-01",
+              "components/dialogs/dialog-02",
+              "components/dialogs/dialog-03",
+              "components/dialogs/dialog-04",
+              "components/dialogs/dialog-05",
+              "components/dialogs/dialog-06",
+              "components/dialogs/dialog-07",
+              "components/dialogs/dialog-08",
+              "components/dialogs/dialog-09",
+              "components/dialogs/dialog-10",
+              "components/dialogs/dialog-11",
+              "components/dialogs/dialog-12"
+            ]
+          },
+          {
+            "group": "File Upload",
+            "pages": [
+              "components/file-upload/file-upload-01",
+              "components/file-upload/file-upload-02",
+              "components/file-upload/file-upload-03",
+              "components/file-upload/file-upload-04",
+              "components/file-upload/file-upload-05",
+              "components/file-upload/file-upload-06"
+            ]
+          },
+          {
+            "group": "Form Layout",
+            "pages": [
+              "components/form-layout/form-layout-01",
+              "components/form-layout/form-layout-02",
+              "components/form-layout/form-layout-03",
+              "components/form-layout/form-layout-04",
+              "components/form-layout/form-layout-05"
+            ]
+          },
+          {
+            "group": "Grid List",
+            "pages": [
+              "components/grid-list/grid-list-01",
+              "components/grid-list/grid-list-02",
+              "components/grid-list/grid-list-03"
+            ]
+          },
+          {
+            "group": "Login",
+            "pages": [
+              "components/login/login-01",
+              "components/login/login-02",
+              "components/login/login-03",
+              "components/login/login-04",
+              "components/login/login-05",
+              "components/login/login-06",
+              "components/login/login-07",
+              "components/login/login-08",
+              "components/login/login-09"
+            ]
+          },
+          {
+            "group": "Onboarding",
+            "pages": [
+              "components/onboarding/onboarding-01"
+            ]
+          },
+          {
+            "group": "Sidebar",
+            "pages": [
+              "components/sidebar/sidebar-01",
+              "components/sidebar/sidebar-02",
+              "components/sidebar/sidebar-03",
+              "components/sidebar/sidebar-04",
+              "components/sidebar/sidebar-05",
+              "components/sidebar/sidebar-06"
+            ]
+          },
+          {
+            "group": "Stats",
+            "pages": [
+              "components/stats/stats-01",
+              "components/stats/stats-02",
+              "components/stats/stats-03",
+              "components/stats/stats-04",
+              "components/stats/stats-05",
+              "components/stats/stats-06",
+              "components/stats/stats-07",
+              "components/stats/stats-08",
+              "components/stats/stats-09",
+              "components/stats/stats-10",
+              "components/stats/stats-11",
+              "components/stats/stats-12",
+              "components/stats/stats-13",
+              "components/stats/stats-14",
+              "components/stats/stats-15"
+            ]
+          },
+          {
+            "group": "Tables",
+            "pages": [
+              "components/tables/table-01",
+              "components/tables/table-02",
+              "components/tables/table-03",
+              "components/tables/table-04",
+              "components/tables/table-05"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Contributing",
+        "groups": [
+          {
+            "group": "Contributing",
+            "pages": [
+              "contributing/overview",
+              "contributing/adding-blocks",
+              "contributing/guidelines"
             ]
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
-  },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
+    ]
   }
 }

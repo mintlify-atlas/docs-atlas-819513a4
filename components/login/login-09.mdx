@@ -1,0 +1,114 @@
+---
+title: "Login Signup with Role Selection"
+description: "Comprehensive signup form with role dropdown, name fields, and password toggle"
+icon: "lock"
+---
+
+A detailed signup form featuring role selection dropdown, split name fields, username input, and password visibility toggle.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://blocks.so/r/login-09
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- button
+- card
+- checkbox
+- input
+- label
+- select
+
+### External Dependencies
+
+- lucide-react (for icons)
+- next/link (for routing)
+
+## Usage
+
+```tsx
+import Login09 from "@/components/login-09";
+
+export default function SignupPage() {
+  return <Login09 />;
+}
+```
+
+## Features
+
+- Card layout with shadow
+- Centered logo in header
+- Role selection dropdown with icons
+- Split first and last name fields
+- Username input field
+- Email address field
+- Password field with visibility toggle
+- Terms and conditions checkbox
+- Create account button
+- Sign-in link in footer
+- Client-side state management
+- Accessible select with icon display
+- Professional two-column grid for names
+
+## Component Structure
+
+### CardHeader
+- Logo icon
+- "Create an account" heading
+- Welcome subtitle
+
+### CardContent
+- Role select dropdown
+- Two-column name inputs
+- Username field
+- Email field
+- Password field with toggle
+- Terms checkbox with links
+- Create account button
+
+### CardFooter
+- Sign-in prompt for existing users
+- Sign-in link
+
+## Form Fields
+
+### Role Selection
+Dropdown with three options:
+- **Product Designer** (User icon)
+- **Developer** (Code icon)
+- **Product Manager** (BarChart icon)
+
+### Name Fields
+- First name (left column)
+- Last name (right column)
+- Grid layout on desktop
+
+### Additional Fields
+- Username
+- Email address
+- Password (with toggle)
+
+## Icons Used
+
+- **User**: Product Designer role
+- **Code**: Developer role
+- **BarChart**: Product Manager role
+- **Eye/EyeOff**: Password visibility toggle
+
+## Customization
+
+You can customize by:
+
+- Adding more role options
+- Modifying role icons
+- Adjusting grid breakpoints
+- Customizing card styling
+- Adding field validation
+- Implementing password strength meter
+- Modifying terms and conditions text
+- Adding more profile fields
+- Customizing select dropdown styling

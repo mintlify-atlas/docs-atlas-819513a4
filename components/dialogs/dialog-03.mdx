@@ -1,0 +1,72 @@
+---
+title: "Dialog with Input Field"
+description: "An edit profile dialog with input field and save action"
+---
+
+A simple dialog for editing user information, featuring a single input field with label and a save button.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx shadcn@latest add @blocks/dialog-03
+```
+
+```bash pnpm
+pnpm dlx shadcn@latest add @blocks/dialog-03
+```
+
+```bash yarn
+npx shadcn@latest add @blocks/dialog-03
+```
+
+```bash bun
+bunx --bun shadcn@latest add @blocks/dialog-03
+```
+
+</CodeGroup>
+
+## Dependencies
+
+This component requires the following dependencies:
+
+- `button` - shadcn/ui button component
+- `dialog` - shadcn/ui dialog component
+- `input` - shadcn/ui input component
+- `label` - shadcn/ui label component
+
+## Usage
+
+```tsx
+import Dialog03 from "@/components/dialog-03";
+
+export default function Page() {
+  return <Dialog03 />;
+}
+```
+
+## Features
+
+- **Form input** - Labeled input field for username
+- **Clean layout** - Simple, focused design for single-field editing
+- **Full-width action** - Save button spans the full width
+- **Proper labeling** - Associated label with htmlFor attribute
+- **Medium width** - Uses `sm:max-w-md` for optimal form width
+- **Accessible** - Semantic form structure with proper labels
+
+## Component Structure
+
+The component includes:
+
+- `Dialog` with state management
+- `DialogTrigger` button
+- `DialogContent` with medium width
+- `DialogHeader` with title and description
+- Form field with `Label` and `Input` components
+- `DialogFooter` with full-width save button
+- Controlled open state
+
+<Note>
+This component demonstrates a basic edit form pattern. For multiple fields or more complex forms, consider using react-hook-form or similar form libraries for validation and state management.
+</Note>

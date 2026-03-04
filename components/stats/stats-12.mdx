@@ -1,0 +1,47 @@
+---
+title: "Stats Usage Dashboard"
+description: "A stats usage dashboard block."
+---
+
+Detailed usage dashboard showing resource consumption, limits, and utilization across multiple services.
+
+## Installation
+
+Install the component from the Blocks registry:
+
+```bash
+npx shadcn@latest add @blocks/stats-12
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- `card`
+- `progress`
+
+## Usage
+
+```tsx
+import Stats12 from "@/components/stats-12";
+
+export default function Page() {
+  return <Stats12 />;
+}
+```
+
+## Features
+
+- **Usage metrics** - Track resource consumption
+- **Limit indicators** - Show quotas and caps
+- **Multiple services** - Monitor various resources
+- **Progress visualization** - Clear utilization display
+- **Detailed breakdown** - Comprehensive usage data
+
+## Use Cases
+
+- Cloud resource monitoring
+- API usage tracking
+- Subscription limits
+- Billing dashboards
+- Resource management

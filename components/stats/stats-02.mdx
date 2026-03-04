@@ -1,0 +1,53 @@
+---
+title: "Stats with Borders"
+description: "A stats with borders block."
+---
+
+Stats cards with border dividers and trending badges. Features clean separation between metrics with visual trend indicators.
+
+## Installation
+
+Install the component from the Blocks registry:
+
+```bash
+npx shadcn@latest add @blocks/stats-02
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- `badge`
+- `card`
+
+And the following npm packages:
+
+```bash
+npm install lucide-react
+```
+
+## Usage
+
+```tsx
+import Stats02 from "@/components/stats-02";
+
+export default function Page() {
+  return <Stats02 />;
+}
+```
+
+## Features
+
+- **Border dividers** - Clear visual separation between stats
+- **Trend badges** - Prominent trending indicators with icons
+- **Comparison values** - Shows current vs. previous metrics
+- **Responsive layout** - Mobile-friendly grid
+- **Icon integration** - TrendingUp/TrendingDown icons
+
+## Use Cases
+
+- User analytics
+- Conversion metrics
+- Session tracking
+- Engagement monitoring
+- Performance comparison

@@ -1,0 +1,57 @@
+---
+title: "Sidebar Double-Sided Mail"
+description: "A sidebar double-sided mail block."
+---
+
+A specialized mail application sidebar with dual-pane layout. Features a primary navigation sidebar and a secondary mail folder sidebar.
+
+## Installation
+
+Install the component from the Blocks registry:
+
+```bash
+npx shadcn@latest add @blocks/sidebar-04
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- `avatar`
+- `button`
+- `collapsible`
+- `dropdown-menu`
+- `sidebar`
+
+And the following npm packages:
+
+```bash
+npm install lucide-react
+```
+
+## Usage
+
+```tsx
+import Sidebar04 from "@/components/sidebar-04";
+
+export default function Page() {
+  return <Sidebar04 />;
+}
+```
+
+## Features
+
+- **Double-sided layout** - Primary and secondary sidebars
+- **Mail-specific navigation** - Inbox, sent, drafts, and more
+- **Folder organization** - Nested mail folder structure
+- **Collapsible sections** - Expand/collapse folder groups
+- **User profile** - Integrated account management
+- **Icon badges** - Visual indicators for unread messages
+
+## Use Cases
+
+- Email applications
+- Messaging platforms
+- Document management systems
+- File browsers
+- Content management interfaces

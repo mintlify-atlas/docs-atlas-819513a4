@@ -1,0 +1,83 @@
+---
+title: "Dialog with Member List"
+description: "An invite members dialog displaying existing team members with avatars"
+---
+
+A dialog for inviting team members that displays a list of existing members with avatars and status badges.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx shadcn@latest add @blocks/dialog-07
+```
+
+```bash pnpm
+pnpm dlx shadcn@latest add @blocks/dialog-07
+```
+
+```bash yarn
+npx shadcn@latest add @blocks/dialog-07
+```
+
+```bash bun
+bunx --bun shadcn@latest add @blocks/dialog-07
+```
+
+</CodeGroup>
+
+## Dependencies
+
+This component requires the following dependencies:
+
+- `avatar` - shadcn/ui avatar component
+- `badge` - shadcn/ui badge component
+- `button` - shadcn/ui button component
+- `dialog` - shadcn/ui dialog component
+- `input` - shadcn/ui input component
+- `lucide-react` - Icon library (UserPlus)
+
+## Usage
+
+```tsx
+import Dialog07 from "@/components/dialog-07";
+
+export default function Page() {
+  return <Dialog07 />;
+}
+```
+
+## Features
+
+- **Email input** - Input field with UserPlus icon for inviting members
+- **Member list** - Displays existing members with avatars and names
+- **Avatar component** - Shows member profile images with fallback initials
+- **Status badges** - Displays member role or status
+- **Divided list** - Uses dividers for clean separation between members
+- **Large dialog** - Uses `sm:max-w-2xl` for wider content area
+- **Icon input** - Left-aligned icon in input field for visual clarity
+
+## Component Structure
+
+The component includes:
+
+- `Dialog` with controlled state
+- `DialogTrigger` button
+- `DialogContent` with large width (`sm:max-w-2xl`)
+- `DialogHeader` with title and description
+- Form with:
+  - Email input field with UserPlus icon
+  - Invite submit button
+- Member list section:
+  - Heading for "People with existing access"
+  - Unordered list with dividers
+  - Each member item showing:
+    - `Avatar` with image and fallback
+    - Member name
+    - `Badge` with status
+- Sample member data array
+
+<Note>
+The input field uses absolute positioning for the icon (`absolute left-3 top-1/2 -translate-y-1/2`) and corresponding left padding (`pl-9`) on the input to prevent text overlap.
+</Note>

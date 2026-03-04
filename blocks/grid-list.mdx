@@ -1,0 +1,251 @@
+---
+title: 'Grid List Blocks'
+description: 'Grid-based list layouts with actions, links, and icon support'
+---
+
+## Overview
+
+Grid list blocks provide organized, grid-based layouts for displaying collections of items. These components are perfect for dashboards, galleries, and any interface where you need to present multiple items in a structured, scannable format.
+
+## Available Blocks
+
+<CardGroup cols={2}>
+  <Card title="Grid List with Dropdown" icon="grid" href="/blocks/grid-list-01">
+    Grid layout with dropdown menus for item actions
+  </Card>
+  
+  <Card title="Grid List with Links" icon="link" href="/blocks/grid-list-02">
+    Clickable grid items that navigate to detail pages
+  </Card>
+  
+  <Card title="Grid List with Icons" icon="icons" href="/blocks/grid-list-03">
+    Icon-based grid layout for apps, features, or services
+  </Card>
+</CardGroup>
+
+## Key Features
+
+- **Responsive Grid**: Automatically adjusts columns based on screen size
+- **Item Actions**: Dropdown menus or inline actions for each item
+- **Visual Hierarchy**: Icons, images, and typography for clear organization
+- **Interactive Elements**: Clickable items with hover states
+- **Flexible Layout**: Customizable grid columns and spacing
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="Project Dashboard">
+    Display a grid of projects or workspaces with quick actions like edit, delete, or share via dropdown menus.
+  </Accordion>
+  
+  <Accordion title="App Launcher">
+    Create an application launcher grid with icons representing different apps or features users can access.
+  </Accordion>
+  
+  <Accordion title="Product Gallery">
+    Showcase products, templates, or resources in a grid layout with links to detail pages.
+  </Accordion>
+  
+  <Accordion title="Team Members">
+    Display team members or users in a grid with profile information and action buttons.
+  </Accordion>
+  
+  <Accordion title="Integration Directory">
+    Present available integrations or plugins with icons and quick install actions.
+  </Accordion>
+</AccordionGroup>
+
+## Implementation Example
+
+```tsx
+import { GridListWithDropdown } from '@/components/blocks/grid-list-01'
+import { useState } from 'react'
+
+export default function ProjectsGrid() {
+  const [projects, setProjects] = useState([
+    {
+      id: '1',
+      name: 'Website Redesign',
+      description: 'Marketing website refresh',
+      lastUpdated: '2 hours ago',
+      members: 5
+    },
+    {
+      id: '2',
+      name: 'Mobile App',
+      description: 'iOS and Android app',
+      lastUpdated: '1 day ago',
+      members: 3
+    },
+    // More projects...
+  ])
+  
+  const handleAction = (projectId: string, action: string) => {
+    switch (action) {
+      case 'edit':
+        router.push(`/projects/${projectId}/edit`)
+        break
+      case 'delete':
+        deleteProject(projectId)
+        break
+      case 'share':
+        openShareDialog(projectId)
+        break
+    }
+  }
+  
+  return (
+    <GridListWithDropdown
+      items={projects}
+      onAction={handleAction}
+      columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
+    />
+  )
+}
+```
+
+## Responsive Grid Configuration
+
+Configure grid columns for different screen sizes:
+
+```tsx
+const gridConfig = {
+  // Mobile: 1 column
+  sm: 1,
+  // Tablet: 2 columns
+  md: 2,
+  // Desktop: 3 columns
+  lg: 3,
+  // Large desktop: 4 columns
+  xl: 4
+}
+
+// Using Tailwind CSS
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+  {items.map(item => (
+    <GridItem key={item.id} {...item} />
+  ))}
+</div>
+```
+
+<Note>
+  Always test your grid layouts on multiple screen sizes. Items should remain readable and actions accessible on all devices.
+</Note>
+
+## Best Practices
+
+### Layout & Design
+
+- **Consistent Sizing**: Keep grid items the same height for visual harmony
+- **Appropriate Spacing**: Use consistent gaps between items
+- **Visual Balance**: Distribute visual weight evenly across the grid
+- **Clear Hierarchy**: Use typography and spacing to establish information hierarchy
+- **Loading States**: Show skeleton screens while data loads
+
+### Interaction Patterns
+
+- **Click Targets**: Ensure entire cards are clickable when appropriate
+- **Action Visibility**: Make important actions easily discoverable
+- **Hover States**: Provide visual feedback on hover
+- **Keyboard Navigation**: Support tab navigation through grid items
+- **Touch Targets**: Ensure buttons are large enough for touch devices (min 44x44px)
+
+### Performance
+
+- **Virtualization**: For large lists, implement virtual scrolling
+- **Lazy Loading**: Load images and data as needed
+- **Pagination**: Break large datasets into pages
+- **Skeleton Loading**: Show placeholders while content loads
+
+## Grid Item Actions
+
+Implement actions effectively:
+
+```tsx
+const itemActions = [
+  {
+    label: 'Edit',
+    icon: 'pencil',
+    onClick: (id) => handleEdit(id)
+  },
+  {
+    label: 'Duplicate',
+    icon: 'copy',
+    onClick: (id) => handleDuplicate(id)
+  },
+  {
+    label: 'Delete',
+    icon: 'trash',
+    onClick: (id) => handleDelete(id),
+    variant: 'destructive'
+  }
+]
+
+<GridItem
+  {...item}
+  actions={itemActions}
+  actionMenuPosition="top-right"
+/>
+```
+
+## Empty States
+
+Handle empty grid states gracefully:
+
+```tsx
+{projects.length === 0 ? (
+  <div className="col-span-full flex flex-col items-center justify-center py-12">
+    <div className="text-gray-400 mb-4">
+      <FolderIcon className="w-16 h-16" />
+    </div>
+    <h3 className="text-lg font-semibold mb-2">No projects yet</h3>
+    <p className="text-gray-600 mb-4">Get started by creating your first project</p>
+    <button onClick={createProject}>Create Project</button>
+  </div>
+) : (
+  <GridList items={projects} />
+)}
+```
+
+## Grid Variations
+
+| Variation | Best For | Key Feature |
+|-----------|----------|-------------|
+| With Dropdown | Dashboards, project lists | Quick actions menu |
+| With Links | Galleries, directories | Navigable items |
+| With Icons | App launchers, features | Visual identification |
+
+## Loading State Example
+
+```tsx
+function GridSkeleton() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="border rounded-lg p-6">
+          <div className="animate-pulse">
+            <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+            <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
+            <div className="h-3 bg-gray-200 rounded w-2/3"></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+## Accessibility
+
+- Use semantic HTML (lists, headings)
+- Provide clear labels for actions
+- Ensure keyboard navigation works
+- Add ARIA labels where needed
+- Maintain sufficient color contrast
+- Support screen reader navigation
+
+## Related Components
+
+- [Tables](/blocks/tables) - Tabular data display
+- [Stats](/blocks/stats) - Metric displays
+- [Sidebar](/blocks/sidebar) - Navigation alongside grids

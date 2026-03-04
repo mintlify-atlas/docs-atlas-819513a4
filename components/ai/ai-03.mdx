@@ -1,0 +1,242 @@
+---
+title: AI Chat Compact Interface
+description: A ai chat compact interface block.
+author: ephraim duncan
+---
+
+<ComponentPreview name="ai-03" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsContent value="cli">
+
+<Steps>
+
+<Step>Install dependencies</Step>
+
+```bash
+npx shadcn@latest add @blocks/ai-03
+```
+
+This will install the following dependencies:
+- `@tabler/icons-react`
+
+And add the following shadcn/ui components:
+- `button`
+- `dropdown-menu`
+- `textarea`
+
+</Steps>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install dependencies</Step>
+
+```bash
+npm install @tabler/icons-react
+```
+
+<Step>Add shadcn/ui components</Step>
+
+```bash
+npx shadcn@latest add button dropdown-menu textarea
+```
+
+<Step>Copy the source code</Step>
+
+Create `components/ai-03.tsx` and paste the component code.
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import Ai03 from "@/components/ai-03";
+
+export default function Page() {
+  return <Ai03 />;
+}
+```
+
+## Features
+
+A compact, feature-rich AI chat interface with extensive customization options:
+
+### Auto Mode
+
+<Note>
+**Intelligent Automation** - Toggle automatic mode for AI-assisted workflows and smart suggestions.
+</Note>
+
+The Auto mode button dynamically changes appearance when activated:
+
+```tsx
+<Button
+  variant="ghost"
+  size="sm"
+  onClick={() => setAutoMode(!autoMode)}
+  className={cn(
+    "h-7 px-2 rounded-full border border-border hover:bg-accent",
+    {
+      "bg-primary/10 text-primary border-primary/30": autoMode,
+      "text-muted-foreground": !autoMode,
+    }
+  )}
+>
+  <IconWand className="size-3" />
+  <span className="text-xs">Auto</span>
+</Button>
+```
+
+### Configuration Dropdowns
+
+Three dropdown menus for fine-grained control:
+
+**Model Selection**
+- Local - Run models on your device
+- Cloud - Use cloud-hosted models
+
+**Agent Type**
+- Agent - Autonomous AI agent
+- Assistant - Interactive AI assistant
+
+**Performance Level**
+- High - Maximum performance and accuracy
+- Medium - Balanced performance
+- Low - Resource-efficient mode
+
+### Attachment Options
+
+Quick access to various tools via the plus button:
+
+- **Attach Files** - Upload documents and images
+- **Code Interpreter** - Execute and analyze code
+- **Web Search** - Search the internet for context
+- **Chat History** - Access previous conversations
+
+### Auto-Resizing Textarea
+
+The textarea automatically adjusts its height based on content:
+
+```tsx
+<Textarea
+  value={input}
+  onChange={(e) => setInput(e.target.value)}
+  placeholder="Ask anything"
+  rows={1}
+  onInput={(e) => {
+    const target = e.target as HTMLTextAreaElement;
+    target.style.height = "auto";
+    target.style.height = target.scrollHeight + "px";
+  }}
+/>
+```
+
+## Component Props
+
+This component doesn't accept external props. State is managed internally:
+
+<ParamField path="input" type="string">
+  Current input text value
+</ParamField>
+
+<ParamField path="selectedModel" type="string">
+  Currently selected model ("Local" or "Cloud")
+</ParamField>
+
+<ParamField path="selectedAgent" type="string">
+  Currently selected agent type ("Agent" or "Assistant")
+</ParamField>
+
+<ParamField path="selectedPerformance" type="string">
+  Performance level ("High", "Medium", or "Low")
+</ParamField>
+
+<ParamField path="autoMode" type="boolean">
+  Whether auto mode is enabled
+</ParamField>
+
+## Customization
+
+### Changing Icon Sizes
+
+All icons use consistent sizing which can be adjusted:
+
+```tsx
+// Small icons (3x3)
+<IconPlus className="size-3" />
+
+// Medium icons (16x16 pixels)
+<IconPaperclip size={16} className="opacity-60" />
+```
+
+### Adding Custom Dropdown Items
+
+Extend any dropdown menu with new options:
+
+```tsx
+<DropdownMenuItem
+  className="rounded-[calc(1rem-6px)] text-xs"
+  onClick={() => handleCustomAction()}
+>
+  <IconCustom size={16} className="opacity-60" />
+  Custom Option
+</DropdownMenuItem>
+```
+
+### Styling the Container
+
+The component has a fixed width that can be modified:
+
+```tsx
+<div className="w-xl"> {/* Change to w-full, w-2xl, etc. */}
+  {/* Component content */}
+</div>
+```
+
+### Customizing Border Radius
+
+The component uses a 2xl border radius:
+
+```tsx
+<div className="bg-background border border-border rounded-2xl overflow-hidden">
+  {/* Adjust rounded-2xl to rounded-xl, rounded-3xl, etc. */}
+</div>
+```
+
+## Implementation Details
+
+### State Management
+
+The component manages multiple state variables for different settings:
+
+```tsx
+const [input, setInput] = useState("");
+const [selectedModel, setSelectedModel] = useState("Local");
+const [selectedAgent, setSelectedAgent] = useState("Agent");
+const [selectedPerformance, setSelectedPerformance] = useState("High");
+const [autoMode, setAutoMode] = useState(false);
+```
+
+### Submit Handler
+
+The form submission is handled with validation:
+
+```tsx
+const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+  if (input.trim()) {
+    // Handle submission
+  }
+};
+```

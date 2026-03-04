@@ -1,0 +1,88 @@
+---
+title: "Login with Magic Link and SSO"
+description: "Modern passwordless login with magic link email and SSO option"
+icon: "lock"
+---
+
+A contemporary passwordless authentication interface featuring magic link email authentication and single sign-on (SSO) option.
+
+## Installation
+
+```bash
+npx shadcn@latest add https://blocks.so/r/login-06
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- button
+- card
+- input
+- separator
+
+## Usage
+
+```tsx
+import Login06 from "@/components/login-06";
+
+export default function LoginPage() {
+  return <Login06 />;
+}
+```
+
+## Features
+
+- Rounded card design (rounded-4xl)
+- Custom logo branding
+- Email input for magic link
+- "Send me the magic link" primary action
+- Alternative password sign-in link
+- Horizontal separator with "OR" text
+- SSO button for enterprise authentication
+- Sign-up link for new users
+- Terms of service acknowledgment
+- Modern, spacious layout
+- Centered design elements
+
+## Component Structure
+
+The interface includes:
+
+- Welcome back heading
+- Sign-up prompt for first-time users
+- Email input with rounded corners
+- Magic link button
+- Password sign-in alternative (link style)
+- Visual separator
+- SSO button for enterprise users
+- Legal disclaimer at bottom
+
+## Authentication Methods
+
+### Magic Link
+- Email-based passwordless authentication
+- Primary action button
+- Rounded button styling
+
+### Password Alternative
+- Link-style button
+- Muted appearance
+- Alternative to magic link
+
+### SSO Option
+- Outline button style
+- Enterprise authentication
+- Below separator
+
+## Customization
+
+Customize the component by:
+
+- Modifying card border radius
+- Adjusting button sizes
+- Adding loading states
+- Customizing email validation
+- Implementing magic link flow
+- Adding SSO provider selection
+- Modifying color scheme

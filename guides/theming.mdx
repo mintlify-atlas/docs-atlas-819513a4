@@ -1,0 +1,359 @@
+---
+title: Theming
+description: Customize the visual theme of your Blocks application with CSS variables and dark mode support
+---
+
+# Theming
+
+Blocks uses CSS variables and the OKLCH color space to provide a powerful, flexible theming system with built-in dark mode support.
+
+## Theme Configuration
+
+The theme is configured in `components.json`:
+
+```json
+{
+  "style": "new-york",
+  "tailwind": {
+    "baseColor": "neutral",
+    "cssVariables": true
+  }
+}
+```
+
+<Note>
+  CSS variables mode allows you to change themes without rebuilding your application.
+</Note>
+
+## CSS Variables Structure
+
+All theme variables are defined in `app/globals.css` using the OKLCH color space:
+
+```css
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+}
+```
+
+## Dark Mode
+
+Dark mode is implemented using a `.dark` class with overridden variables:
+
+<Tabs>
+  <Tab title="Dark Mode Variables">
+    ```css
+    .dark {
+      --background: oklch(0.145 0 0);
+      --foreground: oklch(0.985 0 0);
+      --primary: oklch(0.922 0 0);
+      --primary-foreground: oklch(0.205 0 0);
+      --secondary: oklch(0.269 0 0);
+      --secondary-foreground: oklch(0.985 0 0);
+      --muted: oklch(0.269 0 0);
+      --muted-foreground: oklch(0.708 0 0);
+      --border: oklch(1 0 0 / 10%);
+      --input: oklch(1 0 0 / 15%);
+    }
+    ```
+  </Tab>
+
+  <Tab title="Usage in Components">
+    ```tsx
+    export default function ThemedComponent() {
+      return (
+        <div className="bg-background text-foreground border border-border">
+          <h1 className="text-primary">Themed Heading</h1>
+          <p className="text-muted-foreground">Themed text</p>
+        </div>
+      )
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Color Palette Variables
+
+<Steps>
+  <Step title="Primary colors">
+    Used for main actions and emphasis:
+
+    - `--primary`: Primary brand color
+    - `--primary-foreground`: Text color on primary background
+
+    ```tsx
+    <Button className="bg-primary text-primary-foreground">
+      Primary Action
+    </Button>
+    ```
+  </Step>
+
+  <Step title="Secondary colors">
+    Used for less prominent elements:
+
+    - `--secondary`: Secondary color
+    - `--secondary-foreground`: Text on secondary background
+
+    ```tsx
+    <Button variant="secondary" className="bg-secondary text-secondary-foreground">
+      Secondary Action
+    </Button>
+    ```
+  </Step>
+
+  <Step title="Muted colors">
+    Used for disabled states and subtle elements:
+
+    - `--muted`: Muted background
+    - `--muted-foreground`: Muted text
+
+    ```tsx
+    <p className="text-muted-foreground">Secondary information</p>
+    ```
+  </Step>
+
+  <Step title="Accent colors">
+    Used for hover states and highlights:
+
+    - `--accent`: Accent background
+    - `--accent-foreground`: Text on accent background
+  </Step>
+</Steps>
+
+## Border Radius Customization
+
+Blocks provides four radius sizes using CSS variables:
+
+```css
+:root {
+  --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+```
+
+Access these in your components:
+
+```tsx
+<div className="rounded-lg">Default radius</div>
+<div className="rounded-xl">Larger radius</div>
+```
+
+## Customizing Your Theme
+
+### Changing Colors
+
+Update the CSS variables in `app/globals.css` to match your brand:
+
+<CodeGroup>
+  ```css Blue Theme
+  :root {
+    --primary: oklch(0.55 0.22 250);
+    --primary-foreground: oklch(1 0 0);
+  }
+
+  .dark {
+    --primary: oklch(0.65 0.22 250);
+    --primary-foreground: oklch(0.15 0 0);
+  }
+  ```
+
+  ```css Green Theme
+  :root {
+    --primary: oklch(0.55 0.18 145);
+    --primary-foreground: oklch(1 0 0);
+  }
+
+  .dark {
+    --primary: oklch(0.65 0.18 145);
+    --primary-foreground: oklch(0.15 0 0);
+  }
+  ```
+
+  ```css Purple Theme
+  :root {
+    --primary: oklch(0.55 0.25 290);
+    --primary-foreground: oklch(1 0 0);
+  }
+
+  .dark {
+    --primary: oklch(0.65 0.25 290);
+    --primary-foreground: oklch(0.15 0 0);
+  }
+  ```
+</CodeGroup>
+
+### Adjusting Border Radius
+
+Change the base radius value to affect all components:
+
+```css
+:root {
+  --radius: 0.5rem; /* Default: 0.625rem */
+}
+```
+
+<Tip>
+  Use smaller radius values (0.25rem - 0.375rem) for a modern, sharp look, or larger values (0.75rem - 1rem) for a softer appearance.
+</Tip>
+
+## Chart Colors
+
+Blocks includes chart color variables for data visualization:
+
+```css
+:root {
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+}
+
+.dark {
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+}
+```
+
+## Sidebar Theming
+
+The sidebar has its own set of theme variables:
+
+```css
+:root {
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+```
+
+## Theme Inline Configuration
+
+The `@theme inline` directive maps CSS variables to Tailwind classes:
+
+```css
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-border: var(--border);
+  --radius-lg: var(--radius);
+}
+```
+
+This allows you to use theme variables directly in Tailwind classes:
+
+```tsx
+<div className="bg-background text-foreground border-border rounded-lg">
+  Themed content
+</div>
+```
+
+## Base Layer Styles
+
+The base layer applies theme variables globally:
+
+```css
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+```
+
+## Dark Mode Variant
+
+A custom dark variant is defined for scoped dark mode styling:
+
+```css
+@custom-variant dark (&:is(.dark *));
+```
+
+Use it in your components:
+
+```tsx
+<div className="bg-white dark:bg-gray-900">
+  Light background with dark mode support
+</div>
+```
+
+## Complete Theme Example
+
+Here's a complete custom theme implementation:
+
+```css
+/* Custom brand theme */
+:root {
+  --radius: 0.5rem;
+  
+  /* Brand colors */
+  --primary: oklch(0.5 0.2 220);
+  --primary-foreground: oklch(1 0 0);
+  
+  /* Surfaces */
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.1 0 0);
+  --card: oklch(1 0 0);
+  
+  /* Interactive */
+  --accent: oklch(0.95 0.01 220);
+  --accent-foreground: oklch(0.2 0 0);
+  
+  /* Borders */
+  --border: oklch(0.9 0 0);
+  --ring: oklch(0.5 0.2 220);
+}
+
+.dark {
+  --primary: oklch(0.6 0.2 220);
+  --background: oklch(0.12 0 0);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.15 0 0);
+  --accent: oklch(0.2 0 0);
+  --border: oklch(1 0 0 / 10%);
+}
+```
+
+<Note>
+  The OKLCH color space provides better color consistency and perceptual uniformity compared to traditional RGB or HSL.
+</Note>
+
+## Best Practices
+
+- **Maintain contrast**: Ensure sufficient contrast between text and backgrounds (WCAG AA: 4.5:1)
+- **Test both modes**: Always verify your theme in both light and dark modes
+- **Use semantic variables**: Reference `--primary`, `--accent`, etc. instead of hardcoding colors
+- **Preserve accessibility**: Keep focus rings and interactive states visible
+- **Test with real content**: Verify your theme works with actual UI components
+
+## Next Steps
+
+- Learn about [customization](/guides/customization) to modify individual components
+- Explore [TypeScript support](/guides/typescript) for type-safe theme configuration

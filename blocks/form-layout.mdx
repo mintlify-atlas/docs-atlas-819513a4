@@ -1,0 +1,251 @@
+---
+title: 'Form Layout Blocks'
+description: 'Form layouts with various field arrangements, validation, and styling options'
+---
+
+## Overview
+
+Form layout blocks provide pre-built form structures with different field arrangements and styling patterns. From workspace settings to plan selection, these components help you create consistent, accessible forms quickly.
+
+## Available Blocks
+
+<CardGroup cols={2}>
+  <Card title="Form with Workspace Fields" icon="briefcase" href="/blocks/form-layout-01">
+    Workspace or organization settings form with standard fields
+  </Card>
+  
+  <Card title="Form with Side Labels" icon="align-left" href="/blocks/form-layout-02">
+    Form layout with labels positioned to the left of inputs
+  </Card>
+  
+  <Card title="Form with Checkbox Settings" icon="square-check" href="/blocks/form-layout-03">
+    Settings form with multiple checkbox options and toggles
+  </Card>
+  
+  <Card title="Form with Package Selection" icon="box" href="/blocks/form-layout-04">
+    Form featuring package or tier selection cards
+  </Card>
+  
+  <Card title="Form with Plan Selection" icon="layer-group" href="/blocks/form-layout-05">
+    Subscription or pricing plan selection form with comparison layout
+  </Card>
+</CardGroup>
+
+## Layout Patterns
+
+### Stacked Layout
+Traditional vertical form layout with labels above inputs. Best for most use cases and mobile-friendly.
+
+### Side Label Layout
+Labels positioned to the left of inputs. Good for dense forms where horizontal space is available.
+
+### Settings Layout
+Checkboxes and toggles with descriptions. Perfect for preferences and configuration forms.
+
+### Selection Cards
+Visual card-based selection for packages, plans, or options. Helps users compare choices.
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="User Settings">
+    Create account settings, preferences, or profile editing forms with organized field groups and clear labels.
+  </Accordion>
+  
+  <Accordion title="Workspace Configuration">
+    Build team or organization setup forms with workspace name, settings, and member management.
+  </Accordion>
+  
+  <Accordion title="Onboarding Forms">
+    Guide new users through setup processes with clear, step-by-step form layouts.
+  </Accordion>
+  
+  <Accordion title="Plan Selection">
+    Implement pricing plan or package selection interfaces with visual comparison cards.
+  </Accordion>
+  
+  <Accordion title="Feature Toggles">
+    Manage application features or permissions with checkbox settings forms.
+  </Accordion>
+</AccordionGroup>
+
+## Implementation Example
+
+```tsx
+import { FormWithWorkspaceFields } from '@/components/blocks/form-layout-01'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
+
+const formSchema = z.object({
+  workspaceName: z.string().min(1, 'Workspace name is required'),
+  workspaceUrl: z.string().url('Must be a valid URL'),
+  description: z.string().optional(),
+})
+
+export default function WorkspaceSettings() {
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      workspaceName: '',
+      workspaceUrl: '',
+      description: '',
+    }
+  })
+  
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    // Handle form submission
+    await updateWorkspace(data)
+  }
+  
+  return (
+    <FormWithWorkspaceFields
+      form={form}
+      onSubmit={onSubmit}
+    />
+  )
+}
+```
+
+## Form Validation
+
+Implement comprehensive validation for better user experience:
+
+```tsx
+const schema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string()
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[A-Z]/, 'Must contain uppercase letter')
+    .regex(/[0-9]/, 'Must contain number'),
+  confirmPassword: z.string()
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ['confirmPassword'],
+})
+```
+
+<Note>
+  Use libraries like Zod or Yup for schema validation combined with react-hook-form for optimal performance and developer experience.
+</Note>
+
+## Best Practices
+
+### Form Design
+
+- **Group Related Fields**: Use fieldsets or sections to organize related inputs
+- **Clear Labels**: Every input should have a descriptive label
+- **Help Text**: Provide hints or examples for complex fields
+- **Required Indicators**: Mark required fields clearly (asterisk or label)
+- **Appropriate Input Types**: Use correct HTML input types for better mobile UX
+
+### Validation & Errors
+
+- **Inline Validation**: Show errors near the relevant field
+- **Real-time Feedback**: Validate as users type (with debouncing)
+- **Clear Error Messages**: Be specific about what's wrong and how to fix it
+- **Success States**: Confirm when fields are valid
+- **Form-level Errors**: Show general submission errors prominently
+
+### User Experience
+
+- **Logical Tab Order**: Ensure keyboard navigation flows naturally
+- **Auto-focus**: Focus the first field when form loads
+- **Save Progress**: Auto-save or warn before losing data
+- **Loading States**: Show feedback during submission
+- **Success Feedback**: Confirm successful submissions clearly
+
+## Accessibility
+
+Ensure your forms are accessible to all users:
+
+```tsx
+<form onSubmit={handleSubmit}>
+  <fieldset>
+    <legend>Account Information</legend>
+    
+    <label htmlFor="email">
+      Email Address
+      <span aria-label="required">*</span>
+    </label>
+    <input
+      id="email"
+      type="email"
+      required
+      aria-describedby="email-error"
+      aria-invalid={!!errors.email}
+    />
+    {errors.email && (
+      <span id="email-error" role="alert">
+        {errors.email.message}
+      </span>
+    )}
+  </fieldset>
+</form>
+```
+
+### Accessibility Checklist
+
+- [ ] All inputs have associated labels
+- [ ] Required fields are marked and announced
+- [ ] Error messages are linked to inputs via aria-describedby
+- [ ] Form has a clear submit button
+- [ ] Keyboard navigation works throughout
+- [ ] Screen readers can navigate form structure
+- [ ] Color is not the only indicator of errors
+
+## Plan Selection Forms
+
+For pricing or package selection:
+
+```tsx
+import { FormWithPlanSelection } from '@/components/blocks/form-layout-05'
+
+const plans = [
+  {
+    id: 'free',
+    name: 'Free',
+    price: '$0',
+    features: ['10 projects', 'Basic support', '1 GB storage']
+  },
+  {
+    id: 'pro',
+    name: 'Pro',
+    price: '$29',
+    features: ['Unlimited projects', 'Priority support', '100 GB storage'],
+    recommended: true
+  },
+  {
+    id: 'enterprise',
+    name: 'Enterprise',
+    price: 'Custom',
+    features: ['Everything in Pro', 'Custom features', 'Unlimited storage']
+  }
+]
+
+<FormWithPlanSelection
+  plans={plans}
+  selectedPlan={selectedPlan}
+  onPlanSelect={setSelectedPlan}
+/>
+```
+
+## Common Field Types
+
+| Field Type | Use Case | Example |
+|------------|----------|----------|
+| Text | Names, titles, short text | `<input type="text">` |
+| Email | Email addresses | `<input type="email">` |
+| Password | Passwords | `<input type="password">` |
+| Textarea | Long text, descriptions | `<textarea>` |
+| Select | Dropdown choices | `<select>` |
+| Checkbox | Boolean options, multiple selections | `<input type="checkbox">` |
+| Radio | Single choice from options | `<input type="radio">` |
+| File | File uploads | `<input type="file">` |
+
+## Related Components
+
+- [Login](/blocks/login) - Authentication forms
+- [Dialogs](/blocks/dialogs) - Modal forms
+- [File Upload](/blocks/file-upload) - File input components
+- [Onboarding](/blocks/onboarding) - Multi-step form flows

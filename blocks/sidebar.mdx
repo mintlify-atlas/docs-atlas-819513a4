@@ -1,0 +1,355 @@
+---
+title: 'Sidebar Blocks'
+description: 'Sidebar navigation layouts with collapsible sections and various styling options'
+---
+
+## Overview
+
+Sidebar blocks provide comprehensive navigation layouts for your application. From collapsible sections to floating sidebars and double-sided layouts, these components offer flexible navigation patterns for different application structures.
+
+## Available Blocks
+
+<CardGroup cols={2}>
+  <Card title="Sidebar Collapsible Sections" icon="bars" href="/blocks/sidebar-01">
+    Navigation sidebar with expandable/collapsible menu sections
+  </Card>
+  
+  <Card title="Sidebar Dashboard Inset" icon="sidebar" href="/blocks/sidebar-02">
+    Inset sidebar design for dashboard layouts
+  </Card>
+  
+  <Card title="Sidebar Dashboard Floating" icon="window" href="/blocks/sidebar-03">
+    Floating sidebar with modern card-like appearance
+  </Card>
+  
+  <Card title="Sidebar Double-Sided Mail" icon="envelope" href="/blocks/sidebar-04">
+    Mail client layout with sidebars on both sides
+  </Card>
+  
+  <Card title="Sidebar Double-Sided" icon="columns" href="/blocks/sidebar-05">
+    Two-sidebar layout for complex navigation hierarchies
+  </Card>
+  
+  <Card title="Sidebar Replacement" icon="rotate" href="/blocks/sidebar-06">
+    Dynamic sidebar that replaces content based on context
+  </Card>
+</CardGroup>
+
+## Sidebar Patterns
+
+### Collapsible Sections
+Organize navigation items into expandable groups. Perfect for apps with many menu items.
+
+### Inset Layout
+Sidebar sits within the page container. Good for traditional dashboard designs.
+
+### Floating Layout
+Sidebar appears elevated above the page content. Modern, clean aesthetic.
+
+### Double-Sided
+Two sidebars for primary and secondary navigation. Ideal for complex applications.
+
+### Replacement
+Sidebar content changes dynamically. Great for contextual navigation.
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="Dashboard Applications">
+    Use inset or floating sidebar layouts for admin dashboards, analytics platforms, or business applications.
+  </Accordion>
+  
+  <Accordion title="Mail Clients">
+    Implement double-sided layouts with folder navigation on the left and message list in the center.
+  </Accordion>
+  
+  <Accordion title="Documentation Sites">
+    Use collapsible sections to organize documentation categories and subcategories.
+  </Accordion>
+  
+  <Accordion title="Project Management">
+    Employ replacement sidebars that change based on selected project or workspace.
+  </Accordion>
+  
+  <Accordion title="Social Platforms">
+    Create double-sided layouts with main navigation and contextual actions or filters.
+  </Accordion>
+</AccordionGroup>
+
+## Implementation Example
+
+```tsx
+import { SidebarCollapsibleSections } from '@/components/blocks/sidebar-01'
+import { useState } from 'react'
+
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const [collapsed, setCollapsed] = useState(false)
+  
+  const navigationSections = [
+    {
+      title: 'Getting Started',
+      items: [
+        { label: 'Dashboard', href: '/dashboard', icon: HomeIcon },
+        { label: 'Quick Start', href: '/quick-start', icon: RocketIcon }
+      ]
+    },
+    {
+      title: 'Projects',
+      items: [
+        { label: 'All Projects', href: '/projects', icon: FolderIcon },
+        { label: 'Favorites', href: '/projects/favorites', icon: StarIcon },
+        { label: 'Archived', href: '/projects/archived', icon: ArchiveIcon }
+      ],
+      collapsible: true,
+      defaultOpen: true
+    },
+    {
+      title: 'Settings',
+      items: [
+        { label: 'Account', href: '/settings/account', icon: UserIcon },
+        { label: 'Team', href: '/settings/team', icon: UsersIcon },
+        { label: 'Billing', href: '/settings/billing', icon: CreditCardIcon }
+      ],
+      collapsible: true
+    }
+  ]
+  
+  return (
+    <div className="flex h-screen">
+      <SidebarCollapsibleSections
+        sections={navigationSections}
+        collapsed={collapsed}
+        onToggleCollapse={() => setCollapsed(!collapsed)}
+        currentPath={usePathname()}
+      />
+      
+      <main className="flex-1 overflow-auto">
+        {children}
+      </main>
+    </div>
+  )
+}
+```
+
+## Responsive Behavior
+
+Handle mobile and desktop differently:
+
+```tsx
+import { useState, useEffect } from 'react'
+
+function Sidebar() {
+  const [isMobile, setIsMobile] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+  
+  if (isMobile) {
+    return (
+      <>
+        <button onClick={() => setMobileMenuOpen(true)}>
+          Menu
+        </button>
+        
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-50">
+            <div className="absolute inset-0 bg-black/50" onClick={() => setMobileMenuOpen(false)} />
+            <div className="absolute left-0 top-0 bottom-0 w-64 bg-white">
+              <Sidebar />
+            </div>
+          </div>
+        )}
+      </>
+    )
+  }
+  
+  return <Sidebar /> // Desktop sidebar
+}
+```
+
+<Note>
+  On mobile devices, sidebars should typically appear as slide-out drawers or sheets that overlay the content. Always provide a clear way to close the mobile menu.
+</Note>
+
+## Best Practices
+
+### Navigation Design
+
+- **Logical Grouping**: Organize items into related sections
+- **Clear Labels**: Use concise, descriptive navigation labels
+- **Visual Hierarchy**: Use indentation and typography to show structure
+- **Active States**: Clearly indicate the current page
+- **Icon Consistency**: Use icons consistently throughout
+- **Breadth vs Depth**: Balance top-level items vs nested levels
+
+### Interaction Patterns
+
+- **Keyboard Navigation**: Support arrow keys and keyboard shortcuts
+- **Collapse State**: Remember collapsed/expanded states
+- **Smooth Transitions**: Animate section opening/closing
+- **Click Targets**: Ensure adequate touch target sizes (44x44px minimum)
+- **Hover States**: Provide visual feedback on hover
+
+### Performance
+
+- **Lazy Load Sections**: Load nested items only when sections expand
+- **Virtualize Long Lists**: For sidebars with many items
+- **Optimize Animations**: Use CSS transforms for better performance
+- **Debounce Search**: If sidebar includes search functionality
+
+## Collapsible Sidebar
+
+Implement a collapsible sidebar:
+
+```tsx
+function CollapsibleSidebar({ collapsed }: { collapsed: boolean }) {
+  return (
+    <aside 
+      className={`
+        transition-all duration-300
+        ${collapsed ? 'w-16' : 'w-64'}
+      `}
+    >
+      {collapsed ? (
+        // Icon-only view
+        <nav>
+          {items.map(item => (
+            <a key={item.href} href={item.href} title={item.label}>
+              <item.icon className="w-6 h-6" />
+            </a>
+          ))}
+        </nav>
+      ) : (
+        // Full view
+        <nav>
+          {items.map(item => (
+            <a key={item.href} href={item.href}>
+              <item.icon className="w-6 h-6" />
+              <span>{item.label}</span>
+            </a>
+          ))}
+        </nav>
+      )}
+    </aside>
+  )
+}
+```
+
+## Double-Sided Layout
+
+For complex applications:
+
+```tsx
+function DoubleSidebarLayout() {
+  return (
+    <div className="flex h-screen">
+      {/* Primary sidebar */}
+      <aside className="w-64 border-r">
+        <PrimarySidebar />
+      </aside>
+      
+      {/* Main content */}
+      <main className="flex-1">
+        {children}
+      </main>
+      
+      {/* Secondary sidebar */}
+      <aside className="w-80 border-l">
+        <SecondarySidebar />
+      </aside>
+    </div>
+  )
+}
+```
+
+## Sidebar Widths
+
+| Type | Width | Use Case |
+|------|-------|----------|
+| Collapsed | 64px (w-16) | Icon-only navigation |
+| Narrow | 200px (w-50) | Compact navigation |
+| Standard | 256px (w-64) | Default sidebar |
+| Wide | 320px (w-80) | Rich content sidebars |
+| Extra Wide | 384px (w-96) | Secondary content panels |
+
+## Active Link Highlighting
+
+```tsx
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+
+function NavItem({ href, label }: { href: string; label: string }) {
+  const pathname = usePathname()
+  const isActive = pathname === href || pathname.startsWith(`${href}/`)
+  
+  return (
+    <Link
+      href={href}
+      className={`
+        block px-4 py-2 rounded-md transition-colors
+        ${isActive 
+          ? 'bg-primary text-primary-foreground font-medium' 
+          : 'hover:bg-gray-100'
+        }
+      `}
+    >
+      {label}
+    </Link>
+  )
+}
+```
+
+## Search in Sidebar
+
+Add search functionality:
+
+```tsx
+function SearchableSidebar({ items }: { items: NavItem[] }) {
+  const [search, setSearch] = useState('')
+  
+  const filteredItems = items.filter(item =>
+    item.label.toLowerCase().includes(search.toLowerCase())
+  )
+  
+  return (
+    <div>
+      <div className="p-4">
+        <input
+          type="search"
+          placeholder="Search navigation..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full px-3 py-2 border rounded-md"
+        />
+      </div>
+      
+      <nav>
+        {filteredItems.map(item => (
+          <NavItem key={item.href} {...item} />
+        ))}
+      </nav>
+    </div>
+  )
+}
+```
+
+## Accessibility
+
+- Use semantic HTML (`<nav>`, `<aside>`)
+- Provide ARIA labels for navigation regions
+- Ensure keyboard navigation works
+- Support focus management
+- Announce dynamic content changes
+- Maintain logical tab order
+- Provide skip links
+
+## Related Components
+
+- [Command Menu](/blocks/command-menu) - Alternative quick navigation
+- [Grid List](/blocks/grid-list) - Content display in main area
+- [Tables](/blocks/tables) - Tabular data alongside navigation

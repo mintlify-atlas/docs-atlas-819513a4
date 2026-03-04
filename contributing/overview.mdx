@@ -1,0 +1,213 @@
+---
+title: Contributing Overview
+description: Learn how to contribute to the Blocks project and help build the component library
+---
+
+## Welcome Contributors
+
+We welcome contributions to the Blocks project! This guide will help you get started with development and contributing to the blocks registry.
+
+Whether you're fixing bugs, adding new blocks, or improving documentation, your contributions help make this library better for everyone.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **Bun** - This project uses Bun as the package manager
+- **Node.js 18+** - Required for Next.js
+- **Git** - For version control
+
+<Note>
+  If you don't have Bun installed, you can install it from [bun.sh](https://bun.sh)
+</Note>
+
+## Development Setup
+
+<Steps>
+  <Step title="Fork the repository">
+    Fork the repository on GitHub to your own account. This creates a copy of the project under your GitHub username.
+  </Step>
+
+  <Step title="Clone your fork">
+    Clone your forked repository to your local machine:
+
+    ```bash
+    git clone https://github.com/your-username/blocks.git
+    cd blocks
+    ```
+  </Step>
+
+  <Step title="Install dependencies">
+    Install all project dependencies using Bun:
+
+    ```bash
+    bun install
+    ```
+
+    This will install all the required packages including Next.js, React, Radix UI components, and development tools.
+  </Step>
+
+  <Step title="Start the development server">
+    Launch the development server with Turbopack:
+
+    ```bash
+    bun run dev
+    ```
+
+    The development server will be available at `http://localhost:3000`. You can now browse the blocks and see your changes in real-time.
+  </Step>
+</Steps>
+
+## Available Scripts
+
+The project includes several useful scripts for development and maintenance:
+
+<CodeGroup>
+
+```bash Development
+# Start development server with hot reload
+bun run dev
+
+# Build the project for production
+bun run build
+
+# Start production server
+bun run start
+```
+
+```bash Registry Management
+# Generate registry.json from metadata
+bun run generate:registry
+
+# Generate registry with verbose output
+bun run generate:registry:verbose
+
+# Validate registry structure
+bun run validate:registry
+
+# Get registry information
+bun run registry:info
+
+# Generate MDX documentation
+bun run generate:markdown
+
+# Generate both registry and markdown
+bun run generate
+```
+
+```bash Code Quality
+# Lint codebase with Biome
+bunx ultracite lint
+
+# Generate RSS feed
+bun run generate:rss
+```
+
+</CodeGroup>
+
+<Warning>
+  Always run `bun run generate:registry` after adding or modifying blocks to update the registry files.
+</Warning>
+
+## Project Structure
+
+Understanding the project structure will help you navigate the codebase:
+
+```
+blocks/
+├── app/                    # Next.js app router pages
+├── components/             # Shared UI components
+├── content/
+│   ├── components/         # Block implementations
+│   ├── markdown/           # Generated MDX docs
+│   ├── blocks-metadata.ts  # Block registry metadata
+│   ├── blocks-categories.tsx # Category definitions
+│   ├── blocks-components.tsx # Component mapping
+│   └── declarations.ts     # Type definitions
+├── lib/                    # Utility functions
+├── public/
+│   └── r/                  # Registry JSON files
+├── scripts/                # Build and generation scripts
+└── registry.json           # Main registry file
+```
+
+### Key Directories
+
+- **content/components/** - Contains all block implementations organized by category
+- **content/blocks-metadata.ts** - Defines metadata for each block (id, category, name, etc.)
+- **content/blocks-categories.tsx** - Defines available categories
+- **scripts/** - Contains utilities for registry generation and validation
+
+## Submitting Pull Requests
+
+<Steps>
+  <Step title="Create a new branch">
+    Create a new branch for your feature or bug fix:
+
+    ```bash
+    git checkout -b your-branch-name
+    ```
+
+    Use a descriptive branch name like `feat/add-card-block` or `fix/login-styling`.
+  </Step>
+
+  <Step title="Make your changes">
+    Make your changes to the codebase. Follow the [guidelines](/contributing/guidelines) for code style and conventions.
+  </Step>
+
+  <Step title="Build and test">
+    Build the project to ensure everything works:
+
+    ```bash
+    bun run build
+    ```
+
+    Test your changes thoroughly in the development environment.
+  </Step>
+
+  <Step title="Run linting">
+    Ensure code quality by running the linter:
+
+    ```bash
+    bunx ultracite lint
+    ```
+
+    Fix any linting errors before committing.
+  </Step>
+
+  <Step title="Commit your changes">
+    Commit your changes with a descriptive message:
+
+    ```bash
+    git commit -m "Your descriptive commit message"
+    ```
+
+    Follow conventional commit format: `feat:`, `fix:`, `docs:`, `refactor:`, etc.
+  </Step>
+
+  <Step title="Push to your fork">
+    Push your changes to your forked repository:
+
+    ```bash
+    git push -u origin your-branch-name
+    ```
+  </Step>
+
+  <Step title="Open a pull request">
+    Open a pull request on the original repository. Provide a clear description of your changes and why they're needed.
+  </Step>
+</Steps>
+
+<Note>
+  The project uses commit message validation with commitlint to ensure consistent commit messages.
+</Note>
+
+## Getting Help
+
+If you have questions or need help:
+
+- Open an issue on GitHub for bugs or feature requests
+- Check existing issues and pull requests for similar topics
+- Review the documentation for detailed guides
+
+Thank you for contributing to the Blocks project!

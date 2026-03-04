@@ -1,0 +1,57 @@
+---
+title: "Table with Actions"
+description: "A table with actions block."
+---
+
+Data table with action buttons for each row. Includes inline actions for common operations like view, edit, and delete.
+
+## Installation
+
+Install the component from the Blocks registry:
+
+```bash
+npx shadcn@latest add @blocks/table-02
+```
+
+## Dependencies
+
+This component requires the following shadcn/ui components:
+
+- `badge`
+- `button`
+- `table`
+- `tooltip`
+
+And the following npm packages:
+
+```bash
+npm install lucide-react
+```
+
+## Usage
+
+```tsx
+import Table02 from "@/components/table-02";
+
+export default function Page() {
+  return <Table02 />;
+}
+```
+
+## Features
+
+- **Row actions** - Individual action buttons per row
+- **Status badges** - Visual status indicators
+- **Priority labels** - Color-coded priority badges
+- **Tooltips** - Helpful action descriptions
+- **Icon buttons** - Space-efficient controls
+- **Multiple actions** - Start, pause, complete, delete, view
+
+## Use Cases
+
+- Task management
+- User administration
+- Content management
+- Order processing
+- Workflow management
+- Project tracking
